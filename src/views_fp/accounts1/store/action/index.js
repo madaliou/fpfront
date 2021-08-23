@@ -4,11 +4,10 @@ import useJwt from '@src/auth/jwt/useJwt'
 //console.log('useJwt22 : ', useJwt)
 
 // ** Get all Data
-export const getAllData = () => {
+export const getAllAccounts = () => {
   return async dispatch => {
     await axios.get('accounts').then(response => {
 
-      //console.log('users ! ', response)
       dispatch({
         type: 'GET_ALL_DATA',
         data: response.data
@@ -17,7 +16,7 @@ export const getAllData = () => {
   }
 }
 
-/* export const getAllData = () => {
+/* export const getAllAccounts = () => {
   return async dispatch => {
     await axios.get('/api/users/list/all-data').then(response => {
 
@@ -30,7 +29,7 @@ export const getAllData = () => {
   }
 } */
 
-/* export const getData = params => {
+/* export const getAccounts = params => {
   return async dispatch => {
     await axios.get('/api/users/list/data', params).then(response => {
       console.log('not all : ', response.data)
@@ -45,13 +44,12 @@ export const getAllData = () => {
 } */
 
 // ** Get data on page or row change
-export const getData = params => {
-  console.log('om')
+export const getAccounts = params => {
   return async dispatch => {
 
-    const mytoken = await localStorage.getItem('token')
+    /* const mytoken = await localStorage.getItem('token')
 
-    const token = JSON.parse(mytoken)
+    const token = JSON.parse(mytoken) */
 
     //console.log('santri : ', token)   
 
@@ -78,7 +76,7 @@ export const getUser = id => {
       .then(response => {
         dispatch({
           type: 'GET_ACCOUNT',
-          selectedUser: response.data.user
+          selectedAccount: response.data.user
         })
       })
       .catch(err => console.log(err))
@@ -98,8 +96,8 @@ export const addAccount = account => {
         })
       })
       .then(() => {
-        dispatch(getData(getState().users.params))
-        dispatch(getAllData())
+        dispatch(getAccounts(getState().accounts.params))
+        dispatch(getAllAccounts())
       })
       .catch(err => console.log(err))
   }
@@ -111,14 +109,14 @@ export const deleteAccount = id => {
     axios
       .delete(`accounts/${id}/`)
       .then(response => {
-        console.log('deleted')
+        //console.log('deleted')
         dispatch({
           type: 'DELETE_ACCOUNT'
         })
       })
       .then(() => {
-        dispatch(getData(getState().users.params))
-        dispatch(getAllData())
+        dispatch(getAccounts(getState().accounts.params))
+        dispatch(getAllAccounts())
       })
   }
 }

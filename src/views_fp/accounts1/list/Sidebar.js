@@ -33,7 +33,7 @@ const ToastContent = ({ message }) => (
   </Fragment>
 )
 
-const SidebarNewUsers = ({ open, toggleSidebar }) => {
+const SidebarNewAccounts = ({ open, toggleSidebar }) => {
   // ** States
   const [accountType, setAccountType] = useState('standardAccount')
   const [accountForm, setAccountForm] = useState('logicalAccount')
@@ -41,7 +41,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const [currency, setCurrency] = useState(1)
   const [parentAccount, setParentAccount] = useState('')
   const [accounts, setAccounts] = useState([])
-  const store = useSelector(state => state.users)
+  const store = useSelector(state => state.accounts)
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -116,7 +116,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     <Sidebar
       size='lg'
       open={open}
-      title='New Account'
+      title='New User'
       headerClassName='mb-1'
       contentClassName='pt-0'
       toggleSidebar={toggleSidebar}
@@ -130,7 +130,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               className='react-select'
               classNamePrefix='select'
               //defaultValue={currencies[0]}
-              options={store.allData}
+              options={store.allAccounts}
               isClearable={false}
               onChange={item => {
                 setParentAccount(item.id)
@@ -207,4 +207,4 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   )
 }
 
-export default SidebarNewUsers
+export default SidebarNewAccounts
