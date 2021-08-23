@@ -1,5 +1,5 @@
 // ** React Import
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import Select from 'react-select'
 import { selectThemeColors, isObjEmpty } from '@utils'
 
@@ -15,6 +15,24 @@ import { Button, FormGroup, Label, Col, FormText, Form, Input } from 'reactstrap
 import { addAccount } from '../store/action'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import { toast, Slide } from 'react-toastify'
+import Avatar from '@components/avatar'
+import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
+
+
+const ToastContent = ({ message }) => (
+  <Fragment>
+    <div className='toastify-header'>
+      <div className='title-wrapper'>
+        <Avatar size='sm' color='success' icon={<Coffee size={12} />} />
+        <h6 className='toast-title font-weight-bold'>Succès</h6>
+      </div>
+    </div>
+    <div className='toastify-body' style={{background: '#gray'}}>
+      <span>{message}</span>
+    </div>
+  </Fragment>
+)
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** States
@@ -85,20 +103,13 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           accountType,
           parentAccount,
           currency
-        }) 
-         /*addUser({
-          fullName: values['full-name'],
-          company: values.company,
-          role,
-          username: values.username,
-          country: values.country,
-          contact: values.contact,
-          email: values.email,
-          currentPlan: plan,
-          status: 'active',
-          avatar: ''
-        }) */
+        })
       )
+      toast.error(
+        <ToastContent message={'Compte créé avec succès!!'} />,
+        { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+      )
+
     }
   }
 
@@ -143,7 +154,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
         <FormGroup className='mt-1'>
           <Label for='wording'>
-            Description <span className='text-danger'>*</span>
+            Libellé <span className='text-danger'>*</span>
           </Label>
           <Input
             name='wording'

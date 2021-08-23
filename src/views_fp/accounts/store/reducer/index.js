@@ -18,11 +18,11 @@ const users = (state = initialState, action) => {
         total: action.totalPages,
         params: action.params
       }
-    case 'GET_USER':
+    case 'GET_ACCOUNT':
       return { ...state, selectedUser: action.selectedUser }
     case 'ADD_ACCOUNT':
       return { ...state }
-    case 'DELETE_USER':
+    case 'DELETE_ACCOUNT':
       return { ...state }
     default:
       return { ...state }

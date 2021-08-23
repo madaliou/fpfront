@@ -53,13 +53,9 @@ export const getData = params => {
 
     const token = JSON.parse(mytoken)
 
-    console.log('santri : ', token)   
+    //console.log('santri : ', token)   
 
-    await axios.get("accounts", {
-      headers: {
-          Authorization: `Bearer ${token}`
-      }
-    }).then(response => {
+    await axios.get("accounts").then(response => {
       console.log('accounts : ', response.data)
       /* dispatch({
         type: 'GET_DATA',
@@ -81,7 +77,7 @@ export const getUser = id => {
       .get('/api/users/user', { id })
       .then(response => {
         dispatch({
-          type: 'GET_USER',
+          type: 'GET_ACCOUNT',
           selectedUser: response.data.user
         })
       })
@@ -110,13 +106,14 @@ export const addAccount = account => {
 }
 
 // ** Delete user
-export const deleteUser = id => {
+export const deleteAccount = id => {
   return (dispatch, getState) => {
     axios
-      .delete('/apps/users/delete', { id })
+      .delete(`accounts/${id}/`)
       .then(response => {
+        console.log('deleted')
         dispatch({
-          type: 'DELETE_USER'
+          type: 'DELETE_ACCOUNT'
         })
       })
       .then(() => {

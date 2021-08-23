@@ -5,13 +5,44 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getUser, deleteUser } from '../store/action'
+import { getUser, deleteAccount } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
 import { Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2, Archive } from 'react-feather'
 import { isObjEmpty } from '@utils'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
+
+const handleConfirmDelete = (id) => {
+  return MySwal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    customClass: {
+      confirmButton: 'btn btn-primary',
+      cancelButton: 'btn btn-outline-danger ml-1'
+    },
+    buttonsStyling: false
+  }).then(function (result) {
+    if (result.value) {
+      store.dispatch(deleteAccount(id))
+      MySwal.fire({
+        icon: 'success',
+        title: 'Deleted!',
+        text: 'Your file has been deleted.',
+        customClass: {
+          confirmButton: 'btn btn-success'
+        }
+      })
+    }
+  })
+}
 
 // ** Renders Client Columns
 const renderClient = row => {
@@ -156,7 +187,7 @@ export const columns = [
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>
           </DropdownItem>
-          <DropdownItem className='w-100' onClick={() => store.dispatch(deleteUser(row.id))}>
+          <DropdownItem className='w-100' onClick={() => handleConfirmDelete(row.id)}>
             <Trash2 size={14} className='mr-50' />
             <span className='align-middle'>Delete</span>
           </DropdownItem>
