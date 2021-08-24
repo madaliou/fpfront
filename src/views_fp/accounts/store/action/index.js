@@ -1,6 +1,6 @@
 import axios from 'axios'
 import useJwt from '@src/auth/jwt/useJwt'
-
+import { useSelector } from 'react-redux'
 //console.log('useJwt22 : ', useJwt)
 
 // ** Get all Data
@@ -71,15 +71,18 @@ export const getData = params => {
 }
 
 // ** Get User
-export const getUser = id => {
+export const getAccount = id => {
+ 
   return async dispatch => {
     await axios
-      .get('/api/users/user', { id })
-      .then(response => {
-        dispatch({
-          type: 'GET_ACCOUNT',
-          selectedUser: response.data.user
-        })
+      .get(`accounts/${id}/`)
+      .then(response => {   
+        console.log('response.data : ', response.data)
+          dispatch({
+            type: 'GET_ACCOUNT',
+            selectedUser: response.data
+          })          
+        
       })
       .catch(err => console.log(err))
   }
@@ -91,9 +94,29 @@ export const addAccount = account => {
     axios
       .post('accounts/', account)
       .then(response => {
-        console.log('add account : ', response.data)
+        //console.log('add account : ', response.data)
         dispatch({
           type: 'ADD_ACCOUNT',
+          account: response.data
+        })
+      })
+      .then(() => {
+        dispatch(getData(getState().users.params))
+        dispatch(getAllData())
+      })
+      .catch(err => console.log(err))
+  }
+}
+
+//edit account 
+export const editAccount = account => {
+  return (dispatch, getState) => {
+    axios
+      .put(`accounts/${account.id}/`, account)
+      .then(response => {
+        console.log('update account : ', response.data)
+        dispatch({
+          type: 'UPDATE_ACCOUNT',
           account: response.data
         })
       })

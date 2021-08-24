@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect } from 'react'
 // ** Invoice List Sidebar
 import Sidebar from './Sidebar'
 
+
 // ** Columns
 import { columns } from './columns'
 
@@ -80,6 +81,7 @@ const UsersList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.users)
 
+  console.log('first list : ', store)
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -226,10 +228,10 @@ const UsersList = () => {
   return (
     <Fragment>
       <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Search Filter</CardTitle>
+       <CardHeader>
+          <CardTitle tag='h4'>Comptes</CardTitle>
         </CardHeader>
-        <CardBody>
+         {/* <CardBody>
           <Row>
             <Col md='4'>
               <Select
@@ -301,7 +303,7 @@ const UsersList = () => {
               />
             </Col>
           </Row>
-        </CardBody>
+        </CardBody> */}
       </Card>
 
       <Card>

@@ -1,17 +1,48 @@
 // ** React Imports
-import { useState, useEffect } from 'react'
-
+import { useState, useEffect, Fragment } from 'react'
+import axios from 'axios'
 // ** Custom Components
 import Avatar from '@components/avatar'
+import { selectThemeColors, isObjEmpty } from '@utils'
+import Select from 'react-select'
+import { useDispatch, useSelector } from 'react-redux'
+import { editAccount } from '../store/action'
+import { useParams, Link } from 'react-router-dom'
+import classnames from 'classnames'
+import { toast, Slide } from 'react-toastify'
 
 // ** Third Party Components
-import { Lock, Edit, Trash2 } from 'react-feather'
+import { Lock, Edit, Trash2, Coffee} from 'react-feather'
 import { Media, Row, Col, Button, Form, Input, Label, FormGroup, Table, CustomInput } from 'reactstrap'
+import { useForm } from 'react-hook-form'
+ 
+const ToastContent = ({ message }) => (
+  <Fragment>
+    <div className='toastify-header'>
+      <div className='title-wrapper'>
+        <Avatar size='sm' color='success' icon={<Coffee size={12} />} />
+        <h6 className='toast-title font-weight-bold'>Succès</h6>
+      </div>
+    </div>
+    <div className='toastify-body' style={{background: '#gray'}}>
+      <span>{message}</span>
+    </div>
+  </Fragment>
+)
 
 const UserAccountTab = ({ selectedUser }) => {
   // ** States
   const [img, setImg] = useState(null)
   const [userData, setUserData] = useState(null)
+  const [currencies, setCurrencies] = useState([])
+  const [currency, setCurrency] = useState({})
+  const [parentAccount, setParentAccount] = useState({})
+  const [accountType, setAccountType] = useState(selectedUser.accountType)
+  const [accountForm, setAccountForm] = useState(selectedUser.accountForm)
+
+  const store = useSelector(state => state.users)
+
+  const dispatch = useDispatch()
 
   // ** Function to change user image
   const onChange = e => {
@@ -27,13 +58,55 @@ const UserAccountTab = ({ selectedUser }) => {
   useEffect(() => {
     if (selectedUser !== null || (selectedUser !== null && userData !== null && selectedUser.id !== userData.id)) {
       setUserData(selectedUser)
-      if (selectedUser.avatar.length) {
-        return setImg(selectedUser.avatar)
-      } else {
-        return setImg(null)
-      }
+     
+      setParentAccount({label:  selectedUser.parentAccount.wording, value: selectedUser.parentAccount.id, id:  selectedUser.parentAccount.id})
+      setCurrency({label:  selectedUser.currency.wording, value: selectedUser.currency.id, id: selectedUser.currency.id})
+      console.log('currency : ', currency)
+    
     }
+    axios.get('currencies').then(response => {
+      setCurrencies(response.data)
+    })
+
   }, [selectedUser])
+
+  // ** Vars
+ const { register, errors, handleSubmit } = useForm()
+ // ** Function to handle form submit
+ const onSubmit = values => {
+   console.log('eric : ', values)
+   if (isObjEmpty(errors)) {
+      console.log('values : ', {
+        id: selectedUser.id,          
+        wording: values.wording,
+        balance: values.balance,
+        accountForm,
+        accountType,
+        parentAccount: parentAccount.id,
+        currency: currency.id
+      }) 
+     
+     dispatch(
+       editAccount({   
+          id: selectedUser.id,        
+         wording: values.wording,
+         balance: values.balance,
+         accountForm,
+         accountType,
+         parentAccount: parentAccount.id,
+         currency: currency.id
+       })
+     ) 
+     console.log('end')
+     toast.error(
+       <ToastContent message={'Compte modifié avec succès!!'} />,
+       { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+     )
+
+     window.open(`/apps/accounts/list`)
+
+   }
+ }
 
   // ** Renders User
   const renderUserAvatar = () => {
@@ -76,11 +149,11 @@ const UserAccountTab = ({ selectedUser }) => {
     <Row>
       <Col sm='12'>
         <Media className='mb-2'>
-          {renderUserAvatar()}
+         {/*  {renderUserAvatar()} */}
           <Media className='mt-50' body>
             <h4>{selectedUser.fullName} </h4>
             <div className='d-flex flex-wrap mt-1 px-0'>
-              <Button.Ripple id='change-img' tag={Label} className='mr-75 mb-0' color='primary'>
+              {/* <Button.Ripple id='change-img' tag={Label} className='mr-75 mb-0' color='primary'>
                 <span className='d-none d-sm-block'>Change</span>
                 <span className='d-block d-sm-none'>
                   <Edit size={14} />
@@ -92,66 +165,89 @@ const UserAccountTab = ({ selectedUser }) => {
                 <span className='d-block d-sm-none'>
                   <Trash2 size={14} />
                 </span>
-              </Button.Ripple>
+              </Button.Ripple> */}
             </div>
           </Media>
         </Media>
       </Col>
       <Col sm='12'>
-        <Form onSubmit={e => e.preventDefault()}>
+        {/* <Form onSubmit={e => e.preventDefault()}> */}
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>
             <Col md='4' sm='12'>
               <FormGroup>
-                <Label for='username'>Username</Label>
-                <Input type='text' id='username' placeholder='Username' defaultValue={userData && userData.username} />
-              </FormGroup>
-            </Col>
-            <Col md='4' sm='12'>
-              <FormGroup>
-                <Label for='name'>Name</Label>
-                <Input type='text' id='name' placeholder='Name' defaultValue={userData && userData.fullName} />
-              </FormGroup>
-            </Col>
-            <Col md='4' sm='12'>
-              <FormGroup>
-                <Label for='email'>Email</Label>
-                <Input type='text' id='email' placeholder='Email' defaultValue={userData && userData.email} />
-              </FormGroup>
-            </Col>
-            <Col md='4' sm='12'>
-              <FormGroup>
-                <Label for='status'>Status</Label>
-                <Input type='select' name='status' id='status' defaultValue={userData && userData.status}>
-                  <option value='pending'>Pending</option>
-                  <option value='active'>Active</option>
-                  <option value='inactive'>Inactive</option>
-                </Input>
-              </FormGroup>
-            </Col>
-            <Col md='4' sm='12'>
-              <FormGroup>
-                <Label for='role'>Role</Label>
-                <Input type='select' name='role' id='role' defaultValue={userData && userData.role}>
-                  <option value='admin'>Admin</option>
-                  <option value='author'>Author</option>
-                  <option value='editor'>Editor</option>
-                  <option value='maintainer'>Maintainer</option>
-                  <option value='subscriber'>Subscriber</option>
-                </Input>
-              </FormGroup>
-            </Col>
-            <Col md='4' sm='12'>
-              <FormGroup>
-                <Label for='company'>Company</Label>
-                <Input
-                  type='text'
-                  id='company'
-                  defaultValue={userData && userData.company}
-                  placeholder='WinDon Technologies Pvt Ltd'
+                <Label for='username'>Parent</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  value={parentAccount}
+                  options={store.allData}
+                  isClearable={false}
+                  onChange={item => {
+                    setParentAccount(item)
+                  }}
                 />
               </FormGroup>
             </Col>
-            <Col sm='12'>
+
+           
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='wording'>Libellé</Label>
+                <Input innerRef={register({ required: true })} id='wording' name='wording' placeholder='Libellé' defaultValue={userData && userData.wording} />
+              </FormGroup>
+            </Col>
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='balance'>Solde</Label>
+                <Input innerRef={register({ required: true })} id='balance' name='balance' placeholder='Solde' defaultValue={userData && userData.balance} />
+              </FormGroup>
+            </Col>
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='accountType'>Type de Compte</Label>
+                <Input type='select' name='accountType' id='accountType'
+                 defaultValue={userData && userData.accountType}
+                 onChange={e => {
+                  console.log('restoaa : ', e.target.value)
+                  setAccountType(e.target.value)
+                } }>
+                <option value='standardAccount'>Compte standard</option>
+                <option value='cashAccount'>Compte de trésorerie</option>
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col md='4' sm='12'>
+            <FormGroup>
+                <Label for='accountForm'>Forme de Compte</Label>
+                <Input type='select' name='accountForm' id='accountForm' defaultValue={userData && userData.accountForm}
+                  onChange={e => {
+                  console.log('restoaa : ', e.target.value)
+                  setAccountForm(e.target.value)
+                } }>
+                <option value='physicalAccount'>Compte physique</option>
+            <option value='logicalAccount'>Compte logique</option>
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='company'>Devise</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  value={currency}
+                  options={currencies}
+                  isClearable={false}
+                  onChange={item => {
+                    setCurrency(item)
+                  }}
+                />
+              </FormGroup>
+            </Col>
+            {/* <Col sm='12'>
               <div className='permissions border mt-1'>
                 <h6 className='py-1 mx-1 mb-0 font-medium-2'>
                   <Lock size={18} className='mr-25' />
@@ -246,14 +342,14 @@ const UserAccountTab = ({ selectedUser }) => {
                   </tbody>
                 </Table>
               </div>
-            </Col>
+            </Col> */}
             <Col className='d-flex flex-sm-row flex-column mt-2' sm='12'>
               <Button.Ripple className='mb-1 mb-sm-0 mr-0 mr-sm-1' type='submit' color='primary'>
-                Save Changes
+                Valider
               </Button.Ripple>
-              <Button.Ripple color='secondary' outline>
+              {/* <Button.Ripple color='secondary' outline>
                 Reset
-              </Button.Ripple>
+              </Button.Ripple> */}
             </Col>
           </Row>
         </Form>

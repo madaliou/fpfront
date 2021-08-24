@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 // ** Store & Actions
-import { getUser } from '../store/action'
+import { getAccount } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Reactstrap
@@ -13,7 +13,7 @@ import { Row, Col, Alert } from 'reactstrap'
 import PlanCard from './PlanCard'
 import UserInfoCard from './UserInfoCard'
 import UserTimeline from './UserTimeline'
-import InvoiceList from '../../invoice/list'
+//import InvoiceList from '../../invoice/list'
 import PermissionsTable from './PermissionsTable'
 
 // ** Styles
@@ -27,7 +27,7 @@ const UserView = props => {
 
   // ** Get suer on mount
   useEffect(() => {
-    dispatch(getUser(parseInt(id)))
+    dispatch(getAccount(parseInt(id)))
   }, [dispatch])
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
@@ -40,17 +40,17 @@ const UserView = props => {
           <PlanCard selectedUser={store.selectedUser} />
         </Col>
       </Row>
-      <Row>
+     {/*  <Row>
         <Col md='6'>
           <UserTimeline />
         </Col>
         <Col md='6'>
           <PermissionsTable />
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col sm='12'>
-          <InvoiceList />
+         {/*  <InvoiceList /> */}
         </Col>
       </Row>
     </div>

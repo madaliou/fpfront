@@ -3,11 +3,11 @@ const initialState = {
   allData: [],
   data: [],
   total: 1,
-  params: {},
-  selectedUser: null
+  params: {}
+  //selectedUser: null
 }
 
-const users = (state = initialState, action) => {
+const users2 = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALL_DATA':
       return { ...state, allData: action.data }
@@ -28,4 +28,4 @@ const users = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default users
+export default users2

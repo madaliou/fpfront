@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getUser, deleteAccount } from '../store/action'
+import { getAccount, deleteAccount } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -111,7 +111,7 @@ export const columns = [
           <Link
             to={`/apps/user/view/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getUser(row.id))}
+            onClick={() => store.dispatch(getAccount(row.id))}
           >
             <span className='font-weight-bold'>{row.fullName}</span>
           </Link>
@@ -171,18 +171,18 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/apps/user/view/${row.id}`}
+            to={`/apps/account/view/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getUser(row.id))}
+            onClick={() => store.dispatch(getAccount(row.id)) }
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/apps/user/edit/${row.id}`}
+            to={`/apps/account/edit/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getUser(row.id))}
+            onClick={() =>  store.dispatch(getAccount(row.id)) }
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>

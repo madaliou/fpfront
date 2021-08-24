@@ -26,13 +26,13 @@ export default [
     id: 'todo',
     title: 'Exploitations',
     icon: <ShoppingCart size={20} />,
-    navLink: '/apps/todo'
+    navLink: '/apps/todot'
   },
   {
     id: 'todo',
     title: 'Opérations',
     icon: <Circle size={20} />,
-    navLink: '/apps/todo'
+    navLink: '/apps/todos'
   }
  /*  {
     id: 'calendar',

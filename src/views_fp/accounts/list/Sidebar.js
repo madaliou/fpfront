@@ -7,7 +7,6 @@ import { selectThemeColors, isObjEmpty } from '@utils'
 import Sidebar from '@components/sidebar'
 
 // ** Third Party Components
-import classnames from 'classnames'
 import { useForm } from 'react-hook-form'
 import { Button, FormGroup, Label, Col, FormText, Form, Input } from 'reactstrap'
 
@@ -16,6 +15,7 @@ import { addAccount } from '../store/action'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { toast, Slide } from 'react-toastify'
+import classnames from 'classnames'
 import Avatar from '@components/avatar'
 import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
 
@@ -129,7 +129,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               theme={selectThemeColors}
               className='react-select'
               classNamePrefix='select'
-              //defaultValue={currencies[0]}
               options={store.allData}
               isClearable={false}
               onChange={item => {

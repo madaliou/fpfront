@@ -172,16 +172,32 @@ const AppRoutes = [
   {
     path: '/apps/accounts/list',
     component: lazy(() => import('../../views_fp/accounts/list'))
+  },
+  {
+    path: '/apps/account/edit',
+    exact: true,
+    component: () => <Redirect to='/apps/accounts/edit/1' />
+  },
+  {
+    path: '/apps/account/edit/:id',
+    component: lazy(() => import('../../views_fp/accounts/edit')),
+    meta: {
+      navLink: '/apps/account/edit'
+    }
+  },
+  {
+    path: '/apps/account/view',
+    exact: true,
+    component: () => <Redirect to='/apps/account/view/1' />
+  },
+  {
+    path: '/apps/account/view/:id',
+    component: lazy(() => import('../../views_fp/accounts/view')),
+    meta: {
+      navLink: '/apps/account/view'
+    }
   }
- /*  {
-    path: '/apps/user/list',
-    component: lazy(() => import('../../views/apps/user/list'))
-  },
-  {
-    path: '/apps/user/list',
-    component: lazy(() => import('../../views/apps/user/list'))
-  },
-  {
+  /*{
     path: '/apps/user/list',
     component: lazy(() => import('../../views/apps/user/list'))
   }, */

@@ -24,7 +24,7 @@ const UserEdit = () => {
     store = useSelector(state => state.users),
     dispatch = useDispatch(),
     { id } = useParams()
-
+    console.log('store : ', store)
   // ** Function to toggle tabs
   const toggle = tab => setActiveTab(tab)
 

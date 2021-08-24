@@ -8,7 +8,7 @@ import AccountTab from './Account'
 import InfoTab from './Information'
 
 // ** Store & Actions
-import { getUser } from '../store/action'
+import { getAccount } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Third Party Components
@@ -23,14 +23,17 @@ const UserEdit = () => {
   const [activeTab, setActiveTab] = useState('1'),
     store = useSelector(state => state.users),
     dispatch = useDispatch(),
-    { id } = useParams()
+    { id } = useParams()   
 
   // ** Function to toggle tabs
   const toggle = tab => setActiveTab(tab)
 
   // ** Function to get user on mount
   useEffect(() => {
-    dispatch(getUser(parseInt(id)))
+    dispatch(getAccount(parseInt(id)))
+
+    console.log('the store : ', store)
+   
   }, [dispatch])
 
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
@@ -42,10 +45,10 @@ const UserEdit = () => {
               <NavItem>
                 <NavLink active={activeTab === '1'} onClick={() => toggle('1')}>
                   <User size={14} />
-                  <span className='align-middle d-none d-sm-block'>Account</span>
+                  <span className='align-middle d-none d-sm-block'>Compte</span>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink active={activeTab === '2'} onClick={() => toggle('2')}>
                   <Info size={14} />
                   <span className='align-middle d-none d-sm-block'>Information</span>
@@ -54,20 +57,20 @@ const UserEdit = () => {
               <NavItem>
                 <NavLink active={activeTab === '3'} onClick={() => toggle('3')}>
                   <Share2 size={14} />
-                  <span className='align-middle d-none d-sm-block'>Social</span>
+                  <span className='align-middle d-none d-sm-block'>Socialvvvvv</span>
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId='1'>
                 <AccountTab selectedUser={store.selectedUser} />
               </TabPane>
-              <TabPane tabId='2'>
+             {/*   <TabPane tabId='2'>
                 <InfoTab />
               </TabPane>
               <TabPane tabId='3'>
                 <SocialTab />
-              </TabPane>
+              </TabPane>  */}
             </TabContent>
           </CardBody>
         </Card>
