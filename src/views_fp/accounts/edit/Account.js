@@ -56,11 +56,15 @@ const UserAccountTab = ({ selectedUser }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
+       if (selectedUser.parentAccount !== null) {
+        setParentAccount({label:  selectedUser.parentAccount.wording, value: selectedUser.parentAccount.id, id:  selectedUser.parentAccount.id})
+      }    
+      setCurrency({label:  selectedUser.currency.wording, value: selectedUser.currency.id, id: selectedUser.currency.id})
+
     if (selectedUser !== null || (selectedUser !== null && userData !== null && selectedUser.id !== userData.id)) {
       setUserData(selectedUser)
      
-      setParentAccount({label:  selectedUser.parentAccount.wording, value: selectedUser.parentAccount.id, id:  selectedUser.parentAccount.id})
-      setCurrency({label:  selectedUser.currency.wording, value: selectedUser.currency.id, id: selectedUser.currency.id})
+    
       console.log('currency : ', currency)
     
     }
@@ -102,8 +106,7 @@ const UserAccountTab = ({ selectedUser }) => {
        <ToastContent message={'Compte modifié avec succès!!'} />,
        { transition: Slide, hideProgressBar: true, autoClose: 2000 }
      )
-
-     window.open(`/apps/accounts/list`)
+    //window.open(`/apps/accounts/list`)
 
    }
  }

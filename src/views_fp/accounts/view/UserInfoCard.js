@@ -127,7 +127,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     Parent
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.parentAccount.wording : 'England'}</CardText>
+                <CardText className='mb-0'>{selectedUser.parentAccount !== null ? selectedUser.parentAccount.wording : 'Pas de parent'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
