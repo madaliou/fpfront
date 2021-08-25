@@ -150,7 +150,7 @@ export const columns = [
     minWidth: '138px',
     selector: 'balance',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.balance}</span>
+    cell: row => <span className='text-capitalize'>{row.balance} {' '} {row.currency.wording} </span>
   },
   
   {

@@ -7,7 +7,7 @@ import { selectThemeColors, isObjEmpty } from '@utils'
 import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux'
 import { editAccount } from '../store/action'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useHistory } from 'react-router-dom'
 import classnames from 'classnames'
 import { toast, Slide } from 'react-toastify'
 
@@ -15,6 +15,11 @@ import { toast, Slide } from 'react-toastify'
 import { Lock, Edit, Trash2, Coffee} from 'react-feather'
 import { Media, Row, Col, Button, Form, Input, Label, FormGroup, Table, CustomInput } from 'reactstrap'
 import { useForm } from 'react-hook-form'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+
+const MySwal = withReactContent(Swal)
  
 const ToastContent = ({ message }) => (
   <Fragment>
@@ -44,6 +49,8 @@ const UserAccountTab = ({ selectedUser }) => {
 
   const dispatch = useDispatch()
 
+  const history = useHistory()
+
   // ** Function to change user image
   const onChange = e => {
     const reader = new FileReader(),
@@ -62,8 +69,7 @@ const UserAccountTab = ({ selectedUser }) => {
       setCurrency({label:  selectedUser.currency.wording, value: selectedUser.currency.id, id: selectedUser.currency.id})
 
     if (selectedUser !== null || (selectedUser !== null && userData !== null && selectedUser.id !== userData.id)) {
-      setUserData(selectedUser)
-     
+      setUserData(selectedUser)     
     
       console.log('currency : ', currency)
     
@@ -101,12 +107,29 @@ const UserAccountTab = ({ selectedUser }) => {
          currency: currency.id
        })
      ) 
-     console.log('end')
+
+     /* MySwal.fire({
+      title: 'Succès',
+      text: "Le compte a été modifié avec succès",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1'
+      },
+      buttonsStyling: false
+    }).then(function (result) {
+      if (result.value) {
+        return (<Link to="/apps/accounts/list" className="btn btn-primary"></Link>)
+      }
+    }) */
+     
      toast.error(
        <ToastContent message={'Compte modifié avec succès!!'} />,
        { transition: Slide, hideProgressBar: true, autoClose: 2000 }
      )
-    //window.open(`/apps/accounts/list`)
+     history.push('/apps/accounts/list')
 
    }
  }

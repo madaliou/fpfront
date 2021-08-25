@@ -33,12 +33,12 @@ const UserView = props => {
   return store.selectedUser !== null && store.selectedUser !== undefined ? (
     <div className='app-user-view'>
       <Row>
-        <Col xl='9' lg='8' md='7'>
+        <Col xl='12' lg='12' md='12'>
           <UserInfoCard selectedUser={store.selectedUser} />
         </Col>
-        <Col xl='3' lg='4' md='5'>
-          <PlanCard selectedUser={store.selectedUser} />
-        </Col>
+        {/*<Col xl='3' lg='4' md='5'>
+           <PlanCard selectedUser={store.selectedUser} /> 
+        </Col>*/}
       </Row>
      {/*  <Row>
         <Col md='6'>

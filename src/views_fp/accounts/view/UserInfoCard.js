@@ -6,7 +6,8 @@ import Avatar from '@components/avatar'
 
 // ** Third Party Components
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
+import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from 'react-feather'
+import moment from 'moment'
 
 const UserInfoCard = ({ selectedUser }) => {
   // ** render user img
@@ -42,7 +43,7 @@ const UserInfoCard = ({ selectedUser }) => {
     <Card>
       <CardBody>
         <Row>
-          <Col xl='6' lg='12' className='d-flex flex-column justify-content-between border-container-lg'>
+          <Col xl='4' lg='12' className='d-flex flex-column justify-content-between border-container-lg'>
             <div className='user-avatar-section'>
               <div className='d-flex justify-content-start'>
                 {/*renderUserImg() */}
@@ -54,12 +55,12 @@ const UserInfoCard = ({ selectedUser }) => {
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
+                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
                       Delete
-                    </Button.Ripple>
+                    </Button.Ripple> */}
                   </div>
                 </div>
               </div>
@@ -75,17 +76,17 @@ const UserInfoCard = ({ selectedUser }) => {
                 </div>
               </div>
               <div className='d-flex align-items-center'>
-                <div className='color-box bg-light-success'>
+                {/*<div className='color-box bg-light-success'>
                   <TrendingUp className='text-success' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>$99.87K</h5>
-                  <small>Annual Profit</small>
-                </div>
+                   <h5 className='mb-0'>$99.87K</h5>
+                  <small>Annual Profit</small> 
+                </div>*/}
               </div>
             </div>
           </Col>
-          <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
+          <Col xl='8' lg='12' className='mt-2 mt-xl-0'>
             <div className='user-info-wrapper'>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -137,6 +138,17 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>{selectedUser !== null ? selectedUser.currency.wording : '(123) 456-7890'}</CardText>
+              </div>
+              <div className='d-flex flex-wrap align-items-center'>
+                <div className='user-info-title'>
+                  <Calendar className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Création
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{ moment(new Date(selectedUser.created_at)).format(
+                          'DD/MM/YYYY à H:m:s')}
+              </CardText>
               </div>
             </div>
           </Col>
