@@ -33,8 +33,10 @@ export default [
     title: 'Opérations',
     icon: <Circle size={20} />,
     navLink: '/apps/todos'
-  }
- /*  {
+  },
+
+  //begin comment
+  {
     id: 'calendar',
     title: 'Calendar',
     icon: <Calendar size={20} />,
@@ -126,5 +128,6 @@ export default [
         navLink: '/apps/user/edit'
       }
     ] 
-  }*/
+  }
+  //end comment
 ]

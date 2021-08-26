@@ -19,7 +19,7 @@ import { ChevronDown } from 'react-feather'
 import DataTable from 'react-data-table-component'
 import { selectThemeColors } from '@utils'
 import { Card, CardHeader, CardTitle, CardBody, Input, Row, Col, Label, CustomInput, Button } from 'reactstrap'
-
+import axios from 'axios'
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
@@ -79,9 +79,9 @@ const CustomHeader = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter,
 const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.users)
+  const store = useSelector(state => state.accounts)
 
-  console.log('first list : ', store)
+  //console.log('first list : ', store)
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -90,6 +90,12 @@ const UsersList = () => {
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  
+  const [parentAccount, setParentAccount] = useState({ value: '', label: 'Selectionner un parent' })
+  const [accountType, setAccountType] = useState({ value: '', label: 'Select type', number: 0 })
+  const [accountForm, setAccountForm] = useState({ value: '', label: 'Select forme', number: 0 })
+
+  const [theAccounts, setTheAccounts] = useState([])
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
@@ -101,12 +107,16 @@ const UsersList = () => {
       getData({
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
+        parentAccount: parentAccount.value,
+        accountType: accountType.value,
+        accountForm: accountForm.value,
         q: searchTerm
       })
     )
+
+    axios.get('accounts').then(response => {
+      setTheAccounts(response.data)
+    })
   }, [dispatch, store.data.length])
 
   // ** User filter options
@@ -134,15 +144,27 @@ const UsersList = () => {
     { value: 'inactive', label: 'Inactive', number: 3 }
   ]
 
+  const accountTypeOptions = [
+    { value: '', label: 'Select type', number: 0 },
+    { value: 'standardAccount', label: 'Compte standard', number: 1 },
+    { value: 'cashAccount', label: 'Compte de trésorerie', number: 2 }
+  ]
+
+  const accountFormOptions = [
+    { value: '', label: 'Select forme', number: 0 },
+    { value: 'physicalAccount', label: 'Compte physique', number: 1 },
+    { value: 'logicalAccount', label: 'Compte logique', number: 2 }
+  ]
+
   // ** Function in get data on page change
   const handlePagination = page => {
     dispatch(
       getData({
         page: page.selected + 1,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
+        parentAccount: parentAccount.value,
+        accountForm: accountForm.value,
+        accountType: accountType.value,
         q: searchTerm
       })
     )
@@ -156,9 +178,9 @@ const UsersList = () => {
       getData({
         page: currentPage,
         perPage: value,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
+        parentAccount: parentAccount.value,
+        accountForm: accountForm.value,
+        accountType: accountType.value,
         q: searchTerm
       })
     )
@@ -172,9 +194,9 @@ const UsersList = () => {
       getData({
         page: currentPage,
         perPage: rowsPerPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
+        parentAccount: parentAccount.value,
+        accountForm: accountForm.value,
+        accountType: accountType.value,
         q: val
       })
     )
@@ -206,9 +228,9 @@ const UsersList = () => {
   // ** Table data to render
   const dataToRender = () => {
     const filters = {
-      role: currentRole.value,
-      currentPlan: currentPlan.value,
-      status: currentStatus.value,
+      parentAccount: parentAccount.value,
+      accountForm: accountForm.value,
+      accountType: accountType.value,
       q: searchTerm
     }
 
@@ -221,7 +243,7 @@ const UsersList = () => {
     } else if (store.data.length === 0 && isFiltered) {
       return []
     } else {
-      return store.allData.slice(0, rowsPerPage)
+      return store.allAccounts.slice(0, rowsPerPage)
     }
   }
 
@@ -229,9 +251,9 @@ const UsersList = () => {
     <Fragment>
       <Card>
        <CardHeader>
-          <CardTitle tag='h4'>Comptes</CardTitle>
+          <CardTitle tag='h4'>Filtres</CardTitle>
         </CardHeader>
-         {/* <CardBody>
+          <CardBody>
           <Row>
             <Col md='4'>
               <Select
@@ -239,17 +261,18 @@ const UsersList = () => {
                 theme={selectThemeColors}
                 className='react-select'
                 classNamePrefix='select'
-                options={roleOptions}
-                value={currentRole}
+                options={theAccounts}
+                value={parentAccount}
                 onChange={data => {
-                  setCurrentRole(data)
+                  console.log('selected parent : ', data)
+                  setParentAccount(data)
                   dispatch(
                     getData({
                       page: currentPage,
                       perPage: rowsPerPage,
-                      role: data.value,
-                      currentPlan: currentPlan.value,
-                      status: currentStatus.value,
+                      parentAccount: data.value,
+                      accountType: accountType.value,
+                      accountForm: accountForm.value,
                       q: searchTerm
                     })
                   )
@@ -262,17 +285,17 @@ const UsersList = () => {
                 isClearable={false}
                 className='react-select'
                 classNamePrefix='select'
-                options={planOptions}
-                value={currentPlan}
+                options={accountTypeOptions}
+                value={accountType}
                 onChange={data => {
-                  setCurrentPlan(data)
+                  setAccountType(data)
                   dispatch(
                     getData({
                       page: currentPage,
                       perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
+                      parentAccount: parentAccount.value,
+                      accountType: data.value,
+                      accountForm: accountForm.value,
                       q: searchTerm
                     })
                   )
@@ -285,17 +308,17 @@ const UsersList = () => {
                 isClearable={false}
                 className='react-select'
                 classNamePrefix='select'
-                options={statusOptions}
-                value={currentStatus}
+                options={accountFormOptions}
+                value={accountForm}
                 onChange={data => {
-                  setCurrentStatus(data)
+                  setAccountForm(data)
                   dispatch(
                     getData({
                       page: currentPage,
                       perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                      status: data.value,
+                      parentAccount: parentAccount.value,
+                      accountType: accountType.value,
+                      accountForm: data.value,
                       q: searchTerm
                     })
                   )
@@ -303,7 +326,7 @@ const UsersList = () => {
               />
             </Col>
           </Row>
-        </CardBody> */}
+        </CardBody> 
       </Card>
 
       <Card>

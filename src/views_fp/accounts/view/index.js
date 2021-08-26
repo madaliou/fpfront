@@ -11,8 +11,8 @@ import { Row, Col, Alert } from 'reactstrap'
 
 // ** User View Components
 import PlanCard from './PlanCard'
-import UserInfoCard from './UserInfoCard'
-import UserTimeline from './UserTimeline'
+import UserInfoCard from './InfoCard'
+import UserTimeline from './Timeline'
 //import InvoiceList from '../../invoice/list'
 import PermissionsTable from './PermissionsTable'
 
@@ -21,7 +21,7 @@ import '@styles/react/apps/app-users.scss'
 
 const UserView = props => {
   // ** Vars
-  const store = useSelector(state => state.users),
+  const store = useSelector(state => state.accounts),
     dispatch = useDispatch(),
     { id } = useParams()
 
@@ -30,14 +30,14 @@ const UserView = props => {
     dispatch(getAccount(parseInt(id)))
   }, [dispatch])
 
-  return store.selectedUser !== null && store.selectedUser !== undefined ? (
+  return store.selectedAccount !== null && store.selectedAccount !== undefined ? (
     <div className='app-user-view'>
       <Row>
         <Col xl='12' lg='12' md='12'>
-          <UserInfoCard selectedUser={store.selectedUser} />
+          <UserInfoCard selectedAccount={store.selectedAccount} />
         </Col>
         {/*<Col xl='3' lg='4' md='5'>
-           <PlanCard selectedUser={store.selectedUser} /> 
+           <PlanCard selectedAccount={store.selectedAccount} /> 
         </Col>*/}
       </Row>
      {/*  <Row>

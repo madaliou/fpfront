@@ -4,6 +4,7 @@ import axios from 'axios'
 export const getAllData = () => {
   return async dispatch => {
     await axios.get('/api/users/list/all-data').then(response => {
+      console.log('all users : ', response.data)
       dispatch({
         type: 'GET_ALL_DATA',
         data: response.data
@@ -16,6 +17,8 @@ export const getAllData = () => {
 export const getData = params => {
   return async dispatch => {
     await axios.get('/api/users/list/data', params).then(response => {
+      console.log('params : ', params)
+      console.log('users : ', response.data)
       dispatch({
         type: 'GET_DATA',
         data: response.data.users,

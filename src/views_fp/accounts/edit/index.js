@@ -21,7 +21,7 @@ import '@styles/react/apps/app-users.scss'
 const UserEdit = () => {
   // ** States & Vars
   const [activeTab, setActiveTab] = useState('1'),
-    store = useSelector(state => state.users),
+    store = useSelector(state => state.accounts),
     dispatch = useDispatch(),
     { id } = useParams()   
 
@@ -36,7 +36,7 @@ const UserEdit = () => {
    
   }, [dispatch])
 
-  return store.selectedUser !== null && store.selectedUser !== undefined ? (
+  return store.selectedAccount !== null && store.selectedAccount !== undefined ? (
     <Row className='app-user-edit'>
       <Col sm='12'>
         <Card>
@@ -63,7 +63,7 @@ const UserEdit = () => {
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId='1'>
-                <AccountTab selectedUser={store.selectedUser} />
+                <AccountTab selectedAccount={store.selectedAccount} />
               </TabPane>
              {/*   <TabPane tabId='2'>
                 <InfoTab />

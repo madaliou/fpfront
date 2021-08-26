@@ -35,17 +35,17 @@ const ToastContent = ({ message }) => (
   </Fragment>
 )
 
-const UserAccountTab = ({ selectedUser }) => {
+const UserAccountTab = ({ selectedAccount }) => {
   // ** States
   const [img, setImg] = useState(null)
   const [userData, setUserData] = useState(null)
   const [currencies, setCurrencies] = useState([])
   const [currency, setCurrency] = useState({})
   const [parentAccount, setParentAccount] = useState({})
-  const [accountType, setAccountType] = useState(selectedUser.accountType)
-  const [accountForm, setAccountForm] = useState(selectedUser.accountForm)
+  const [accountType, setAccountType] = useState(selectedAccount.accountType)
+  const [accountForm, setAccountForm] = useState(selectedAccount.accountForm)
 
-  const store = useSelector(state => state.users)
+  const store = useSelector(state => state.accounts)
 
   const dispatch = useDispatch()
 
@@ -63,13 +63,13 @@ const UserAccountTab = ({ selectedUser }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
-       if (selectedUser.parentAccount !== null) {
-        setParentAccount({label:  selectedUser.parentAccount.wording, value: selectedUser.parentAccount.id, id:  selectedUser.parentAccount.id})
+       if (selectedAccount.parentAccount !== null) {
+        setParentAccount({label:  selectedAccount.parentAccount.wording, value: selectedAccount.parentAccount.id, id:  selectedAccount.parentAccount.id})
       }    
-      setCurrency({label:  selectedUser.currency.wording, value: selectedUser.currency.id, id: selectedUser.currency.id})
+      setCurrency({label:  selectedAccount.currency.wording, value: selectedAccount.currency.id, id: selectedAccount.currency.id})
 
-    if (selectedUser !== null || (selectedUser !== null && userData !== null && selectedUser.id !== userData.id)) {
-      setUserData(selectedUser)     
+    if (selectedAccount !== null || (selectedAccount !== null && userData !== null && selectedAccount.id !== userData.id)) {
+      setUserData(selectedAccount)     
     
       console.log('currency : ', currency)
     
@@ -78,7 +78,7 @@ const UserAccountTab = ({ selectedUser }) => {
       setCurrencies(response.data)
     })
 
-  }, [selectedUser])
+  }, [selectedAccount])
 
   // ** Vars
  const { register, errors, handleSubmit } = useForm()
@@ -87,7 +87,7 @@ const UserAccountTab = ({ selectedUser }) => {
    console.log('eric : ', values)
    if (isObjEmpty(errors)) {
       console.log('values : ', {
-        id: selectedUser.id,          
+        id: selectedAccount.id,          
         wording: values.wording,
         balance: values.balance,
         accountForm,
@@ -98,7 +98,7 @@ const UserAccountTab = ({ selectedUser }) => {
      
      dispatch(
        editAccount({   
-          id: selectedUser.id,        
+          id: selectedAccount.id,        
          wording: values.wording,
          balance: values.balance,
          accountForm,
@@ -145,7 +145,7 @@ const UserAccountTab = ({ selectedUser }) => {
           initials
           color={color}
           className='rounded mr-2 my-25'
-          content={selectedUser.fullName}
+          content={selectedAccount.fullName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -177,7 +177,7 @@ const UserAccountTab = ({ selectedUser }) => {
         <Media className='mb-2'>
          {/*  {renderUserAvatar()} */}
           <Media className='mt-50' body>
-            <h4>{selectedUser.fullName} </h4>
+            <h4>{selectedAccount.fullName} </h4>
             <div className='d-flex flex-wrap mt-1 px-0'>
               {/* <Button.Ripple id='change-img' tag={Label} className='mr-75 mb-0' color='primary'>
                 <span className='d-none d-sm-block'>Change</span>
@@ -208,7 +208,7 @@ const UserAccountTab = ({ selectedUser }) => {
                   className='react-select'
                   classNamePrefix='select'
                   value={parentAccount}
-                  options={store.allData}
+                  options={store.allAccounts}
                   isClearable={false}
                   onChange={item => {
                     setParentAccount(item)

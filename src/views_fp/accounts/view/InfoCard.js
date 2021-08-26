@@ -9,11 +9,11 @@ import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from 'react-feather'
 import moment from 'moment'
 
-const UserInfoCard = ({ selectedUser }) => {
+const UserInfoCard = ({ selectedAccount }) => {
   // ** render user img
   const renderUserImg = () => {
-    if (selectedUser !== null && selectedUser.avatar.length) {
-      return <img src={selectedUser.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
+    if (selectedAccount !== null && selectedAccount.avatar.length) {
+      return <img src={selectedAccount.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -23,7 +23,7 @@ const UserInfoCard = ({ selectedUser }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedUser.fullName}
+          content={selectedAccount.fullName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -49,13 +49,13 @@ const UserInfoCard = ({ selectedUser }) => {
                 {/*renderUserImg() */}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mb-1'>
-                    <h4 className='mb-0'>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedAccount !== null ? selectedAccount.fullName : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedUser !== null ? selectedUser.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedAccount !== null ? selectedAccount.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
+                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedAccount.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
@@ -71,7 +71,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   <DollarSign className='text-primary' />
                 </div>
                 <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedUser.balance}</h5>
+                  <h5 className='mb-0'>{selectedAccount.balance} {' '} {selectedAccount.currency.wording} </h5>
                   <small>Solde</small>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedUser !== null ? selectedUser.wording : 'eleanor.aguilar'}
+                  {selectedAccount !== null ? selectedAccount.wording : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -107,7 +107,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser.accountType : 'Active'}
+                  {selectedAccount !== null ? selectedAccount.accountType : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -118,7 +118,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedUser !== null ? selectedUser.accountForm : 'Admin'}
+                  {selectedAccount !== null ? selectedAccount.accountForm : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -128,7 +128,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     Parent
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser.parentAccount !== null ? selectedUser.parentAccount.wording : 'Pas de parent'}</CardText>
+                <CardText className='mb-0'>{selectedAccount.parentAccount !== null ? selectedAccount.parentAccount.wording : 'Pas de parent'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -137,7 +137,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     Devise
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedUser !== null ? selectedUser.currency.wording : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{selectedAccount !== null ? selectedAccount.currency.wording : '(123) 456-7890'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -146,7 +146,7 @@ const UserInfoCard = ({ selectedUser }) => {
                     Création
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{ moment(new Date(selectedUser.created_at)).format(
+                <CardText className='mb-0'>{ moment(new Date(selectedAccount.created_at)).format(
                           'DD/MM/YYYY à H:m:s')}
               </CardText>
               </div>

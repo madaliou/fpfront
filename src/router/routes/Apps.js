@@ -196,11 +196,11 @@ const AppRoutes = [
     meta: {
       navLink: '/apps/account/view'
     }
-  }
-  /*{
+  },
+  {
     path: '/apps/user/list',
     component: lazy(() => import('../../views/apps/user/list'))
-  }, */
+  }
 ]
 
 export default AppRoutes

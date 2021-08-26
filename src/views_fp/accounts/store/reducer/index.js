@@ -1,18 +1,17 @@
 // ** Initial State
 const initialState = {
-  allData: [],
+  allAccounts: [],
   data: [],
   total: 1,
   params: {},
-  selectedUser: null,
-  selectedAccount: 'test2'
+  selectedAccount: null
 }
 
-const users = (state = initialState, action) => {
+const accounts = (state = initialState, action) => {
  
   switch (action.type) {
     case 'GET_ALL_DATA':
-      return { ...state, allData: action.data }
+      return { ...state, allAccounts: action.data }
     case 'GET_DATA':
       return {
         ...state,
@@ -21,7 +20,7 @@ const users = (state = initialState, action) => {
         params: action.params
       }
     case 'GET_ACCOUNT':      
-      return { ...state, selectedUser: action.selectedUser }
+      return { ...state, selectedAccount: action.selectedAccount }
     case 'ADD_ACCOUNT':
       return { ...state }
     case 'UPDATE_ACCOUNT': {
@@ -30,7 +29,7 @@ const users = (state = initialState, action) => {
       console.log('oiuoioo', user)
 
       //clone the current state
-      const clone = JSON.parse(JSON.stringify(state.users))
+      const clone = JSON.parse(JSON.stringify(state.accounts))
 
       //check if user already exist
       const index = clone.findIndex(obj => obj.id === user.id)
@@ -40,7 +39,7 @@ const users = (state = initialState, action) => {
         clone[index] = user
       }
 
-      return {...state, users: clone, fullData: clone}
+      return {...state, accounts: clone, fullData: clone}
     }
     case 'DELETE_ACCOUNT':
       return { ...state }
@@ -48,4 +47,4 @@ const users = (state = initialState, action) => {
       return { ...state }
   }
 }
-export default users
+export default accounts

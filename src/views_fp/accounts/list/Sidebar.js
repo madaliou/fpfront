@@ -18,6 +18,8 @@ import { toast, Slide } from 'react-toastify'
 import classnames from 'classnames'
 import Avatar from '@components/avatar'
 import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
+import NumberInput from '@components/number-input'
+
 
 const ToastContent = ({ message }) => (
   <Fragment>
@@ -38,10 +40,11 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const [accountType, setAccountType] = useState('standardAccount')
   const [accountForm, setAccountForm] = useState('logicalAccount')
   const [currencies, setCurrencies] = useState([])
-  const [currency, setCurrency] = useState(1)
+  const [currency, setCurrency] = useState(2)
   const [parentAccount, setParentAccount] = useState('')
+  const [balance, setBalance] = useState(0)
   const [accounts, setAccounts] = useState([])
-  const store = useSelector(state => state.users)
+  const store = useSelector(state => state.accounts)
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -94,21 +97,25 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
         currency
       }) 
       toggleSidebar()
-       dispatch(
-        addAccount({          
-          wording: values.wording,
-          balance: values.balance,
-          accountForm,
-          accountType,
-          parentAccount,
-          currency
-        })
-      )
-      toast.error(
-        <ToastContent message={'Compte créé avec succès!!'} />,
-        { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-      )
-
+      try {
+          dispatch(
+          addAccount({          
+            wording: values.wording,
+            balance: values.balance,
+            accountForm,
+            accountType,
+            parentAccount,
+            currency
+          })
+        ) 
+       /*  toast.success(
+          <ToastContent message={'Compte créé avec succès!!'} />,
+          { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+        ) */
+      } catch (error) {    
+          console.log('create account error : ', error)
+         
+      }      
     }
   }
 
@@ -129,7 +136,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               theme={selectThemeColors}
               className='react-select'
               classNamePrefix='select'
-              options={store.allData}
+              options={store.allAccounts}
               isClearable={false}
               onChange={item => {
                 setParentAccount(item.id)
@@ -137,7 +144,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             />
             </FormGroup>
 
-            <Label>Devise</Label>
+            <Label>Devise<span className='text-danger'>*</span></Label>
             <Select
               theme={selectThemeColors}
               className='react-select'
@@ -164,8 +171,9 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
         </FormGroup>
         <FormGroup>
           <Label for='balance'>
-            Solde <span className='text-danger'>*</span>
+            Solde 
           </Label>
+            {/* <NumberInput id='basic-number-input' value={balance} onChange={balance => setBalance(balance)} /> */}
           <Input
             name='balance'
             id='balance'
