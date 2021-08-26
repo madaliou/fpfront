@@ -15,14 +15,14 @@ export default [
     title: 'Budgets',
     icon: <MessageSquare size={20} />,
     navLink: '/budgets/list'
-  },
+  }/* ,
   {
     id: 'todo',
     title: 'Devises',
     icon: <CheckSquare size={20} />,
     navLink: '/currencies/list'
-  },
-  {
+  } */
+  /* {
     id: 'todo',
     title: 'Exploitations',
     icon: <ShoppingCart size={20} />,
@@ -33,10 +33,10 @@ export default [
     title: 'Opérations',
     icon: <Circle size={20} />,
     navLink: '/operations/list'
-  },
+  }, */
 
   //begin comment
-  {
+  /* {
     id: 'calendar',
     title: 'Calendar',
     icon: <Calendar size={20} />,
@@ -128,6 +128,6 @@ export default [
         navLink: '/apps/user/edit'
       }
     ] 
-  }
+  } */
   //end comment
 ]
