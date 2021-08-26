@@ -8,31 +8,31 @@ export default [
     id: 'email',
     title: 'Comptes',
     icon: <Mail size={20} />,
-    navLink: '/apps/accounts/list'
+    navLink: '/accounts/list'
   },
   {
     id: 'chat',
     title: 'Budgets',
     icon: <MessageSquare size={20} />,
-    navLink: '/apps/chat'
+    navLink: '/budgets/list'
   },
   {
     id: 'todo',
     title: 'Devises',
     icon: <CheckSquare size={20} />,
-    navLink: '/apps/todo'
+    navLink: '/currencies/list'
   },
   {
     id: 'todo',
     title: 'Exploitations',
     icon: <ShoppingCart size={20} />,
-    navLink: '/apps/todot'
+    navLink: '/exploitations/list'
   },
   {
     id: 'todo',
     title: 'Opérations',
     icon: <Circle size={20} />,
-    navLink: '/apps/todos'
+    navLink: '/operations/list'
   },
 
   //begin comment

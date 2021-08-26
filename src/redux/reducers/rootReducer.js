@@ -16,6 +16,8 @@ import dataTables from '@src/views/tables/data-tables/store/reducer'
 
 import accounts from '@src/views_fp/accounts/store/reducer'
 
+import budgets from '@src/views_fp/budgets/store/reducer'
+
 
 const rootReducer = combineReducers({
   auth,
@@ -29,7 +31,8 @@ const rootReducer = combineReducers({
   calendar,
   ecommerce,
   dataTables,
-  accounts
+  accounts,
+  budgets
 })
 
 export default rootReducer

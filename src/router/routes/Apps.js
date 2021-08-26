@@ -170,25 +170,25 @@ const AppRoutes = [
 
   //raoul's routes
   {
-    path: '/apps/accounts/list',
+    path: '/accounts/list',
     component: lazy(() => import('../../views_fp/accounts/list'))
   },
   {
-    path: '/apps/account/edit',
+    path: '/account/edit',
     exact: true,
-    component: () => <Redirect to='/apps/accounts/edit/1' />
+    component: () => <Redirect to='accounts/edit/1' />
   },
   {
-    path: '/apps/account/edit/:id',
+    path: '/account/edit/:id',
     component: lazy(() => import('../../views_fp/accounts/edit')),
     meta: {
-      navLink: '/apps/account/edit'
+      navLink: 'account/edit'
     }
   },
   {
-    path: '/apps/account/view',
+    path: '/account/view',
     exact: true,
-    component: () => <Redirect to='/apps/account/view/1' />
+    component: () => <Redirect to='account/view/1' />
   },
   {
     path: '/apps/account/view/:id',
@@ -197,6 +197,37 @@ const AppRoutes = [
       navLink: '/apps/account/view'
     }
   },
+
+  //budgets
+  {
+    path: '/budgets/list',
+    component: lazy(() => import('../../views_fp/budgets/list'))
+  },
+  {
+    path: '/budget/edit',
+    exact: true,
+    component: () => <Redirect to='/budgets/edit/1' />
+  },
+  {
+    path: '/budget/edit/:id',
+    component: lazy(() => import('../../views_fp/budgets/edit')),
+    meta: {
+      navLink: '/budget/edit'
+    }
+  },
+  {
+    path: '/budget/view',
+    exact: true,
+    component: () => <Redirect to='/budget/view/1' />
+  },
+  {
+    path: '/budget/view/:id',
+    component: lazy(() => import('../../views_fp/budgets/view')),
+    meta: {
+      navLink: '/account/view'
+    }
+  },
+
   {
     path: '/apps/user/list',
     component: lazy(() => import('../../views/apps/user/list'))

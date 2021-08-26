@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getAccount, deleteAccount } from '../store/action'
+import { getBudget, deleteBudget } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -14,6 +14,7 @@ import { Slack, User, Settings, Database, Edit2, MoreVertical, FileText, Trash2,
 import { isObjEmpty } from '@utils'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import moment from 'moment'
 
 const MySwal = withReactContent(Swal)
 
@@ -31,7 +32,7 @@ const handleConfirmDelete = (id) => {
     buttonsStyling: false
   }).then(function (result) {
     if (result.value) {
-      store.dispatch(deleteAccount(id))
+      store.dispatch(deleteBudget(id))
       MySwal.fire({
         icon: 'success',
         title: 'Deleted!',
@@ -120,45 +121,75 @@ export const columns = [
       </div>
     )
   }, */
- /*  {
-    name: 'Email',
-    minWidth: '320px',
-    selector: 'email',
+  /* {
+    name: 'Nom',
+    minWidth: '297px',
+    selector: 'fullName',
     sortable: true,
-    cell: row => row.email
+    cell: row => (
+      <div className='d-flex justify-content-left align-items-center'>
+        {renderClient(row)}
+        <div className='d-flex flex-column'>
+          <Link
+            to={`/apps/user/budget/${row.id}`}
+            className='user-name text-truncate mb-0'
+            onClick={() => store.dispatch(getBudget(row.id))}
+          >
+            <span className='font-weight-bold'>{row.wording}</span>
+          </Link>
+          <small className='text-truncate text-muted mb-0'>@{row.wording}</small>
+        </div>
+      </div>
+    )
   }, */
-  {
-    name: 'Code',
-    minWidth: '172px',
-    selector: 'code',
+ {
+    name: 'wording',
+    minWidth: '180px',
+    selector: 'wording',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.code}</span>
+    cell: row => row.wording
   },
   {
-    name: 'Libellé',
+    name: 'Montant Prévisionnel',
     minWidth: '138px',
-    selector: 'wording',
+    selector: 'provisionalAmount',
     sortable: true,
     cell: row => (
       <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.wording}
+        {row.provisionalAmount}
       </Badge>
     )
   },
   {
-    name: 'Solde',
+    name: 'Date début',
     minWidth: '138px',
-    selector: 'balance',
+    selector: 'code',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.balance} {' '} {row.currency.code} </span>
+    cell: row => <span className='text-capitalize'>{row.startDate}</span>
   },
   
   {
-    name: 'Parent',
+    name: 'Date fin',
     minWidth: '138px',
-    //selector: 'balance',
+    selector: 'endDate',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.parentAccount !== null ? row.parentAccount.wording : 'Pas de parent' }</span>
+    cell: row => <span className='text-capitalize'>{row.endDate} </span>
+  },
+  {
+    name: 'Compte',
+    minWidth: '138px',
+    selector: 'account',
+    sortable: true,
+    cell: row => <span className='text-capitalize'>{row.account !== null ? row.account.wording : 'Pas de parent' }</span>
+  },
+  
+  {
+    name: 'Créé le',
+    minWidth: '138px',
+    selector: 'created_at',
+    sortable: true,
+    cell: row => <span className='text-capitalize'>{ moment(new Date(row.created_at)).format(
+      'DD/MM/YYYY à H:m:s')}</span>
   },
   {
     name: 'Actions',
@@ -171,18 +202,18 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/account/view/${row.id}`}
+            to={`/budget/view/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getAccount(row.id)) }
+            onClick={() => store.dispatch(getBudget(row.id)) }
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/account/edit/${row.id}`}
+            to={`/budget/edit/${row.id}`}
             className='w-100'
-            onClick={() =>  store.dispatch(getAccount(row.id)) }
+            onClick={() =>  store.dispatch(getBudget(row.id)) }
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>

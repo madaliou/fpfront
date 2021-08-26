@@ -25,42 +25,15 @@ const ToastContent = ({ message, header, color }) => (
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    await axios.get('accounts').then(response => {
-      //console.log('accounts ! ', response)
+    await axios.get('budgets').then(response => {
+      //console.log('budgets ! ', response)
       dispatch({
-        type: 'GET_ALL_DATA',
+        type: 'GET_ALL_BUDGETS',
         data: response.data
       })
     })
   }
 }
-
-/* export const getAllData = () => {
-  return async dispatch => {
-    await axios.get('/api/accounts/list/all-data').then(response => {
-
-      console.log('accounts ! ', response)
-      dispatch({
-        type: 'GET_ALL_DATA',
-        data: response.data
-      })
-    })
-  }
-} */
-
-/* export const getData = params => {
-  return async dispatch => {
-    await axios.get('/api/accounts/list/data', params).then(response => {
-      console.log('not all : ', response.data)
-      dispatch({
-        type: 'GET_DATA',
-        data: response.data.accounts,
-        totalPages: response.data.total,
-        params
-      })
-    })
-  }
-} */
 
 // ** Get data on page or row change
 export const getData = params => {
@@ -69,37 +42,37 @@ export const getData = params => {
 
     console.log('parameters : ', params)   
 
-    await axios.post('/accounts-filter/', params, {
+    await axios.post('/budgets-filter/', params, {
       params: {
         page: params.page,
         perPage: params.perPage
       }
     }).then(response => {
-      //console.log('see accounts : ', response.data)
+      //console.log('see budgets : ', response.data)
        dispatch({
-        type: 'GET_DATA',
+        type: 'GET_BUDGETS',
         data: response.data.results,
         totalPages: response.data.count,
         params
       })
     }).catch(error => {
-      console.log('see here', JSON.stringify(error.response))
+      console.log('get budgets error : ', JSON.stringify(error.response))
     })
    
   }
 }
 
 // ** Get User
-export const getAccount = id => {
+export const getBudget = id => {
  
   return async dispatch => {
     await axios
-      .get(`accounts/${id}/`)
+      .get(`budgets/${id}/`)
       .then(response => {   
         console.log('response.data : ', response.data)
           dispatch({
-            type: 'GET_ACCOUNT',
-            selectedAccount: response.data
+            type: 'GET_BUDGET',
+            selectedBudget: response.data
           })          
         
       })
@@ -108,39 +81,24 @@ export const getAccount = id => {
 }
 
 // ** Add new user
-/* export const addAccount = account => {
+export const addBudget = budget => {
   return (dispatch, getState) => {
     axios
-      .post('accounts/', account)
+      .post('budgets/', budget)
       .then(response => {
+        //console.log('add budget : ', response.data)
         dispatch({
-          type: 'ADD_ACCOUNT',
-          account: response.data
-        })
-      })
-  }
-} */
-
-
-// ** Add new user
-export const addAccount = account => {
-  return (dispatch, getState) => {
-    axios
-      .post('accounts/', account)
-      .then(response => {
-        //console.log('add account : ', response.data)
-        dispatch({
-          type: 'ADD_ACCOUNT',
-          account: response.data
+          type: 'ADD_BUDGET',
+          budget: response.data
         })
 
         toast.success(
-          <ToastContent message={'Compte créé avec succès!!'} header={'Succès'} color={'success'} />,
+          <ToastContent message={'Budget créé avec succès!!'} header={'Succès'} color={'success'} />,
           { transition: Slide, hideProgressBar: true, autoClose: 2000 }
         )
       })
       .then(() => {
-        dispatch(getData(getState().accounts.params))
+        dispatch(getData(getState().budgets.params))
         dispatch(getAllData())
       })
       .catch(error => {
@@ -154,49 +112,49 @@ export const addAccount = account => {
   }
 } 
 
-//edit account 
-export const editAccount = account => {
+//edit budget 
+export const editBudget = budget => {
   return (dispatch, getState) => {
     axios
-      .put(`accounts/${account.id}/`, account)
+      .put(`budgets/${budget.id}/`, budget)
       .then(response => {
-        console.log('update account : ', response.data)
+        console.log('update budget : ', response.data)
         dispatch({
-          type: 'UPDATE_ACCOUNT',
-          account: response.data
+          type: 'UPDATE_BUDGET',
+          budget: response.data
         })
-        toast.success(
-          <ToastContent message={'Compte modifié avec succès!!'} header={'Succès'} color={'success'} />,
-          { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+        toast.error(
+          <ToastContent color={'success'} message={'Budget modifié avec succès!!'} header={'Budget'} />,
+          { transition: Slide, hideProgressBar: true, autoClose: 3000 }
         )
       })
       .then(() => {
-        dispatch(getData(getState().accounts.params))
+        dispatch(getData(getState().budgets.params))
         dispatch(getAllData())
       })
       .catch(err => {
         console.log(err)
-        toast.success(
-          <ToastContent message={JSON.stringify(error.response.data)} header={'Attention'} color={'danger'} />,
-          { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+        toast.error(
+          <ToastContent color={'danger'} message={JSON.stringify(error.response.data)} header={'Attention'} />,
+          { transition: Slide, hideProgressBar: true, autoClose: 4000 }
         )
       })
   }
 }
 
 // ** Delete user
-export const deleteAccount = id => {
+export const deleteBudget = id => {
   return (dispatch, getState) => {
     axios
-      .delete(`accounts/${id}/`)
+      .delete(`budgets/${id}/`)
       .then(response => {
         console.log('deleted')
         dispatch({
-          type: 'DELETE_ACCOUNT'
+          type: 'DELETE_BUDGET'
         })
       })
       .then(() => {
-        dispatch(getData(getState().accounts.params))
+        dispatch(getData(getState().budgets.params))
         dispatch(getAllData())
       })
   }
