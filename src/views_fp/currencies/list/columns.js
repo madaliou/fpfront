@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getBudget, deleteBudget } from '../store/action'
+import { getCurrency, deleteCurrency } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -32,7 +32,7 @@ const handleConfirmDelete = (id) => {
     buttonsStyling: false
   }).then(function (result) {
     if (result.value) {
-      store.dispatch(deleteBudget(id))
+      store.dispatch(deleteCurrency(id))
       MySwal.fire({
         icon: 'success',
         title: 'Deleted!',
@@ -133,7 +133,7 @@ export const columns = [
           <Link
             to={`/apps/user/budget/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getBudget(row.id))}
+            onClick={() => store.dispatch(getCurrency(row.id))}
           >
             <span className='font-weight-bold'>{row.wording}</span>
           </Link>
@@ -144,45 +144,23 @@ export const columns = [
   }, */
  {
     name: 'Libellé',
-    minWidth: '180px',
+    minWidth: '130px',
     selector: 'wording',
     sortable: true,
     cell: row => row.wording
   },
   {
-    name: 'Exploitation',
-    minWidth: '138px',
-    selector: 'exploitation',
+    name: 'Code',
+    minWidth: '150px',
+    selector: 'code',
     sortable: true,
     cell: row => (
       <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.exploitation !== null ? row.exploitation.wording : "Pas d'exploitation" }
+        {row.code}
       </Badge>
     )
   },
-  {
-    name: 'Date début',
-    minWidth: '138px',
-    selector: 'code',
-    sortable: true,
-    cell: row => <span className='text-capitalize'>{row.startDate}</span>
-  },
-  
-  {
-    name: 'Date fin',
-    minWidth: '138px',
-    selector: 'endDate',
-    sortable: true,
-    cell: row => <span className='text-capitalize'>{row.endDate} </span>
-  },
- /*  {
-    name: 'Compte',
-    minWidth: '138px',
-    selector: 'account',
-    sortable: true,
-    cell: row => <span className='text-capitalize'>{row.account !== null ? row.account.wording : 'Pas de parent' }</span>
-  }, */
-  
+ 
   {
     name: 'Créé le',
     minWidth: '138px',
@@ -192,6 +170,14 @@ export const columns = [
       'DD/MM/YYYY à H:m:s')}</span>
   },
   {
+    name: 'Modifé le',
+    minWidth: '138px',
+    selector: 'updated_at',
+    sortable: true,
+    cell: row => <span className='text-capitalize'>{ moment(new Date(row.updated_at)).format(
+      'DD/MM/YYYY à H:m:s')}</span>
+  }
+  /* {
     name: 'Actions',
     minWidth: '100px',
     cell: row => (
@@ -202,18 +188,18 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/budget/view/${row.id}`}
+            to={`/currency/view/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getBudget(row.id)) }
+            onClick={() => store.dispatch(getCurrency(row.id)) }
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/budget/edit/${row.id}`}
+            to={`/currency/edit/${row.id}`}
             className='w-100'
-            onClick={() =>  store.dispatch(getBudget(row.id)) }
+            onClick={() =>  store.dispatch(getCurrency(row.id)) }
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>
@@ -225,5 +211,5 @@ export const columns = [
         </DropdownMenu>
       </UncontrolledDropdown>
     )
-  }
+  } */
 ]

@@ -9,11 +9,11 @@ import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from 'react-feather'
 import moment from 'moment'
 
-const UserInfoCard = ({ selectedBudget }) => {
+const UserInfoCard = ({ selectedOperation }) => {
   // ** render user img
   const renderUserImg = () => {
-    if (selectedBudget !== null && selectedBudget.avatar.length) {
-      return <img src={selectedBudget.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
+    if (selectedOperation !== null && selectedOperation.avatar.length) {
+      return <img src={selectedOperation.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -23,7 +23,7 @@ const UserInfoCard = ({ selectedBudget }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedBudget.fullName}
+          content={selectedOperation.fullName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -49,13 +49,13 @@ const UserInfoCard = ({ selectedBudget }) => {
                 {/*renderUserImg() */}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mb-1'>
-                    <h4 className='mb-0'>{selectedBudget !== null ? selectedBudget.fullName : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedOperation !== null ? selectedOperation.fullName : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedBudget !== null ? selectedBudget.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedOperation !== null ? selectedOperation.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedBudget.id}`} color='primary'>
+                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedOperation.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger' outline>
@@ -68,12 +68,33 @@ const UserInfoCard = ({ selectedBudget }) => {
             <div className='d-flex align-items-center user-total-numbers'>
               <div className='d-flex align-items-center mr-2'>
                 <div className='color-box bg-light-primary'>
-                  {/* <DollarSign className='text-primary' /> */}
+                  <DollarSign className='text-primary' />
                 </div>
-                {/* <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedBudget.provisionalAmount} </h5>
-                  <small>Montant prévisionnel</small>
-                </div> */}
+                 <div className='ml-1'>
+                  <h5 className='mb-0'>{selectedOperation.totalCashInflow} </h5>
+                  <small>Total Entrées </small>
+                </div>
+              </div>
+              <div className='d-flex align-items-center'>
+                {/*<div className='color-box bg-light-success'>
+                  <TrendingUp className='text-success' />
+                </div>
+                <div className='ml-1'>
+                   <h5 className='mb-0'>$99.87K</h5>
+                  <small>Annual Profit</small> 
+                </div>*/}
+              </div>
+            </div>
+
+            <div className='d-flex align-items-center user-total-numbers'>
+              <div className='d-flex align-items-center mr-2'>
+                <div className='color-box bg-light-primary'>
+                  <DollarSign className='text-primary' />
+                </div>
+                 <div className='ml-1'>
+                  <h5 className='mb-0'>{selectedOperation.totalCashOutflow} </h5>
+                  <small>Total Sorties </small>
+                </div>
               </div>
               <div className='d-flex align-items-center'>
                 {/*<div className='color-box bg-light-success'>
@@ -96,7 +117,7 @@ const UserInfoCard = ({ selectedBudget }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedBudget !== null ? selectedBudget.wording : 'eleanor.aguilar'}
+                  {selectedOperation !== null ? selectedOperation.wording : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -107,7 +128,7 @@ const UserInfoCard = ({ selectedBudget }) => {
                   </CardText>
                 </div> */}
                 <CardText className='text-capitalize mb-0'>
-                  {selectedBudget !== null ? selectedBudget.accountType : 'Active'}
+                  {selectedOperation !== null ? selectedOperation.accountType : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -118,7 +139,7 @@ const UserInfoCard = ({ selectedBudget }) => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'> {'   '}
-                  {selectedBudget !== null ? selectedBudget.startDate : 'Admin'}
+                  {selectedOperation !== null ? selectedOperation.startDate : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -128,16 +149,16 @@ const UserInfoCard = ({ selectedBudget }) => {
                     Date fin
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedBudget !== null ? selectedBudget.endDate : 'Date de fin'}</CardText>
+                <CardText className='mb-0'>{selectedOperation !== null ? selectedOperation.endDate : 'Date de fin'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
                   <Phone className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Exploitation
+                    Budget
                   </CardText>
                 </div>
-                <CardText className='mb-2'>{selectedBudget.exploitation !== null ? selectedBudget.exploitation.wording : '(123) 456-7890'}</CardText>
+                <CardText className='mb-2'>{selectedOperation.budget !== null ? selectedOperation.budget.wording : '(123) 456-7890'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -146,7 +167,7 @@ const UserInfoCard = ({ selectedBudget }) => {
                     Création
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{ moment(new Date(selectedBudget.created_at)).format(
+                <CardText className='mb-0'>{ moment(new Date(selectedOperation.created_at)).format(
                           'DD/MM/YYYY à H:m:s')}
               </CardText>
               </div>

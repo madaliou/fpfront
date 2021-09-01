@@ -17,7 +17,7 @@ const ToastContent = ({ message, header, color }) => (
         <h6 className='toast-title font-weight-bold'>{header}</h6>
       </div>
     </div>
-    <div className='toastify-body' style={{background: '#green'}}>
+    <div className='toastify-body' style={{background: '#gray'}}>
       <span>{message}</span>
     </div>
   </Fragment>
@@ -25,10 +25,10 @@ const ToastContent = ({ message, header, color }) => (
 // ** Get all Data
 export const getAllData = () => {
   return async dispatch => {
-    await axios.get('budgets').then(response => {
-      //console.log('budgets ! ', response)
+    await axios.get('currencies').then(response => {
+      console.log('currencies ! ', response)
       dispatch({
-        type: 'GET_ALL_BUDGETS',
+        type: 'GET_ALL_CURRENCIES',
         data: response.data
       })
     })
@@ -40,39 +40,39 @@ export const getData = params => {
  
   return async dispatch => {
 
-    console.log('parameters : ', params)   
+    //console.log('parameters : ', params)   
 
-    await axios.post('/budgets-filter/', params, {
+    await axios.post('/currencies-filter/', params, {
       params: {
         page: params.page,
         perPage: params.perPage
       }
     }).then(response => {
-      //console.log('see budgets : ', response.data)
+      console.log('see currencies : ', response.data)
        dispatch({
-        type: 'GET_BUDGETS',
+        type: 'GET_CURRENCIES',
         data: response.data.results,
         totalPages: response.data.count,
         params
       })
     }).catch(error => {
-      console.log('get budgets error : ', JSON.stringify(error.response))
+      console.log('get currencies error : ', JSON.stringify(error.response))
     })
    
   }
 }
 
 // ** Get User
-export const getBudget = id => {
+export const getCurrency = id => {
  
   return async dispatch => {
     await axios
-      .get(`budgets/${id}/`)
+      .get(`currencies/${id}/`)
       .then(response => {   
         console.log('response.data : ', response.data)
           dispatch({
-            type: 'GET_BUDGET',
-            selectedBudget: response.data
+            type: 'GET_CURRENCY',
+            selectedCurrency: response.data
           })          
         
       })
@@ -81,24 +81,24 @@ export const getBudget = id => {
 }
 
 // ** Add new user
-export const addBudget = budget => {
+export const addCurrency = exploitation => {
   return (dispatch, getState) => {
     axios
-      .post('budgets/', budget)
+      .post('currencies/', exploitation)
       .then(response => {
-        //console.log('add budget : ', response.data)
+        //console.log('add exploitation : ', response.data)
         dispatch({
-          type: 'ADD_BUDGET',
-          budget: response.data
+          type: 'ADD_CURRENCY',
+          exploitation: response.data
         })
 
         toast.success(
-          <ToastContent message={'Budget créé avec succès!!'} header={'Succès'} color={'success'} />,
+          <ToastContent message={'Currency créé avec succès!!'} header={'Succès'} color={'success'} />,
           { transition: Slide, hideProgressBar: true, autoClose: 2000 }
         )
       })
       .then(() => {
-        dispatch(getData(getState().budgets.params))
+        dispatch(getData(getState().currencies.params))
         dispatch(getAllData())
       })
       .catch(error => {
@@ -112,30 +112,30 @@ export const addBudget = budget => {
   }
 } 
 
-//edit budget 
-export const editBudget = budget => {
+//edit exploitation 
+export const editCurrency = exploitation => {
   return (dispatch, getState) => {
     axios
-      .put(`budgets/${budget.id}/`, budget)
+      .put(`currencies/${exploitation.id}/`, exploitation)
       .then(response => {
-        console.log('update budget : ', response.data)
+        console.log('update exploitation : ', response.data)
         dispatch({
-          type: 'UPDATE_BUDGET',
-          budget: response.data
+          type: 'UPDATE_CURRENCY',
+          exploitation: response.data
         })
-        toast.success(
-          <ToastContent color={'success'} message={'Budget modifié avec succès!!'} header={'Budget'} />,
+        toast.error(
+          <ToastContent color={'success'} message={'Currency modifié avec succès!!'} header={'Currency'} />,
           { transition: Slide, hideProgressBar: true, autoClose: 3000 }
         )
       })
       .then(() => {
-        dispatch(getData(getState().budgets.params))
-        dispatch(getAllData())
+         dispatch(getData(getState().currencies.params))
+        dispatch(getAllData()) 
       })
       .catch(error => {
-        console.log('updat budget error : ', error)
+        console.log('update exploitation error : ', error)
         toast.error(
-          <ToastContent color={'danger'} message={JSON.stringify(error.response.data)} header={'Attention'} />,
+          <ToastContent color={'danger'} message={JSON.stringify(error)} header={'Attention'} />,
           { transition: Slide, hideProgressBar: true, autoClose: 4000 }
         )
       })
@@ -143,18 +143,18 @@ export const editBudget = budget => {
 }
 
 // ** Delete user
-export const deleteBudget = id => {
+export const deleteCurrency = id => {
   return (dispatch, getState) => {
     axios
-      .delete(`budgets/${id}/`)
+      .delete(`currencies/${id}/`)
       .then(response => {
         console.log('deleted')
         dispatch({
-          type: 'DELETE_BUDGET'
+          type: 'DELETE_CURRENCY'
         })
       })
       .then(() => {
-        dispatch(getData(getState().budgets.params))
+        dispatch(getData(getState().currencies.params))
         dispatch(getAllData())
       })
   }

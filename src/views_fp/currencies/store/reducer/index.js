@@ -1,37 +1,35 @@
 // ** Initial State
 const initialState = {
-  allAccounts: [],
+  allData: [],
   data: [],
   total: 1,
   params: {},
-  selectedAccount: null
+  selectedCurrency: null
 }
 
-const accounts = (state = initialState, action) => {
+const currencies = (state = initialState, action) => {
  
   switch (action.type) {
-    case 'GET_ALL_DATA':
-      return { ...state, allAccounts: action.data }
-    case 'GET_DATA':
+    case 'GET_ALL_CURRENCIES':
+      return { ...state, allData: action.data }
+    case 'GET_CURRENCIES':
       return {
         ...state,
         data: action.data,
         total: action.totalPages,
         params: action.params
       }
-    case 'GET_ACCOUNT':      
-      return { ...state, selectedAccount: action.selectedAccount }
-    case 'ADD_ACCOUNT':
+    case 'GET_CURRENCY':      
+      return { ...state, selectedCurrency: action.selectedCurrency }
+    case 'ADD_CURRENCY':
       return { ...state }
-    case 'UPDATE_ACCOUNT':
-      return { ...state}
-    /* case 'UPDATE_ACCOUNT': {
-      const user = action.account
+    case 'UPDATE_CURRENCY': {
+      const user = action.currency
 
       console.log('oiuoioo', user)
 
       //clone the current state
-      const clone = JSON.parse(JSON.stringify(state.accounts))
+      const clone = JSON.parse(JSON.stringify(state.currencies))
 
       //check if user already exist
       const index = clone.findIndex(obj => obj.id === user.id)
@@ -41,13 +39,12 @@ const accounts = (state = initialState, action) => {
         clone[index] = user
       }
 
-      return {...state, accounts: clone, fullData: clone}
-    } */
-
-    case 'DELETE_ACCOUNT':
+      return {...state, currencies: clone, fullData: clone}
+    }
+    case 'DELETE_CURRENCY':
       return { ...state }
     default:
       return { ...state }
   }
 }
-export default accounts
+export default currencies

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Store & Actions
-import { getBudget, deleteBudget } from '../store/action'
+import { getOperation, deleteOperation } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
@@ -32,7 +32,7 @@ const handleConfirmDelete = (id) => {
     buttonsStyling: false
   }).then(function (result) {
     if (result.value) {
-      store.dispatch(deleteBudget(id))
+      store.dispatch(deleteOperation(id))
       MySwal.fire({
         icon: 'success',
         title: 'Deleted!',
@@ -133,7 +133,7 @@ export const columns = [
           <Link
             to={`/apps/user/budget/${row.id}`}
             className='user-name text-truncate mb-0'
-            onClick={() => store.dispatch(getBudget(row.id))}
+            onClick={() => store.dispatch(getOperation(row.id))}
           >
             <span className='font-weight-bold'>{row.wording}</span>
           </Link>
@@ -144,45 +144,56 @@ export const columns = [
   }, */
  {
     name: 'Libellé',
-    minWidth: '180px',
+    minWidth: '130px',
     selector: 'wording',
     sortable: true,
     cell: row => row.wording
   },
   {
-    name: 'Exploitation',
-    minWidth: '138px',
-    selector: 'exploitation',
+    name: 'Compte source',
+    minWidth: '150px',
+    selector: 'exploi',
     sortable: true,
     cell: row => (
       <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.exploitation !== null ? row.exploitation.wording : "Pas d'exploitation" }
+        {row.sourceAccount !== null ? row.sourceAccount.wording : 'Néant'}
       </Badge>
     )
   },
   {
-    name: 'Date début',
-    minWidth: '138px',
+    name: 'Compte destination',
+    minWidth: '150px',
+    selector: 'exploi',
+    sortable: true,
+    cell: row => (
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.destinationAccount !== null ? row.destinationAccount.wording : 'Néant'}
+      </Badge>
+    )
+  },
+  {
+    name: 'Date ',
+    minWidth: '110px',
     selector: 'code',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.startDate}</span>
+    cell: row => <span className='text-capitalize'>{ moment(new Date(row.created_at)).format(
+      'DD/MM/YYYY')}</span>
   },
   
   {
-    name: 'Date fin',
-    minWidth: '138px',
+    name: 'Heure',
+    minWidth: '110px',
     selector: 'endDate',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.endDate} </span>
+    cell: row => <span className='text-capitalize'>{row.operationTime} </span>
   },
- /*  {
-    name: 'Compte',
+  {
+    name: 'Montant',
     minWidth: '138px',
-    selector: 'account',
+    selector: 'totalCashInflow',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.account !== null ? row.account.wording : 'Pas de parent' }</span>
-  }, */
-  
+    cell: row => <span className='text-capitalize'>{row.amount }</span>
+  },
   {
     name: 'Créé le',
     minWidth: '138px',
@@ -202,18 +213,18 @@ export const columns = [
         <DropdownMenu right>
           <DropdownItem
             tag={Link}
-            to={`/budget/view/${row.id}`}
+            to={`/operation/view/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getBudget(row.id)) }
+            onClick={() => store.dispatch(getOperation(row.id)) }
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
           </DropdownItem>
           <DropdownItem
             tag={Link}
-            to={`/budget/edit/${row.id}`}
+            to={`/operation/edit/${row.id}`}
             className='w-100'
-            onClick={() =>  store.dispatch(getBudget(row.id)) }
+            onClick={() =>  store.dispatch(getOperation(row.id)) }
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>
