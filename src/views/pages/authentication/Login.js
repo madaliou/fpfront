@@ -165,19 +165,19 @@ const Login = props => {
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
-              Welcome to Vuexy! 👋
+              Welcome to FP! 👋
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-            <Alert color='primary'>
+           {/*  <Alert color='primary'>
               <div className='alert-body font-small-2'>
                 <p>
                   <small className='mr-50'>
-                    <span className='font-weight-bold'>Admin:</span> admin@demo.com | admin
+                    <span className='font-weight-bold'> Admin: </span>  admin@demo.com | admin
                   </small>
                 </p>
                 <p>
                   <small className='mr-50'>
-                    <span className='font-weight-bold'>Client:</span> client@demo.com | client
+                    <span className='font-weight-bold'> Client: </span> client@demo.com | client 
                   </small>
                 </p>
               </div>
@@ -190,7 +190,7 @@ const Login = props => {
               <UncontrolledTooltip target='login-tip' placement='left'>
                 This is just for ACL demo purpose.
               </UncontrolledTooltip>
-            </Alert>
+            </Alert> */}
             <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>

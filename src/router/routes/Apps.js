@@ -168,7 +168,13 @@ const AppRoutes = [
     }
   },
 
+ /*  {
+    path: '/apps/user/list',
+    component: lazy(() => import('../../views/apps/user/list'))
+  } */
+
   //raoul's routes
+  //accounts
   {
     path: '/accounts/list',
     component: lazy(() => import('../../views_fp/accounts/list'))
@@ -224,14 +230,101 @@ const AppRoutes = [
     path: '/budget/view/:id',
     component: lazy(() => import('../../views_fp/budgets/view')),
     meta: {
-      navLink: '/account/view'
+      navLink: '/budget/view'
     }
   },
 
+  //exploitation
   {
-    path: '/apps/user/list',
-    component: lazy(() => import('../../views/apps/user/list'))
+    path: '/exploitations/list',
+    component: lazy(() => import('../../views_fp/exploitations/list'))
+  },
+  {
+    path: '/exploitation/edit',
+    exact: true,
+    component: () => <Redirect to='/exploitations/edit/1' />
+  },
+  {
+    path: '/exploitation/edit/:id',
+    component: lazy(() => import('../../views_fp/exploitations/edit')),
+    meta: {
+      navLink: '/exploitation/edit'
+    }
+  },
+  {
+    path: '/exploitation/view',
+    exact: true,
+    component: () => <Redirect to='/exploitation/view/1' />
+  },
+  {
+    path: '/exploitation/view/:id',
+    component: lazy(() => import('../../views_fp/exploitations/view')),
+    meta: {
+      navLink: '/exploitation/view'
+    }
+  },
+
+   //operation
+   {
+    path: '/operations/list',
+    component: lazy(() => import('../../views_fp/operations/list'))
+  },
+  {
+    path: '/operation/edit',
+    exact: true,
+    component: () => <Redirect to='/operations/edit/1' />
+  },
+  {
+    path: '/operation/edit/:id',
+    component: lazy(() => import('../../views_fp/operations/edit')),
+    meta: {
+      navLink: '/operation/edit'
+    }
+  },
+  {
+    path: '/operation/view',
+    exact: true,
+    component: () => <Redirect to='/operation/view/1' />
+  },
+  {
+    path: '/operation/view/:id',
+    component: lazy(() => import('../../views_fp/operations/view')),
+    meta: {
+      navLink: '/operation/view'
+    }
+  },
+
+  //currencies
+  {
+    path: '/currencies/list',
+    component: lazy(() => import('../../views_fp/currencies/list'))
   }
+  /* {
+    path: '/currency/edit',
+    exact: true,
+    component: () => <Redirect to='/currencies/edit/1' />
+  },
+  {
+    path: '/currency/edit/:id',
+    component: lazy(() => import('../../views_fp/currencies/edit')),
+    meta: {
+      navLink: '/currency/edit'
+    }
+  },
+  {
+    path: '/currency/view',
+    exact: true,
+    component: () => <Redirect to='/currency/view/1' />
+  },
+  {
+    path: '/currency/view/:id',
+    component: lazy(() => import('../../views_fp/currencies/view')),
+    meta: {
+      navLink: '/currency/view'
+    }
+  } */
+
+  
 ]
 
 export default AppRoutes

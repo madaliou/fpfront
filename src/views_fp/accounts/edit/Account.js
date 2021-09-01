@@ -125,11 +125,11 @@ const UserAccountTab = ({ selectedAccount }) => {
       }
     }) */
      
-     toast.error(
+     /* toast.error(
        <ToastContent message={'Compte modifié avec succès!!'} />,
        { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-     )
-     history.push('/apps/accounts/list')
+     ) */
+     history.push('/accounts/list')
 
    }
  }

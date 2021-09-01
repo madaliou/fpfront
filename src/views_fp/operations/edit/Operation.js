@@ -6,7 +6,7 @@ import Avatar from '@components/avatar'
 import { selectThemeColors, isObjEmpty } from '@utils'
 import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux'
-import { editBudget } from '../store/action'
+import { editOperation } from '../store/action'
 import { useParams, Link, useHistory } from 'react-router-dom'
 import classnames from 'classnames'
 import { toast, Slide } from 'react-toastify'
@@ -37,14 +37,14 @@ const ToastContent = ({ message }) => (
   </Fragment>
 )
 
-const UserAccountTab = ({ selectedBudget }) => {
+const UserAccountTab = ({ selectedOperation }) => {
   // ** States
   const [img, setImg] = useState(null)
   const [userData, setUserData] = useState(null)
-  const [exploitations, setExploitations] = useState([])
-  const [exploitation, setExploitation] = useState({})
-  const [startDate, setStartDate] = useState(selectedBudget.startDate)
-  const [endDate, setEndDate] = useState(selectedBudget.endDate)
+  const [budgets, setBudgets] = useState([])
+  const [budget, setBudget] = useState({})
+  const [startDate, setStartDate] = useState(selectedOperation.startDate)
+  const [endDate, setEndDate] = useState(selectedOperation.endDate)
 
   const store = useSelector(state => state.accounts)
 
@@ -64,21 +64,21 @@ const UserAccountTab = ({ selectedBudget }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
-       if (selectedBudget.exploitation !== null) {
-        setExploitation({label:  selectedBudget.exploitation.wording, value: selectedBudget.exploitation.id, id:  selectedBudget.exploitation.id})
+       if (selectedOperation.budget !== null) {
+        setBudget({label:  selectedOperation.budget.wording, value: selectedOperation.budget.id, id:  selectedOperation.budget.id})
       }    
-      //setCurrency({label:  selectedBudget.currency.wording, value: selectedBudget.currency.id, id: selectedBudget.currency.id})
+      //setCurrency({label:  selectedOperation.currency.wording, value: selectedOperation.currency.id, id: selectedOperation.currency.id})
 
-    if (selectedBudget !== null || (selectedBudget !== null && userData !== null && selectedBudget.id !== userData.id)) {
-      setUserData(selectedBudget)     
+    if (selectedOperation !== null || (selectedOperation !== null && userData !== null && selectedOperation.id !== userData.id)) {
+      setUserData(selectedOperation)     
         
     }
     
 
-    axios.get('exploitations').then(response => {
-      setExploitations(response.data)
+    axios.get('budgets').then(response => {
+      setBudgets(response.data)
     })
-  }, [selectedBudget])
+  }, [selectedOperation])
 
   // ** Vars
  const { register, errors, handleSubmit } = useForm()
@@ -87,25 +87,25 @@ const UserAccountTab = ({ selectedBudget }) => {
    console.log('eric : ', values)
    if (isObjEmpty(errors)) {
       console.log('update values : ', {
-        id: selectedBudget.id,          
+        id: selectedOperation.id,          
         wording: values.wording,
-        exploitation: exploitation.id,
+        budget: budget.id,
         startDate,
         endDate
         
       }) 
      
      dispatch(
-       editBudget({   
-          id: selectedBudget.id,        
+       editOperation({   
+          id: selectedOperation.id,        
          wording: values.wording,
-         exploitation: exploitation.id,
+         budget: budget.id,
          startDate,
          endDate        
        })
      )     
      
-     history.push('/budgets/list')
+     history.push('/exploitations/list')
 
    }
  }
@@ -116,7 +116,7 @@ const UserAccountTab = ({ selectedBudget }) => {
         <Media className='mb-2'>
          {/*  {renderUserAvatar()} */}
           <Media className='mt-50' body>
-            <h4>{selectedBudget.fullName} </h4>
+            <h4>{selectedOperation.fullName} </h4>
             <div className='d-flex flex-wrap mt-1 px-0'>
               {/* <Button.Ripple id='change-img' tag={Label} className='mr-75 mb-0' color='primary'>
                 <span className='d-none d-sm-block'>Change</span>
@@ -141,16 +141,16 @@ const UserAccountTab = ({ selectedBudget }) => {
           <Row>
             <Col md='4' sm='12'>
               <FormGroup>
-                <Label for='username'>Exploitation</Label>
+                <Label for='username'>Budget</Label>
                 <Select
                   theme={selectThemeColors}
                   className='react-select'
                   classNamePrefix='select'
-                  value={exploitation}
-                  options={exploitations}
+                  value={budget}
+                  options={budgets}
                   isClearable={false}
                   onChange={item => {
-                    setExploitation(item)
+                    setBudget(item)
                   }}
                 />
               </FormGroup>

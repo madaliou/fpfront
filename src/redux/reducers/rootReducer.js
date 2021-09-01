@@ -15,9 +15,10 @@ import ecommerce from '@src/views/apps/ecommerce/store/reducer'
 import dataTables from '@src/views/tables/data-tables/store/reducer'
 
 import accounts from '@src/views_fp/accounts/store/reducer'
-
 import budgets from '@src/views_fp/budgets/store/reducer'
-
+import exploitations from '@src/views_fp/exploitations/store/reducer'
+import currencies from '@src/views_fp/currencies/store/reducer'
+import operations from '@src/views_fp/operations/store/reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -32,7 +33,10 @@ const rootReducer = combineReducers({
   ecommerce,
   dataTables,
   accounts,
-  budgets
+  budgets,
+  exploitations,
+  currencies,
+  operations
 })
 
 export default rootReducer
