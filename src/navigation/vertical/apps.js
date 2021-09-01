@@ -15,26 +15,25 @@ export default [
     title: 'Budgets',
     icon: <MessageSquare size={20} />,
     navLink: '/budgets/list'
-  }/* ,
+  },
   {
-    id: 'todo',
+    id: 'currency',
     title: 'Devises',
     icon: <CheckSquare size={20} />,
     navLink: '/currencies/list'
-  } */
-  /* {
-    id: 'todo',
+  },
+  {
+    id: 'exploitation',
     title: 'Exploitations',
     icon: <ShoppingCart size={20} />,
     navLink: '/exploitations/list'
   },
   {
-    id: 'todo',
+    id: 'operation',
     title: 'Opérations',
     icon: <Circle size={20} />,
     navLink: '/operations/list'
-  }, */
-
+  }
   //begin comment
   /* {
     id: 'calendar',
