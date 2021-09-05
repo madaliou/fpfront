@@ -71,8 +71,8 @@ const UserInfoCard = ({ selectedOperation }) => {
                   <DollarSign className='text-primary' />
                 </div>
                  <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedOperation.totalCashInflow} </h5>
-                  <small>Total Entrées </small>
+                  <h5 className='mb-0'>{selectedOperation.amount} </h5>
+                  <small>Montant </small>
                 </div>
               </div>
               <div className='d-flex align-items-center'>
@@ -89,11 +89,11 @@ const UserInfoCard = ({ selectedOperation }) => {
             <div className='d-flex align-items-center user-total-numbers'>
               <div className='d-flex align-items-center mr-2'>
                 <div className='color-box bg-light-primary'>
-                  <DollarSign className='text-primary' />
+                  {/* <DollarSign className='text-primary' /> */}
                 </div>
                  <div className='ml-1'>
                   <h5 className='mb-0'>{selectedOperation.totalCashOutflow} </h5>
-                  <small>Total Sorties </small>
+                 {/*  <small>Total Sorties </small> */}
                 </div>
               </div>
               <div className='d-flex align-items-center'>
@@ -117,7 +117,7 @@ const UserInfoCard = ({ selectedOperation }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedOperation !== null ? selectedOperation.wording : 'eleanor.aguilar'}
+                  {selectedOperation !== null ? selectedOperation.title : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
@@ -127,29 +127,59 @@ const UserInfoCard = ({ selectedOperation }) => {
                    
                   </CardText>
                 </div> */}
-                <CardText className='text-capitalize mb-0'>
-                  {selectedOperation !== null ? selectedOperation.accountType : 'Active'}
-                </CardText>
+              {/*   <CardText className='text-capitalize mb-0'>
+                  {selectedOperation.sourceAccount !== null ? selectedOperation.sourceAccount.wording : 'Néant'}
+                </CardText> */}
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
                 <div className='user-info-title'>
                   <Star className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Date debut
+                    Description
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0'> {'   '}
-                  {selectedOperation !== null ? selectedOperation.startDate : 'Admin'}
+                  {selectedOperation !== null ? selectedOperation.description : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
                 <div className='user-info-title'>
                   <Flag className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Date fin
+                    Date
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedOperation !== null ? selectedOperation.endDate : 'Date de fin'}</CardText>
+                <CardText className='mb-0'>{selectedOperation !== null ? selectedOperation.start : 'Date de fin'}</CardText>
+              </div>
+
+              <div className='d-flex flex-wrap align-items-center my-50'>
+                <div className='user-info-title'>
+                  <Flag className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Heure
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{selectedOperation !== null ? selectedOperation.operationTime : 'Date de fin'}</CardText>
+              </div>
+
+              <div className='d-flex flex-wrap align-items-center my-50'>
+                <div className='user-info-title'>
+                  <Flag className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Compte source
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{selectedOperation.sourceAccount !== null ? selectedOperation.sourceAccount.wording : 'Néant'}</CardText>
+              </div>
+
+              <div className='d-flex flex-wrap align-items-center my-50'>
+                <div className='user-info-title'>
+                  <Flag className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Compte destination
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{ selectedOperation.destinationAccount !== null ? selectedOperation.destinationAccount.wording : 'Néant'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
@@ -158,7 +188,16 @@ const UserInfoCard = ({ selectedOperation }) => {
                     Budget
                   </CardText>
                 </div>
-                <CardText className='mb-2'>{selectedOperation.budget !== null ? selectedOperation.budget.wording : '(123) 456-7890'}</CardText>
+                <CardText className='mb-2'>{selectedOperation.budget !== null ? selectedOperation.budget.wording : 'Néant'}</CardText>
+              </div>
+              <div className='d-flex flex-wrap align-items-center'>
+                <div className='user-info-title'>
+                  <Phone className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Exploitation
+                  </CardText>
+                </div>
+                <CardText className='mb-2'>{selectedOperation.exploitation !== null ? selectedOperation.exploitation.wording : 'Néant'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>

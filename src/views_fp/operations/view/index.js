@@ -21,7 +21,7 @@ import '@styles/react/apps/app-users.scss'
 
 const UserView = props => {
   // ** Vars
-  const store = useSelector(state => state.exploitations),
+  const store = useSelector(state => state.operations),
     dispatch = useDispatch(),
     { id } = useParams()
   console.log('exploitation store : ', store)

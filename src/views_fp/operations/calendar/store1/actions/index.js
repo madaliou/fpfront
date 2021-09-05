@@ -3,8 +3,8 @@ import axios from 'axios'
 // ** Fetch Events
 export const fetchEvents = calendars => {
   return dispatch => {
-    axios.get('operations', { calendars }).then(response => {
-      console.log('events operations : ', response.data)
+    axios.get('/apps/calendar/events', { calendars }).then(response => {
+      console.log('event : ', response.data)
       dispatch({
         type: 'FETCH_EVENTS',
         events: response.data
@@ -12,18 +12,6 @@ export const fetchEvents = calendars => {
     })
   }
 }
-
-// ** Fetch Events
-/* export const fetchEvents = calendars => {
-  return dispatch => {
-    axios.get('/apps/calendar/events', { calendars }).then(response => {
-      dispatch({
-        type: 'FETCH_EVENTS',
-        events: response.data
-      })
-    })
-  }
-} */
 
 // ** Add Event
 export const addEvent = event => {

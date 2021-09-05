@@ -32,7 +32,21 @@ export default [
     id: 'operation',
     title: 'Opérations',
     icon: <Circle size={20} />,
-    navLink: '/operations/list'
+    children: [
+      {
+        id: 'operationList',
+        title: 'Liste',
+        icon: <Circle size={12} />,
+        navLink: '/operations/list'
+      },
+      {
+        id: 'operationCalendar',
+        title: 'Calendrier',
+        icon: <Circle size={12} />,
+        navLink: '/operations/calendar'
+      }
+    ]
+    //navLink: '/operations/list'
   }
   //begin comment
   /* {

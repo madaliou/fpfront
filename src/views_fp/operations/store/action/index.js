@@ -113,10 +113,11 @@ export const addOperation = operation => {
 } 
 
 //edit operation 
-export const editOperation = operation => {
+export const editOperation = (id, operation) => {
+  console.log('where is id : ', operation)
   return (dispatch, getState) => {
     axios
-      .put(`operations/${operation.id}/`, operation)
+      .put(`operations/${id}/`, operation)
       .then(response => {
         console.log('update operation : ', response.data)
         dispatch({
@@ -157,5 +158,37 @@ export const deleteOperation = id => {
         dispatch(getData(getState().operations.params))
         dispatch(getAllData())
       })
+  }
+}
+
+// ** Filter Events
+export const updateFilter = filter => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'UPDATE_FILTERS',
+      filter
+    })
+    dispatch(fetchEvents(getState().calendar.selectedCalendars))
+  }
+}
+
+// ** Add/Remove All Filters
+export const updateAllFilters = value => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'UPDATE_ALL_FILTERS',
+      value
+    })
+    dispatch(fetchEvents(getState().calendar.selectedCalendars))
+  }
+}
+
+// ** Select Event (get event data on click)
+export const selectOperation = event => {
+  return dispatch => {
+    dispatch({
+      type: 'SELECT_OPERATION',
+      event
+    })
   }
 }

@@ -145,9 +145,9 @@ export const columns = [
  {
     name: 'Libellé',
     minWidth: '130px',
-    selector: 'wording',
+    selector: 'title',
     sortable: true,
-    cell: row => row.wording
+    cell: row => row.title
   },
   {
     name: 'Compte source',
@@ -173,7 +173,7 @@ export const columns = [
   },
   {
     name: 'Date ',
-    minWidth: '110px',
+    minWidth: '120px',
     selector: 'code',
     sortable: true,
     cell: row => <span className='text-capitalize'>{ moment(new Date(row.created_at)).format(

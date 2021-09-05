@@ -270,6 +270,10 @@ const AppRoutes = [
     component: lazy(() => import('../../views_fp/operations/list'))
   },
   {
+    path: '/operations/calendar',
+    component: lazy(() => import('../../views_fp/operations/calendar'))
+  },
+  {
     path: '/operation/edit',
     exact: true,
     component: () => <Redirect to='/operations/edit/1' />
