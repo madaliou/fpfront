@@ -144,7 +144,7 @@ export const columns = [
   }, */
  {
     name: 'Libellé',
-    minWidth: '130px',
+    minWidth: '150px',
     selector: 'title',
     sortable: true,
     cell: row => row.title
@@ -189,7 +189,7 @@ export const columns = [
   },
   {
     name: 'Montant',
-    minWidth: '138px',
+    minWidth: '110px',
     selector: 'totalCashInflow',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.amount }</span>

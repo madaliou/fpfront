@@ -281,7 +281,7 @@ const AddEventSidebar = props => {
 
   return (
     <Modal
-      isOpen={open}
+      //isOpen={open}
       toggle={handleAddEventSidebar}
       className='sidebar-lg'
       contentClassName='p-0'

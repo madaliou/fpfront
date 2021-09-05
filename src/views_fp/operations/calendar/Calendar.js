@@ -1,5 +1,5 @@
 // ** React Import
-import { useEffect, useRef, memo, Fragment } from 'react'
+import { useEffect, useRef, memo, Fragment, useState } from 'react'
 
 // ** Full Calendar & it's Plugins
 import FullCalendar from '@fullcalendar/react'
@@ -48,7 +48,7 @@ const Calendar = props => {
   } = props
 
   // ** UseEffect checks for CalendarAPI Update
-  useEffect(() => {
+  useEffect(() => {  
     if (calendarApi === null) {
       setCalendarApi(calendarRef.current.getApi())
       console.log('calendar store : ', store)
@@ -57,7 +57,10 @@ const Calendar = props => {
 
   // ** calendarOptions(Props)
   const calendarOptions = {
+    //locales: [esLocale, frLocale],
+    locale: 'fr', // the initial locale. of not specified, uses the first one,
     events: store.allData.length ? store.allData : [],
+    firstDay:1,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {

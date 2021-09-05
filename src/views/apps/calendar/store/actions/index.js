@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // ** Fetch Events
-export const fetchEvents = calendars => {
+/* export const fetchEvents = calendars => {
   return dispatch => {
     axios.get('operations', { calendars }).then(response => {
       console.log('events operations : ', response.data)
@@ -12,9 +12,9 @@ export const fetchEvents = calendars => {
     })
   }
 }
-
+ */
 // ** Fetch Events
-/* export const fetchEvents = calendars => {
+export const fetchEvents = calendars => {
   return dispatch => {
     axios.get('/apps/calendar/events', { calendars }).then(response => {
       dispatch({
@@ -23,7 +23,7 @@ export const fetchEvents = calendars => {
       })
     })
   }
-} */
+}
 
 // ** Add Event
 export const addEvent = event => {

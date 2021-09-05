@@ -5,11 +5,21 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Third Party Components
-import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
+import { Card, CardBody, CardText, Button, Row, Col, Label } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from 'react-feather'
 import moment from 'moment'
 
 const UserInfoCard = ({ selectedOperation }) => {
+
+  const renderOldImages = () => {
+    const file_url = 'http://188.165.235.13/myfpbackend'
+    if (selectedOperation.operationPictures.length) {     
+      return selectedOperation.operationPictures.map((src, index) => <img key={index} className='rounded mt-2 mr-1' 
+      src={`${file_url}${src.url}`} alt='avatar' width="500"/>)
+    } else {
+      return null
+    }
+  }
   // ** render user img
   const renderUserImg = () => {
     if (selectedOperation !== null && selectedOperation.avatar.length) {
@@ -205,12 +215,13 @@ const UserInfoCard = ({ selectedOperation }) => {
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
                     Création
                   </CardText>
-                </div>
+                </div>                
                 <CardText className='mb-0'>{ moment(new Date(selectedOperation.created_at)).format(
                           'DD/MM/YYYY à H:m:s')}
               </CardText>
               </div>
             </div>
+            {renderOldImages()}
           </Col>
         </Row>
       </CardBody>

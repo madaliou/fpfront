@@ -31,7 +31,7 @@ const EcommerceDashboard = () => {
         </Col>
       </Row>
       <Row className='match-height'>
-        <Col lg='4' md='12'>
+        {/* <Col lg='4' md='12'>
           <Row className='match-height'>
             <Col lg='6' md='3' xs='6'>
               <OrdersBarChart warning={colors.warning.main} />
@@ -46,10 +46,10 @@ const EcommerceDashboard = () => {
         </Col>
         <Col lg='8' md='12'>
           <RevenueReport primary={colors.primary.main} warning={colors.warning.main} />
-        </Col>
+        </Col> */}
       </Row>
       <Row className='match-height'>
-        <Col lg='8' xs='12'>
+        {/* <Col lg='8' xs='12'>
           <CompanyTable />
         </Col>
         <Col lg='4' md='6' xs='12'>
@@ -63,7 +63,7 @@ const EcommerceDashboard = () => {
         </Col>
         <Col lg='4' md='6' xs='12'>
           <CardTransactions />
-        </Col>
+        </Col> */}
       </Row>
     </div>
   )

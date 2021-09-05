@@ -9,6 +9,7 @@ import { Row, Col } from 'reactstrap'
 import Calendar from './Calendar'
 import SidebarLeft from './SidebarLeft'
 import AddEventSidebar from './AddEventSidebar'
+//import AddEventSidebar from './Sidebar'
 
 // ** Custom Hooks
 import { useRTL } from '@hooks/useRTL'
