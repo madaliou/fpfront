@@ -226,7 +226,7 @@ const UserAccountTab = ({ selectedAccount }) => {
             </Col>
             <Col md='4' sm='12'>
               <FormGroup>
-                <Label for='balance'>Solde</Label>
+                <Label for='balance'>Solde Initial</Label>
                 <Input innerRef={register({ required: true })} id='balance' name='balance' placeholder='Solde' defaultValue={userData && userData.balance} />
               </FormGroup>
             </Col>

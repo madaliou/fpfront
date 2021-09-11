@@ -24,9 +24,10 @@ const UserView = props => {
   const store = useSelector(state => state.accounts),
     dispatch = useDispatch(),
     { id } = useParams()
-
+    console.log('account : ', store)
   // ** Get suer on mount
   useEffect(() => {
+    
     dispatch(getAccount(parseInt(id)))
   }, [dispatch])
 
@@ -34,11 +35,12 @@ const UserView = props => {
     <div className='app-user-view'>
       <Row>
         <Col xl='12' lg='12' md='12'>
+        
           <UserInfoCard selectedAccount={store.selectedAccount} />
         </Col>
-        {/*<Col xl='3' lg='4' md='5'>
+        {/* <Col xl='3' lg='4' md='5'>
            <PlanCard selectedAccount={store.selectedAccount} /> 
-        </Col>*/}
+        </Col> */}
       </Row>
      {/*  <Row>
         <Col md='6'>

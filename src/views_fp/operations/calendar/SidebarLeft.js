@@ -10,6 +10,17 @@ import illustration from '@src/assets/images/pages/calendar-illustration.png'
 import Select from 'react-select'
 import { selectThemeColors, isObjEmpty } from '@utils'
 import axios from 'axios'
+import {
+  getData,
+  selectOperation,
+  editOperation,
+  updateFilter,
+  updateAllFilters,
+  addOperation,
+  deleteOperation
+} from '../store/action/index'
+import { useSelector, useDispatch } from 'react-redux'
+
 
 // ** Filters Checkbox Array
 const filters = [
@@ -22,6 +33,11 @@ const filters = [
 
 const SidebarLeft = props => {
   const [accounts, setAccounts] = useState([])
+  const [cashAccounts, setCashAccounts] = useState([])
+  const [exploitations, setExploitations] = useState([])
+  const [exploitation, setExploitation] = useState('')
+  const [operations, setOperations] = useState(props.store.allData)
+
   // ** Props
   const { handleAddEventSidebar, toggleSidebar, updateFilter, updateAllFilters, store, dispatch } = props
 
@@ -32,11 +48,17 @@ const SidebarLeft = props => {
   }
 
   useEffect(() => {
-    axios.get('accounts').then(response => {
+   
+    axios.get('cash-account').then(response => {
       setAccounts(response.data)
+    })
+
+    axios.get('exploitations').then(response => {
+      setExploitations(response.data)
     })
   }, [])
 
+  const selectedAccounts = []
 
   return (
     <Fragment>
@@ -77,15 +99,57 @@ const SidebarLeft = props => {
               })}
           </div>*/}
 
-<Label>Compte source </Label>
+          <Label>Compte de trésorerie </Label>
             <Select
               theme={selectThemeColors}
               className='react-select'
               classNamePrefix='select'
               options={accounts}
               isClearable={false}
+              isMulti
+              onChange={ items =>  {
+                console.log('hiii : ', items)
+                //const result = 
+                //setCashAccounts(items.map(a => a.id))       
+                console.log('all op : ', operations)
+                console.log('props.store.allData : ', props.store.allData)
+                let filterOps = props.store.allData
+                items.forEach(element => {
+                  console.log('test micro')
+                  filterOps = operations.filter(operation => operation.sourceAccount.id === element.id 
+                    || operation.destinationAccount.id === element.id) 
+                })           
+                console.log(' Operations filtered : ', filterOps)
+                setOperations(filterOps)
+                //console.log('selected Accounts : ', cashAccounts)                
+                //dispatch(getData({accounts: cashAccounts, exploitation}))  
+                dispatch({
+                  type: 'GET_OPERATIONS',
+                  data: filterOps
+                })               
+              }}
+            />
+          </CardBody>
+        <CardBody>
+          <Label>Exploitation </Label>
+            <Select
+              theme={selectThemeColors}
+              className='react-select'
+              classNamePrefix='select'
+              options={exploitations}
+              isClearable={false}
               onChange={item => {
-                //setSourceAccount(item.id)
+                console.log('set exploitation : ', item.id)
+                setExploitation(item.id)
+
+                const filter2Ops = operations.filter(operation => operation.exploitation.id === item.id) 
+                //dispatch(getData({accounts: cashAccounts, exploitation}))*
+                console.log(' Operations filtered : ', filter2Ops)
+                
+                dispatch({
+                  type: 'GET_OPERATIONS',
+                  data: filter2Ops
+                })
               }}
             />
         </CardBody>

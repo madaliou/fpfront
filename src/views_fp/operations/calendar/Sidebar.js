@@ -157,7 +157,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
       
   }
 
-
   const renderPreview = () => {
     if (previewArr.length) {
       return previewArr.map((src, index) => <img key={index} className='rounded mt-2 mr-1' src={src} alt='avatar' />)

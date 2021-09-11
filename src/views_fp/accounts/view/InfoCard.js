@@ -72,17 +72,19 @@ const UserInfoCard = ({ selectedAccount }) => {
                 </div>
                 <div className='ml-1'>
                   <h5 className='mb-0'>{selectedAccount.balance} {' '} {selectedAccount.currency.wording} </h5>
-                  <small>Solde</small>
+                  <small>Solde initial</small>
                 </div>
+
+                
               </div>
               <div className='d-flex align-items-center'>
-                {/*<div className='color-box bg-light-success'>
+                <div className='color-box bg-light-success'>
                   <TrendingUp className='text-success' />
                 </div>
                 <div className='ml-1'>
-                   <h5 className='mb-0'>$99.87K</h5>
-                  <small>Annual Profit</small> 
-                </div>*/}
+                   <h5 className='mb-0'>{selectedAccount.currentBalance} {' '} {selectedAccount.currency.wording}</h5>
+                  <small>Solde courant</small> 
+                </div>
               </div>
             </div>
           </Col>

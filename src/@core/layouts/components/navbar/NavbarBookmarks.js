@@ -46,7 +46,7 @@ const NavbarBookmarks = props => {
           return (
             <NavItem key={item.target} className='d-none d-lg-block'>
               <NavLink tag={Link} to={item.link} id={item.target}>
-                <IconTag className='ficon' />
+                {/* <IconTag className='ficon' /> */}
                 <UncontrolledTooltip target={item.target}>{item.title}</UncontrolledTooltip>
               </NavLink>
             </NavItem>
@@ -149,7 +149,7 @@ const NavbarBookmarks = props => {
         {renderExtraBookmarksDropdown()}
         <NavItem className='nav-item d-none d-lg-block'>
           <NavLink className='bookmark-star' onClick={handleBookmarkVisibility}>
-            <Icon.Star className='ficon text-warning' />
+           {/*  <Icon.Star className='ficon text-warning' /> */}
           </NavLink>
           <div className={classnames('bookmark-input search-input', { show: openSearch })}>
             <div className='bookmark-input-icon'>

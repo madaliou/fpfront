@@ -205,7 +205,17 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Label for='description'>
             Description <span className='text-danger'>*</span>
           </Label>
+          {/* <Input
+              type='textarea'
+              name='text'
+              id='description'
+              rows='3'
+              value={desc}
+              onChange={e => setDesc(e.target.value)}
+              placeholder='Description'
+            /> */}
           <Input
+            type='textarea'
             name='description'
             id='description'
             placeholder=''

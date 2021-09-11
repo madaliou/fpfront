@@ -40,9 +40,8 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const [accountType, setAccountType] = useState('standardAccount')
   const [accountForm, setAccountForm] = useState('logicalAccount')
   const [currencies, setCurrencies] = useState([])
-  const [currency, setCurrency] = useState(2)
+  const [currency, setCurrency] = useState(1)
   const [parentAccount, setParentAccount] = useState('')
-  const [balance, setBalance] = useState(0)
   const [accounts, setAccounts] = useState([])
   const store = useSelector(state => state.accounts)
 
@@ -88,7 +87,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** Function to handle form submit
   const onSubmit = values => {
     if (isObjEmpty(errors)) {
-       console.log('values : ', {          
+       console.log('new account values : ', {          
         wording: values.wording,
         balance: values.balance,
         accountForm,
@@ -149,7 +148,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               theme={selectThemeColors}
               className='react-select'
               classNamePrefix='select'
-              defaultValue={currencies[0]}
+              defaultValue={currencies[1]}
               options={currencies}
               isClearable={false}
               onChange={item => {
@@ -178,7 +177,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             name='balance'
             id='balance'
             placeholder=''
-            innerRef={register({ required: true })}
+            innerRef={register()}
             className={classnames({ 'is-invalid': errors['balance'] })}
           />
         </FormGroup>

@@ -6,6 +6,7 @@ import Avatar from '@components/avatar'
 import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
 import { toast, Slide } from 'react-toastify'
 
+//const operations = useSelector(state => state.operations)
 
 //console.log('useJwt22 : ', useJwt)
 
@@ -40,21 +41,25 @@ export const getData = params => {
  
   return async dispatch => {
 
-    console.log('parameters : ', params)   
+    console.log('operation parameters : ', params)  
+    
+    //console.log('store op : ', operations)
 
-    await axios.post('/operations-filter/', params, {
+    await axios.post('/operations-filter/', params
+     /* {
       params: {
         page: params.page,
         perPage: params.perPage
       }
-    }).then(response => {
-      //console.log('see operations : ', response.data)
+    } */
+    ).then(response => {
+      console.log('filter operations : ', response.data)
        dispatch({
         type: 'GET_OPERATIONS',
-        data: response.data.results,
-        totalPages: response.data.count,
+        data: response.data,
+        //totalPages: response.data.count,
         params
-      })
+      }) 
     }).catch(error => {
       console.log('get operations error : ', JSON.stringify(error.response))
     })

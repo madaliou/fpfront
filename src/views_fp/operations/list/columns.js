@@ -192,7 +192,7 @@ export const columns = [
     minWidth: '110px',
     selector: 'totalCashInflow',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{row.amount }</span>
+    cell: row => <span className='text-capitalize'>{row.amount }  </span>
   },
   {
     name: 'Créé le',

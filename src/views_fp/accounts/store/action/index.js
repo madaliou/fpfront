@@ -96,7 +96,7 @@ export const getAccount = id => {
     await axios
       .get(`accounts/${id}/`)
       .then(response => {   
-        console.log('response.data : ', response.data)
+        console.log('acc response.data : ', response.data)
           dispatch({
             type: 'GET_ACCOUNT',
             selectedAccount: response.data

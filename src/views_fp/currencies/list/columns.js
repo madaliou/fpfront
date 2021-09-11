@@ -160,6 +160,18 @@ export const columns = [
       </Badge>
     )
   },
+
+  {
+    name: 'Taux',
+    minWidth: '150px',
+    selector: 'rate',
+    sortable: true,
+    cell: row => (
+      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+        {row.rate}
+      </Badge>
+    )
+  },
  
   {
     name: 'Créé le',

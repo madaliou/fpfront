@@ -197,7 +197,7 @@ const AppRoutes = [
     component: () => <Redirect to='account/view/1' />
   },
   {
-    path: '/apps/account/view/:id',
+    path: '/account/view/:id',
     component: lazy(() => import('../../views_fp/accounts/view')),
     meta: {
       navLink: '/apps/account/view'

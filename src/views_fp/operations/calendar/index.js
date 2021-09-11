@@ -40,12 +40,18 @@ import {
 import '@styles/react/apps/app-calendar.scss'
 
 // ** CalendarColors
-const calendarsColor = {
+/* const calendarsColor = {
   Business: 'primary',
   Holiday: 'success',
   Personal: 'danger',
   Family: 'warning',
   ETC: 'info'
+} */
+
+const calendarsColor = {
+  transfer: 'primary',
+  entrance: 'success',
+  output: 'danger'
 }
 
 const CalendarComponent = () => {
@@ -92,6 +98,7 @@ const CalendarComponent = () => {
   // ** Fetch Events On Mount
   useEffect(() => {
     dispatch(getAllData(store.selectedCalendars))
+    console.log('store.data.length index: ', store.data.length)
   }, [])
 
   return (

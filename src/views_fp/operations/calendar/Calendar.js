@@ -48,19 +48,19 @@ const Calendar = props => {
   } = props
 
   // ** UseEffect checks for CalendarAPI Update
-  useEffect(() => {  
+  useEffect(() => {
     if (calendarApi === null) {
       setCalendarApi(calendarRef.current.getApi())
-      console.log('calendar store : ', store)
+      console.log('store.data.length calendar: ', store.data.length)
     }
   }, [calendarApi])
 
   // ** calendarOptions(Props)
   const calendarOptions = {
     //locales: [esLocale, frLocale],
-    locale: 'fr', // the initial locale. of not specified, uses the first one,
-    events: store.allData.length ? store.allData : [],
-    firstDay:1,
+    //locale: 'fr', // the initial locale. of not specified, uses the first one,
+    events: store.data.length ? store.data : [],
+    firstDay: 1,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -99,7 +99,10 @@ const Calendar = props => {
 
     eventClassNames({ event: calendarEvent }) {
       // eslint-disable-next-line no-underscore-dangle
-      const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
+      //const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
+      const colorName = calendarsColor[calendarEvent._def.extendedProps.operationType]
+      //const colorName = 'warning'
+      //console.log('calendarsCcalendarEvent._def] : ', calendarEvent._def.extendedProps.operationType)
 
       return [
         // Background Color

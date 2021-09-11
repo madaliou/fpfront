@@ -92,11 +92,18 @@ const renderRole = row => {
   )
 }
 
-const statusObj = {
+/* const statusObj = {
   pending: 'light-warning',
   active: 'light-success',
   inactive: 'light-secondary'
+} */
+
+const statusObj = {
+  standardAccount: 'light-warning',
+  cashAccount: 'light-success'
+  //inactive: 'light-secondary'
 }
+
 
 export const columns = [
   /* {
@@ -129,28 +136,36 @@ export const columns = [
   }, */
   {
     name: 'Code',
-    minWidth: '172px',
+    minWidth: '102px',
     selector: 'code',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.code}</span>
   },
   {
     name: 'Libellé',
-    minWidth: '138px',
+    minWidth: '188px',
     selector: 'wording',
     sortable: true,
     cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
+      <Badge className='text-capitalize' color={statusObj[row.accountType]} pill>
         {row.wording}
       </Badge>
     )
   },
   {
-    name: 'Solde',
+    name: 'Solde intitial',
     minWidth: '138px',
     selector: 'balance',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.balance} {' '} {row.currency.code} </span>
+  },
+
+  {
+    name: 'Solde Courant',
+    minWidth: '138px',
+    selector: 'currentBalance',
+    sortable: true,
+    cell: row => <span className='text-capitalize'>{row.currentBalance} {' '} {row.currency.code} </span>
   },
   
   {

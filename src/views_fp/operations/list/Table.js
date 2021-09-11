@@ -81,7 +81,7 @@ const UsersList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.operations)
 
-  //console.log('first list : ', store)
+  console.log('operation store : ', store)
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
