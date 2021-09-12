@@ -75,13 +75,23 @@ export const getData = params => {
         perPage: params.perPage
       }
     }).then(response => {
-      //console.log('see accounts : ', response.data)
-       dispatch({
-        type: 'GET_DATA',
-        data: response.data.results,
-        totalPages: response.data.count,
-        params
-      })
+      console.log('see accounts : ', response.data)
+      if (response.data.length !== 0) {
+        dispatch({
+          type: 'GET_DATA',
+          data: response.data.results,
+          totalPages: response.data.count,
+          params
+        })
+      } else {
+        dispatch({
+          type: 'GET_DATA',
+          data: [],
+          totalPages: 0,
+          params
+        })
+      }
+      
     }).catch(error => {
       console.log('see here', JSON.stringify(error.response))
     })
