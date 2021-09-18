@@ -19,6 +19,7 @@ import classnames from 'classnames'
 import Avatar from '@components/avatar'
 import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
 import NumberInput from '@components/number-input'
+import { isEmptyObject } from 'jquery'
 
 
 const ToastContent = ({ message }) => (
@@ -43,7 +44,8 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const [currency, setCurrency] = useState(1)
   const [parentAccount, setParentAccount] = useState('')
   const [accounts, setAccounts] = useState([])
-  const store = useSelector(state => state.accounts)
+  const store = useSelector(state => state.accounts) 
+  const accountList = store.allAccounts
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -52,7 +54,8 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const { register, errors, handleSubmit } = useForm()
 
     //** ComponentDidMount
-  useEffect(() => {
+  useEffect(() => {       
+   
     axios.get('currencies').then(response => {
       setCurrencies(response.data)
     })
@@ -136,9 +139,14 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               className='react-select'
               classNamePrefix='select'
               options={store.allAccounts}
-              isClearable={false}
+              isClearable
               onChange={item => {
-                setParentAccount(item.id)
+                if (!isEmptyObject(item)) {
+                  setParentAccount(item.id)
+                } else {
+                  setParentAccount('')
+                }
+                
               }}
             />
             </FormGroup>

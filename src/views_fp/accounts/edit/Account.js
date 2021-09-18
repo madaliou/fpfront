@@ -17,6 +17,7 @@ import { Media, Row, Col, Button, Form, Input, Label, FormGroup, Table, CustomIn
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { isEmptyObject } from 'jquery'
 
 
 const MySwal = withReactContent(Swal)
@@ -40,13 +41,14 @@ const UserAccountTab = ({ selectedAccount }) => {
   const [img, setImg] = useState(null)
   const [userData, setUserData] = useState(null)
   const [currencies, setCurrencies] = useState([])
+  //const [accounts, setAccounts] = useState([])
   const [currency, setCurrency] = useState({})
   const [parentAccount, setParentAccount] = useState({})
   const [accountType, setAccountType] = useState(selectedAccount.accountType)
   const [accountForm, setAccountForm] = useState(selectedAccount.accountForm)
-
   const store = useSelector(state => state.accounts)
-
+  const [filterAccounts, setFilterAccounts] = useState(store.allAccounts)
+  const [filtAcs, setFilterAcs] = useState([])
   const dispatch = useDispatch()
 
   const history = useHistory()
@@ -78,15 +80,30 @@ const UserAccountTab = ({ selectedAccount }) => {
       setCurrencies(response.data)
     })
 
+    axios.post('account-parent-list/', {id: selectedAccount.id}).then(response => {
+      console.log('account parent list : ', response.data)
+      //setAccounts(response.data)
+    }).catch(error => {
+      console.log("account parent lkist error : ", error)
+    })
+    setFilterAccounts(store.allAccounts)
+    const filter2Ops = filterAccounts.filter(account => account.id !== selectedAccount.id)
+    //setFilterAccounts(filter2Ops) 
+    setFilterAcs(filter2Ops)
+    console.log('rerer : ', filtAcs)
+    console.log('all accounts : ', store.allAccounts)
+
   }, [selectedAccount])
 
   // ** Vars
  const { register, errors, handleSubmit } = useForm()
  // ** Function to handle form submit
  const onSubmit = values => {
-   console.log('eric : ', values)
-   if (isObjEmpty(errors)) {
-      console.log('values : ', {
+ 
+   if (parentAccount !== null) {
+    
+    if (isObjEmpty(errors)) {     
+      const payload = {
         id: selectedAccount.id,          
         wording: values.wording,
         balance: values.balance,
@@ -94,44 +111,29 @@ const UserAccountTab = ({ selectedAccount }) => {
         accountType,
         parentAccount: parentAccount.id,
         currency: currency.id
-      }) 
-     
-     dispatch(
-       editAccount({   
-          id: selectedAccount.id,        
-         wording: values.wording,
-         balance: values.balance,
-         accountForm,
-         accountType,
-         parentAccount: parentAccount.id,
-         currency: currency.id
-       })
-     ) 
-
-     /* MySwal.fire({
-      title: 'Succès',
-      text: "Le compte a été modifié avec succès",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      customClass: {
-        confirmButton: 'btn btn-primary',
-        cancelButton: 'btn btn-outline-danger ml-1'
-      },
-      buttonsStyling: false
-    }).then(function (result) {
-      if (result.value) {
-        return (<Link to="/apps/accounts/list" className="btn btn-primary"></Link>)
       }
-    }) */
-     
-     /* toast.error(
-       <ToastContent message={'Compte modifié avec succès!!'} />,
-       { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-     ) */
-     history.push('/accounts/list')
-
+      console.log('not null payload : ', payload)
+      dispatch(editAccount(payload))      
+      history.push('/accounts/list')
+ 
+    }
+   } else {
+    
+    if (isObjEmpty(errors)) {    
+      const payload = {
+        id: selectedAccount.id,          
+        wording: values.wording,
+        balance: values.balance,
+        accountForm,
+        accountType,
+        currency: currency.id
+      } 
+      console.log('null payload : ', payload)
+      dispatch(editAccount(payload))      
+      history.push('/accounts/list') 
+    }
    }
+  
  }
 
   // ** Renders User
@@ -208,10 +210,20 @@ const UserAccountTab = ({ selectedAccount }) => {
                   className='react-select'
                   classNamePrefix='select'
                   value={parentAccount}
-                  options={store.allAccounts}
-                  isClearable={false}
+                  options={filtAcs}
+                  isClearable
                   onChange={item => {
+
+                    console.log('deleted item : ', item)
                     setParentAccount(item)
+                    /* if (!isEmptyObject(item)) {
+                      console.log('not empty')
+                      setParentAccount(item)
+                    } else {
+                      console.log('empty')
+                      setParentAccount(null)
+                    } */
+                    
                   }}
                 />
               </FormGroup>
