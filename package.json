@@ -94,7 +94,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired start",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "lint": "eslint src/**/*.js src/**/*.jsx",
