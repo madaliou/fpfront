@@ -67,9 +67,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   (async () => {
     const getCurrenciesPromise = axios.get('currencies')
     const getAccountsPromise = axios.get('accounts')
-
     const [getCurrencies, getAccounts] = await Promise.all([getCurrenciesPromise, getAccountsPromise])
-
     setCurrencies(getCurrencies.data)
     setAccounts(getAccounts.data)
   })()
