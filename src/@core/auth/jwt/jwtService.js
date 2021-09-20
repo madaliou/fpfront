@@ -4,7 +4,7 @@ import jwtDefaultConfig from './jwtDefaultConfig'
 //axios.defaults.baseURL = 'http://188.165.235.13:8019/api/'
 axios.defaults.baseURL = 'https://myfpdjango.herokuapp.com/api/'
 
-//import {BASE_URL} from './config';
+//import {BASE_URL} from './config'  ;
 
 export default class JwtService {
   // ** jwtConfig <= Will be used by this service
