@@ -67,7 +67,7 @@ export const getData = params => {
  
   return async dispatch => {
 
-    console.log('parameters : ', params)   
+    //console.log('parameters : ', params)   
 
     await axios.post('/accounts-filter/', params, {
       params: {
@@ -75,7 +75,7 @@ export const getData = params => {
         perPage: params.perPage
       }
     }).then(response => {
-      console.log('see accounts : ', response.data)
+      //console.log('see accounts : ', response.data)
       if (response.data.length !== 0) {
         dispatch({
           type: 'GET_DATA',
@@ -101,17 +101,17 @@ export const getData = params => {
 
 // ** Get User
 export const getAccount = id => {
- 
+ console.log('yo')
   return async dispatch => {
     await axios
       .get(`accounts/${id}/`)
       .then(response => {   
-        console.log('acc response.data : ', response.data)
+        
           dispatch({
             type: 'GET_ACCOUNT',
             selectedAccount: response.data
           })          
-        
+          console.log('selected acc : ', response.data)
       })
       .catch(err => console.log(err))
   }

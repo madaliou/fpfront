@@ -98,7 +98,7 @@ const CalendarComponent = () => {
   // ** Fetch Events On Mount
   useEffect(() => {
     dispatch(getAllData(store.selectedCalendars))
-    console.log('store.data.length index: ', store.data.length)
+    console.log('store.data.length index: ', store.data)
   }, [])
 
   return (

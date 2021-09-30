@@ -81,7 +81,7 @@ const UsersList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.operations)
 
-  console.log('operation store : ', store)
+  
   // ** States
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -102,6 +102,7 @@ const UsersList = () => {
 
   // ** Get data on mount
   useEffect(() => {
+    
     dispatch(getAllData())
     dispatch(
       getData({
@@ -113,6 +114,7 @@ const UsersList = () => {
         q: searchTerm
       })
     )
+    console.log('operation store : ', store)
 
     axios.get('accounts').then(response => {
       //setTheAccounts(response.data)

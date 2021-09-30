@@ -176,17 +176,17 @@ export const columns = [
     minWidth: '120px',
     selector: 'code',
     sortable: true,
-    cell: row => <span className='text-capitalize'>{ moment(new Date(row.created_at)).format(
+    cell: row => <span className='text-capitalize'>{ moment(new Date(row.start)).format(
       'DD/MM/YYYY')}</span>
   },
   
-  {
+  /* {
     name: 'Heure',
     minWidth: '110px',
     selector: 'endDate',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.operationTime} </span>
-  },
+  }, */
   {
     name: 'Montant',
     minWidth: '110px',
@@ -194,14 +194,14 @@ export const columns = [
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.amount }  </span>
   },
-  {
+  /* {
     name: 'Créé le',
     minWidth: '138px',
     selector: 'created_at',
     sortable: true,
     cell: row => <span className='text-capitalize'>{ moment(new Date(row.created_at)).format(
       'DD/MM/YYYY à H:m:s')}</span>
-  },
+  }, */
   {
     name: 'Actions',
     minWidth: '100px',

@@ -31,7 +31,7 @@ const accounts = (state = initialState, action) => {
       console.log('oiuoioo', user)
 
       //clone the current state
-      const clone = JSON.parse(JSON.stringify(state.accounts))
+      const clone = JSON.parse(JSON.stringify(state.allAccounts))
 
       //check if user already exist
       const index = clone.findIndex(obj => obj.id === user.id)
@@ -41,7 +41,7 @@ const accounts = (state = initialState, action) => {
         clone[index] = user
       }
 
-      return {...state, accounts: clone, fullData: clone}
+      return {...state, allAccounts: clone, data: clone, fullData: clone}
     } */
 
     case 'DELETE_ACCOUNT':

@@ -188,7 +188,8 @@ export const columns = [
             tag={Link}
             to={`/account/view/${row.id}`}
             className='w-100'
-            onClick={() => store.dispatch(getAccount(row.id)) }
+            onClick={() => store.dispatch(getAccount(row.id)) 
+            }
           >
             <FileText size={14} className='mr-50' />
             <span className='align-middle'>Details</span>
@@ -197,7 +198,7 @@ export const columns = [
             tag={Link}
             to={`/account/edit/${row.id}`}
             className='w-100'
-            onClick={() =>  store.dispatch(getAccount(row.id)) }
+            onClick={() => store.dispatch(getAccount(row.id)) }
           >
             <Archive size={14} className='mr-50' />
             <span className='align-middle'>Edit</span>

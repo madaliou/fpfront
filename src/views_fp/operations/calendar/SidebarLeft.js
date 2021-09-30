@@ -115,7 +115,7 @@ const SidebarLeft = props => {
                 console.log('props.store.allData : ', props.store.allData)
                 let filterOps = props.store.allData
                 items.forEach(element => {
-                  console.log('test micro')
+                  //console.log('test micro')
                   filterOps = operations.filter(operation => operation.sourceAccount.id === element.id 
                     || operation.destinationAccount.id === element.id) 
                 })           
