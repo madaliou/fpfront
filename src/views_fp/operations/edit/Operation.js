@@ -49,9 +49,9 @@ const UserAccountTab = ({ selectedOperation }) => {
   const [operationData, setUserData] = useState(null)
   const [budgets, setBudgets] = useState([])
   const [budget, setBudget] = useState({id:''})
-  const [start, setStart] = useState(selectedOperation.start)
-  const [operationTime, setOperationTime] = useState(selectedOperation.operationTime)
-  const [operationType, setOperationType] = useState(selectedOperation.operationType)
+  const [start, setStart] = useState('')
+  const [operationTime, setOperationTime] = useState('')
+  const [operationType, setOperationType] = useState('')
   const [exploitation, setExploitation] = useState({id:''})
   const [exploitations, setExploitations] = useState([])
   const [accounts, setAccounts] = useState([])
@@ -78,6 +78,11 @@ const UserAccountTab = ({ selectedOperation }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
+
+        setOperationTime(selectedOperation.operationTime)
+        setOperationType(selectedOperation.operationType)
+        setStart(selectedOperation.start)
+            
        if (selectedOperation.budget !== null) {
         setBudget({label:  selectedOperation.budget.wording, value: selectedOperation.budget.id, id:  selectedOperation.budget.id})
       }  
@@ -100,7 +105,7 @@ const UserAccountTab = ({ selectedOperation }) => {
     axios.get('accounts').then(response => {
       setAccounts(response.data)
     })
-    console.log('one opé : ', selectedOperation)
+    console.log('selected opé : ', selectedOperation)
   }, [selectedOperation])
 
   const uppy = new Uppy({
@@ -112,7 +117,7 @@ const UserAccountTab = ({ selectedOperation }) => {
 
   uppy.on('thumbnail:generated', (file, preview) => {
     
-    console.log('one file : ', file)
+    //console.log('one file : ', file)
     const arr = previewArr    
     arr.push(preview)
     setPreviewArr([...arr])
@@ -120,7 +125,7 @@ const UserAccountTab = ({ selectedOperation }) => {
     const arr2 = proofs
     arr2.push(file.data)    
     setProofs([...arr2])
-    console.log('operationProofs : ', proofs)
+    //console.log('operationProofs : ', proofs)
   })
 
   const renderOldImages = () => {
@@ -143,12 +148,12 @@ const UserAccountTab = ({ selectedOperation }) => {
   }
 
   const createFormData = (proofs, body) => {
-    console.log('formData proofs : ', proofs)
+    //console.log('formData proofs : ', proofs)
     const data = new FormData()
     //data.append('proofs', proofs)
 
     proofs.forEach(photo => {
-      console.log('a picture : ', photo)
+      //console.log('a picture : ', photo)
         
       data.append('proofs', photo)
     }) 
@@ -164,8 +169,9 @@ const UserAccountTab = ({ selectedOperation }) => {
  const { register, errors, handleSubmit } = useForm()
  // ** Function to handle form submit
  const onSubmit = values => {
-   console.log('eric : ', values)
+   //console.log('eric : ', values)
    if (isObjEmpty(errors)) {
+
      const modifiedOperation = {
         id: selectedOperation.id,          
         title: values.title,
@@ -180,7 +186,7 @@ const UserAccountTab = ({ selectedOperation }) => {
         operationType        
       }     
       //setProofs([])
-      console.log('modeified operation : ', modifiedOperation)
+      console.log('modified operation : ', modifiedOperation)
      
       const payload = createFormData(proofs, modifiedOperation)
            dispatch(
@@ -224,7 +230,7 @@ const UserAccountTab = ({ selectedOperation }) => {
           <Col md='4' sm='12'>
               <FormGroup>
                 <Label for='title'>Type d'opération</Label>
-                <Input type='select' id='accountForm' name='accountForm' value={operationType} onChange={e => {
+                <Input type='select' id='operationType' name='operationType' value={operationType} onChange={e => {
             
             setOperationType(e.target.value)
           } }>

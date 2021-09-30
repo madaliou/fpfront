@@ -99,7 +99,7 @@ const CalendarComponent = () => {
   useEffect(() => {
     //dispatch
     dispatch(getAllData(store.selectedCalendars))
-    console.log('store.data.length index: ', store.data.length)
+    console.log('store.data.length index: ', store.data)
   }, [])
 
   return (

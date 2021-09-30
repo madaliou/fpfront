@@ -33,6 +33,6 @@ module.exports = function override(config, env) {
         }
       ]
     })
-    .rewire(config, env)
+    .rewire(config, 'development')
   return config
 }

@@ -3,8 +3,8 @@ const initialState = {
   allData: [],
   data: [],
   total: 1,
-  params: {}
-  //selectedUser: null
+  params: {},
+  selectedUser: null
 }
 
 const users2 = (state = initialState, action) => {

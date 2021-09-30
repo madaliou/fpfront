@@ -27,7 +27,7 @@ const ToastContent = ({ message, header, color }) => (
 export const getAllData = () => {
   return async dispatch => {
     await axios.get('operations').then(response => {
-      //console.log('operations ! ', response)
+      //console.log('operations from calendar! ', response.data)
       dispatch({
         type: 'GET_ALL_OPERATIONS',
         data: response.data
@@ -41,7 +41,7 @@ export const getData = params => {
  
   return async dispatch => {
 
-    console.log('operation parameters : ', params)  
+    //console.log('operation parameters : ', params)  
     
     //console.log('store op : ', operations)
 
@@ -53,7 +53,7 @@ export const getData = params => {
       }
     } */
     ).then(response => {
-      console.log('filter operations : ', response.data)
+      //console.log('filter operations : ', response.data)
        dispatch({
         type: 'GET_OPERATIONS',
         data: response.data,
@@ -74,7 +74,7 @@ export const getOperation = id => {
     await axios
       .get(`operations/${id}/`)
       .then(response => {   
-        console.log('response.data : ', response.data)
+        //console.log('response.data : ', response.data)
           dispatch({
             type: 'GET_OPERATION',
             selectedOperation: response.data
@@ -119,7 +119,7 @@ export const addOperation = operation => {
 
 //edit operation 
 export const editOperation = (id, operation) => {
-  console.log('where is id : ', operation)
+  //console.log('where is id : ', operation)
   return (dispatch, getState) => {
     axios
       .put(`operations/${id}/`, operation)
@@ -136,7 +136,7 @@ export const editOperation = (id, operation) => {
       })
       .then(() => {
          dispatch(getData(getState().operations.params))
-        dispatch(getAllData()) 
+         dispatch(getAllData()) 
       })
       .catch(error => {
         console.log('update operation error : ', error)
@@ -154,7 +154,7 @@ export const deleteOperation = id => {
     axios
       .delete(`operations/${id}/`)
       .then(response => {
-        console.log('deleted')
+        //console.log('deleted')
         dispatch({
           type: 'DELETE_OPERATION'
         })

@@ -44,8 +44,9 @@ const UserAccountTab = ({ selectedAccount }) => {
   //const [accounts, setAccounts] = useState([])
   const [currency, setCurrency] = useState({})
   const [parentAccount, setParentAccount] = useState({})
-  const [accountType, setAccountType] = useState(selectedAccount.accountType)
-  const [accountForm, setAccountForm] = useState(selectedAccount.accountForm)
+  const [accountType, setAccountType] = useState('')
+  const [accountForm, setAccountForm] = useState('')
+
   const store = useSelector(state => state.accounts)
   const [filterAccounts, setFilterAccounts] = useState(store.allAccounts)
   const [filtAcs, setFilterAcs] = useState([])
@@ -65,15 +66,17 @@ const UserAccountTab = ({ selectedAccount }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
+    console.log('selected account type store : ', selectedAccount.accountType)
        if (selectedAccount.parentAccount !== null) {
         setParentAccount({label:  selectedAccount.parentAccount.wording, value: selectedAccount.parentAccount.id, id:  selectedAccount.parentAccount.id})
       }    
       setCurrency({label:  selectedAccount.currency.wording, value: selectedAccount.currency.id, id: selectedAccount.currency.id})
-
+      setAccountForm(selectedAccount.accountForm)
+      setAccountType(selectedAccount.accountType)
     if (selectedAccount !== null || (selectedAccount !== null && userData !== null && selectedAccount.id !== userData.id)) {
-      setUserData(selectedAccount)     
+      setUserData(selectedAccount)           
     
-      console.log('currency : ', currency)
+      //console.log('currency : ', currency)
     
     }
     axios.get('currencies').then(response => {
@@ -242,7 +245,7 @@ const UserAccountTab = ({ selectedAccount }) => {
                 <Input innerRef={register({ required: true })} id='balance' name='balance' placeholder='Solde' defaultValue={userData && userData.balance} />
               </FormGroup>
             </Col>
-            <Col md='4' sm='12'>
+           {/*  <Col md='4' sm='12'>
               <FormGroup>
                 <Label for='accountType'>Type de Compte</Label>
                 <Input type='select' name='accountType' id='accountType'
@@ -255,8 +258,35 @@ const UserAccountTab = ({ selectedAccount }) => {
                 <option value='cashAccount'>Compte de trésorerie</option>
                 </Input>
               </FormGroup>
-            </Col>
+            </Col> */}
+
             <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='title'>Type de compte</Label>
+                <Input type='select' id='accountType' name='accountType' value={accountType} onChange={e => {
+
+              setAccountType(e.target.value)
+            } }>
+            <option value='standardAccount'>Compte standard</option>
+            <option value='cashAccount'>Compte de trésorerie</option>
+            </Input>
+              </FormGroup>
+            </Col>
+
+            <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='title'>Forme de compte</Label>
+                <Input type='select' id='accountForm' name='accountForm' value={accountForm} onChange={e => {
+
+                setAccountForm(e.target.value)
+            } }>
+             <option value='physicalAccount'>Compte physique</option>
+            <option value='logicalAccount'>Compte logique</option>
+            </Input>
+              </FormGroup>
+            </Col>
+
+            {/* <Col md='4' sm='12'>
             <FormGroup>
                 <Label for='accountForm'>Forme de Compte</Label>
                 <Input type='select' name='accountForm' id='accountForm' defaultValue={userData && userData.accountForm}
@@ -268,7 +298,7 @@ const UserAccountTab = ({ selectedAccount }) => {
             <option value='logicalAccount'>Compte logique</option>
                 </Input>
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md='4' sm='12'>
               <FormGroup>
                 <Label for='company'>Devise</Label>

@@ -43,8 +43,8 @@ const UserAccountTab = ({ selectedBudget }) => {
   const [userData, setUserData] = useState(null)
   const [exploitations, setExploitations] = useState([])
   const [exploitation, setExploitation] = useState({})
-  const [startDate, setStartDate] = useState(selectedBudget.startDate)
-  const [endDate, setEndDate] = useState(selectedBudget.endDate)
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
 
   const store = useSelector(state => state.accounts)
 
@@ -64,6 +64,8 @@ const UserAccountTab = ({ selectedBudget }) => {
 
   // ** Update user image on mount or change
   useEffect(() => {
+      setEndDate(selectedBudget.startDate)
+      setEndDate(selectedBudget.endDate)
        if (selectedBudget.exploitation !== null) {
         setExploitation({label:  selectedBudget.exploitation.wording, value: selectedBudget.exploitation.id, id:  selectedBudget.exploitation.id})
       }    
@@ -72,8 +74,7 @@ const UserAccountTab = ({ selectedBudget }) => {
     if (selectedBudget !== null || (selectedBudget !== null && userData !== null && selectedBudget.id !== userData.id)) {
       setUserData(selectedBudget)     
         
-    }
-    
+    }    
 
     axios.get('exploitations').then(response => {
       setExploitations(response.data)
@@ -86,7 +87,7 @@ const UserAccountTab = ({ selectedBudget }) => {
  const onSubmit = values => {
    console.log('eric : ', values)
    if (isObjEmpty(errors)) {
-      console.log('update values : ', {
+      console.log('update values  : ', {
         id: selectedBudget.id,          
         wording: values.wording,
         exploitation: exploitation.id,

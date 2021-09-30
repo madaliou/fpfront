@@ -51,7 +51,7 @@ const Calendar = props => {
   useEffect(() => {
     if (calendarApi === null) {
       setCalendarApi(calendarRef.current.getApi())
-      console.log('store.data.length calendar: ', store.data.length)
+      console.log('store.data calendar: ', store.data)
     }
   }, [calendarApi])
 

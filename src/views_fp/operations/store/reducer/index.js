@@ -13,7 +13,7 @@ const operations = (state = initialState, action) => {
  
   switch (action.type) {
     case 'GET_ALL_OPERATIONS':
-      return { ...state, allData: action.data }
+      return { ...state, allData: action.data, data: action.data }
     case 'GET_OPERATIONS':
       return {
         ...state,
