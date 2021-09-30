@@ -2,8 +2,8 @@ import axios from 'axios'
 import jwtDefaultConfig from './jwtDefaultConfig'
 
 //axios.defaults.baseURL = 'http://188.165.235.13:8019/api/'
-axios.defaults.baseURL = 'http://192.168.1.138:8000/api/'
-//axios.defaults.baseURL = 'https://myfpdjango.herokuapp.com/api/'
+//axios.defaults.baseURL = 'http://192.168.1.138:8000/api/'
+axios.defaults.baseURL = 'https://myfpdjango.herokuapp.com/api/'
 
 //import {BASE_URL} from './config'  ;
 
