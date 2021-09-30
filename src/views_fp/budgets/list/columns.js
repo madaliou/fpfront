@@ -144,7 +144,7 @@ export const columns = [
   }, */
  {
     name: 'Libellé',
-    minWidth: '180px',
+    minWidth: '130px',
     selector: 'wording',
     sortable: true,
     cell: row => row.wording
@@ -154,11 +154,7 @@ export const columns = [
     minWidth: '138px',
     selector: 'exploitation',
     sortable: true,
-    cell: row => (
-      <Badge className='text-capitalize' color={statusObj[row.status]} pill>
-        {row.exploitation !== null ? row.exploitation.wording : "Pas d'exploitation" }
-      </Badge>
-    )
+    cell: row => (row.exploitation !== null ? row.exploitation.wording : "Pas d'exploitation")
   },
   {
     name: 'Date début',

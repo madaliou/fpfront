@@ -1,5 +1,5 @@
 // ** React Imports
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -8,8 +8,44 @@ import Avatar from '@components/avatar'
 import { Card, CardBody, CardText, Button, Row, Col, Label } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from 'react-feather'
 import moment from 'moment'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { dele, deleteOperationteOperation } from '../store/action'
+import { store } from '@store/storeConfig/store'
+
 
 const UserInfoCard = ({ selectedOperation }) => {
+  const history = useHistory()
+  const MySwal = withReactContent(Swal) 
+
+  const handleConfirmDelete = (id) => {
+    return MySwal.fire({
+      title: 'Are you sure  ?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1'
+      },
+      buttonsStyling: false
+    }).then(function (result) {
+      if (result.value) {
+        store.dispatch(deleteOperation(id))
+        MySwal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          customClass: {
+            confirmButton: 'btn btn-success'
+          }
+        })
+        history.push('/operations/list')
+        
+      }
+    })
+  }
 
   const renderOldImages = () => {
     const file_url = 'http://188.165.235.13/myfpbackend'
@@ -65,12 +101,14 @@ const UserInfoCard = ({ selectedOperation }) => {
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedOperation.id}`} color='primary'>
+                    <Button.Ripple tag={Link} to={`/operation/edit/${selectedOperation.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
-                    <Button.Ripple className='ml-1' color='danger' outline>
+                    <Button.Ripple className='ml-1' color='danger'    onClick={() => {
+                        handleConfirmDelete(selectedOperation.id)
+                        }}>
                       Delete
-                    </Button.Ripple> */}
+                    </Button.Ripple>
                   </div>
                 </div>
               </div>

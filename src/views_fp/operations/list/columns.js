@@ -94,9 +94,9 @@ const renderRole = row => {
 }
 
 const statusObj = {
-  pending: 'light-warning',
-  active: 'light-success',
-  inactive: 'light-secondary'
+  transfer: 'light-warning',
+  entrance: 'light-success',
+  output: 'light-danger'
 }
 
 export const columns = [
@@ -147,7 +147,9 @@ export const columns = [
     minWidth: '150px',
     selector: 'title',
     sortable: true,
-    cell: row => row.title
+    cell: row => (<Badge className='text-capitalize' color={statusObj[row.operationType]} pill>
+    {row.title}
+  </Badge>)
   },
   {
     name: 'Compte source',

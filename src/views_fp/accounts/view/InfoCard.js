@@ -1,5 +1,5 @@
 // ** React Imports
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -8,8 +8,48 @@ import Avatar from '@components/avatar'
 import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from 'react-feather'
 import moment from 'moment'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { deleteAccount } from '../store/action'
+import { store } from '@store/storeConfig/store'
+
+const MySwal = withReactContent(Swal)
+
 
 const UserInfoCard = ({ selectedAccount }) => {
+
+  const history = useHistory()
+
+  const handleConfirmDelete = (id) => {
+    return MySwal.fire({
+      title: 'Are you sure  ?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1'
+      },
+      buttonsStyling: false
+    }).then(function (result) {
+      if (result.value) {
+        store.dispatch(deleteAccount(id))
+        MySwal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          customClass: {
+            confirmButton: 'btn btn-success'
+          }
+        })
+        history.push('/accounts/list')
+
+      }
+    })
+  }
+
+
   // ** render user img
   const renderUserImg = () => {
     if (selectedAccount !== null && selectedAccount.avatar.length) {
@@ -55,12 +95,13 @@ const UserInfoCard = ({ selectedAccount }) => {
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                   {/*  <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedAccount.id}`} color='primary'>
+                    <Button.Ripple tag={Link} to={`/account/edit/${selectedAccount.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
-                    <Button.Ripple className='ml-1' color='danger' outline>
+                    <Button.Ripple className='ml-1' color='danger'
+                      onClick={() => { handleConfirmDelete(selectedAccount.id) }}>
                       Delete
-                    </Button.Ripple> */}
+                    </Button.Ripple>
                   </div>
                 </div>
               </div>
@@ -75,15 +116,15 @@ const UserInfoCard = ({ selectedAccount }) => {
                   <small>Solde initial</small>
                 </div>
 
-                
+
               </div>
               <div className='d-flex align-items-center'>
                 <div className='color-box bg-light-success'>
                   <TrendingUp className='text-success' />
                 </div>
                 <div className='ml-1'>
-                   <h5 className='mb-0'>{selectedAccount.currentBalance} {' '} {selectedAccount.currency.wording}</h5>
-                  <small>Solde courant</small> 
+                  <h5 className='mb-0'>{selectedAccount.currentBalance} {' '} {selectedAccount.currency.wording}</h5>
+                  <small>Solde courant</small>
                 </div>
               </div>
             </div>
@@ -148,9 +189,9 @@ const UserInfoCard = ({ selectedAccount }) => {
                     Création
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{ moment(new Date(selectedAccount.created_at)).format(
-                          'DD/MM/YYYY à H:m:s')}
-              </CardText>
+                <CardText className='mb-0'>{moment(new Date(selectedAccount.created_at)).format(
+                  'DD/MM/YYYY à H:m:s')}
+                </CardText>
               </div>
             </div>
           </Col>
