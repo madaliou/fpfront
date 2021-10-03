@@ -141,9 +141,11 @@ const SidebarLeft = props => {
               onChange={item => {
                 console.log('set exploitation : ', item.id)
                 setExploitation(item.id)
-
-                const filter2Ops = operations.filter(operation => operation.exploitation.id === item.id) 
+               
+                //const filter2Ops = operations.filter(operation = operation.exploitation.id === item.id) 
                 //dispatch(getData({accounts: cashAccounts, exploitation}))
+                const filter2Ops = operations.filter(operation => operation.exploitation !== null && 
+                  operation.exploitation.id === item.id)
                 console.log(' Operations filtered : ', filter2Ops)
                 
                 dispatch({
