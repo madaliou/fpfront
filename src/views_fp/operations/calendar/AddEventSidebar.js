@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect} from 'react'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -11,7 +11,8 @@ import Flatpickr from 'react-flatpickr'
 import { X, Check, Trash } from 'react-feather'
 import Select, { components } from 'react-select'
 import { useForm, Controller } from 'react-hook-form'
-import { Button, Modal, ModalHeader, ModalBody, FormGroup, Label, CustomInput, Input, Form } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, FormGroup, Label, Card, CardHeader, CardTitle, CardBody,
+   CustomInput, Input, Form } from 'reactstrap'
 
 // ** Utils
 import { selectThemeColors, isObjEmpty } from '@utils'
@@ -27,6 +28,8 @@ import img6 from '@src/assets/images/avatars/11-small.png'
 // ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/flatpickr/flatpickr.scss'
+import axios from 'axios'
+import { getOperation } from '../store/action'
 
 // ** Toast Component
 const ToastComponent = ({ title, icon, color }) => (
@@ -58,12 +61,32 @@ const AddEventSidebar = props => {
 
   // ** Vars
   const selectedEvent = store.selectedEvent
+
+  dispatch(getOperation(selectedEvent.id))
+
+  const selectedOperation = store.selectedOperation
+
+  console.log('selected operation : ', selectedOperation)
+
+  console.log('selected event : ', selectedEvent)
   const { register, errors, handleSubmit } = useForm()
 
   // ** States
   const [url, setUrl] = useState('')
   const [desc, setDesc] = useState('')
   const [title, setTitle] = useState('')
+  const [operationType, setOperationType] = useState('')
+  const [operationTime, setOperationTime] = useState('')
+  const [description, setDescription] = useState('')
+  const [budget, setBudget] = useState('')
+  const [exploitation, setExploitation] = useState('')
+  const [amount, setAmount] = useState('')
+  const [sourceAccount, setSourceAccount] = useState('')
+  const [destinationAccount, setDestinationAccount] = useState('')
+  const [budgets, setBudgets] = useState([])
+  const [exploitations, setExploitations] = useState([])
+  const [accounts, setAccounts] = useState([])
+
   const [guests, setGuests] = useState({})
   const [allDay, setAllDay] = useState(false)
   const [location, setLocation] = useState('')
@@ -156,13 +179,22 @@ const AddEventSidebar = props => {
       const calendar = selectedEvent.extendedProps.calendar
 
       const resolveLabel = () => {
-        if (calendar.length) {
+       /*  if (calendar.length) {
           return { label: calendar, value: calendar, color: calendarsColor[calendar] }
-        } else {
+        } else { */
           return { value: 'Business', label: 'Business', color: 'primary' }
-        }
+        //}
       }
       setTitle(selectedEvent.title || title)
+      setOperationType(selectedOperation.operationType || operationType)
+      setOperationTime(selectedOperation.operationTime || operationTime)
+      setDescription(selectedOperation.description || description)
+      setAmount(selectedOperation.amount || amount)
+      setBudget(selectedOperation.budget || budget)
+      setExploitation(selectedOperation.exploitation || budget)
+      setSourceAccount(selectedOperation.sourceAccount || sourceAccount)
+      setDestinationAccount(selectedOperation.destinationAccount || destinationAccount)
+
       setAllDay(selectedEvent.allDay || allDay)
       setUrl(selectedEvent.url || url)
       setLocation(selectedEvent.extendedProps.location || location)
@@ -173,6 +205,18 @@ const AddEventSidebar = props => {
       setValue([resolveLabel()])
     }
   }
+
+  useEffect(() => {
+   
+    axios.get('budgets').then(response => {
+      setBudgets(response.data)
+    })
+
+    axios.get('exploitations').then(response => {
+      setExploitations(response.data)
+    })
+
+  }, [])
 
   // ** (UI) updateEventInCalendar
   const updateEventInCalendar = (updatedEventData, propsToUpdate, extendedPropsToUpdate) => {
@@ -235,6 +279,7 @@ const AddEventSidebar = props => {
     calendarApi.getEventById(eventId).remove()
   }
   const handleDeleteEvent = () => {
+
     dispatch(removeEvent(selectedEvent.id))
     removeEventInCalendar(selectedEvent.id)
     handleAddEventSidebar()
@@ -261,14 +306,15 @@ const AddEventSidebar = props => {
     } else {
       return (
         <Fragment>
-          <Button.Ripple
+         {/*  <Button.Ripple
             className='mr-1'
             color='primary'
             // onClick={handleUpdateEvent}
           >
             Update
-          </Button.Ripple>
-          <Button.Ripple color='danger' onClick={handleDeleteEvent} outline>
+          </Button.Ripple> */}
+          <Button.Ripple color='danger' onClick={handleDeleteEvent} 
+          outline>
             Delete
           </Button.Ripple>
         </Fragment>
@@ -281,7 +327,7 @@ const AddEventSidebar = props => {
 
   return (
     <Modal
-      //isOpen={open}
+      isOpen={open}
       toggle={handleAddEventSidebar}
       className='sidebar-lg'
       contentClassName='p-0'
@@ -291,7 +337,7 @@ const AddEventSidebar = props => {
     >
       <ModalHeader className='mb-1' toggle={handleAddEventSidebar} close={CloseBtn} tag='div'>
         <h5 className='modal-title'>
-          {selectedEvent && selectedEvent.title && selectedEvent.title.length ? 'Update' : 'Add'} Event
+          {selectedEvent && selectedEvent.title && selectedEvent.title.length ? '' : ''} Operation
         </h5>
       </ModalHeader>
       <ModalBody className='flex-grow-1 pb-sm-0 pb-3'>
@@ -325,114 +371,144 @@ const AddEventSidebar = props => {
           </FormGroup>
 
           <FormGroup>
-            <Label for='label'>Label</Label>
-            <Select
-              id='label'
-              value={value}
-              options={options}
-              theme={selectThemeColors}
-              className='react-select'
-              classNamePrefix='select'
-              isClearable={false}
-              onChange={data => setValue([data])}
-              components={{
-                Option: OptionComponent
-              }}
-            />
-          </FormGroup>
+    <Label for='accountForm'>Type d'operation</Label>
+    <Input type='select' id='accountForm' name='accountForm' value={operationType} onChange={e => {
+      console.log('restoaa : ', e.target.value)
+      setOperationType(e.target.value)
+    } }>
+      <option value='output'>Sortie</option>
+      <option value='entrance'>Entrée</option>
+      <option value='transfer'>Virement</option>
+      </Input>
+  </FormGroup>
 
-          <FormGroup>
-            <Label for='startDate'>Start Date</Label>
-            <Flatpickr
-              required
-              id='startDate'
-              // tag={Flatpickr}
-              name='startDate'
-              className='form-control'
-              onChange={date => setStartPicker(date[0])}
-              value={startPicker}
-              options={{
-                enableTime: allDay === false,
-                dateFormat: 'Y-m-d H:i'
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for='endDate'>End Date</Label>
-            <Flatpickr
-              required
-              id='endDate'
-              // tag={Flatpickr}
-              name='endDate'
-              className='form-control'
-              onChange={date => setEndPicker(date[0])}
-              value={endPicker}
-              options={{
-                enableTime: allDay === false,
-                dateFormat: 'Y-m-d H:i'
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <CustomInput
-              type='switch'
-              id='allDay'
-              name='customSwitch'
-              label='All Day'
-              checked={allDay}
-              onChange={e => setAllDay(e.target.checked)}
-              inline
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for='eventURL'>Event URL</Label>
+  <FormGroup>
+            <Label for='description'>
+              Description <span className='text-danger'>*</span>
+            </Label>
             <Input
-              type='url'
-              id='eventURL'
-              value={url}
-              onChange={e => setUrl(e.target.value)}
-              placeholder='https://www.google.com'
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for='guests'>Guests</Label>
-            <Select
-              isMulti
-              id='guests'
-              className='react-select'
-              classNamePrefix='select'
-              isClearable={false}
-              options={guestsOptions}
-              theme={selectThemeColors}
-              value={guests.length ? [...guests] : null}
-              onChange={data => setGuests([...data])}
-              components={{
-                Option: GuestsComponent
-              }}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for='location'>Location</Label>
-            <Input id='location' value={location} onChange={e => setLocation(e.target.value)} placeholder='Office' />
-          </FormGroup>
-
-          <FormGroup>
-            <Label for='description'>Description</Label>
-            <Input
-              type='textarea'
-              name='text'
               id='description'
-              rows='3'
-              value={desc}
-              onChange={e => setDesc(e.target.value)}
-              placeholder='Description'
+              name='description'
+              placeholder='description'
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              innerRef={register({ register: true, validate: value => value !== '' })}
+              className={classnames({
+                'is-invalid': errors.description
+              })}
             />
           </FormGroup>
+
+  <FormGroup>
+                <Label for='amount'>Montant</Label>
+                <Input innerRef={register({ required: true })} id='amount' name='amount' placeholder='Montant' defaultValue={amount} />
+              </FormGroup>
+
+
+<FormGroup className='mb-2'>
+
+  <Label>Date </Label>
+  <Flatpickr className='form-control' value={startPicker} 
+  onChange={date => {
+    //console.log('selected date : ', moment(new Date(date)).format('YYYY-MM-DD'))
+    setStartDate(moment(new Date(date)).format('YYYY-MM-DD'))
+    }} id='default-picker' />
+  </FormGroup>
+
+  <FormGroup className='mb-2'>
+  <Flatpickr
+  className='form-control'
+  value={operationTime}
+  id='timepicker'
+  options={{
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: 'H:i',
+    time_24hr: true
+  }}
+  onChange={date => {
+    //console.log('selected date : ', moment(new Date(date)).format('H:m:s'))
+    setOperationTime(moment(new Date(date)).format('H:m'))
+  }}
+/>
+ </FormGroup>
+
+ <FormGroup>
+                <Label for='username'>Budget</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  value={budget}
+                  options={budgets}
+                  isClearable={false}
+                  onChange={item => {
+                    setBudget(item)
+                  }}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label for='username'>Exploitation</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  value={exploitation}
+                  options={exploitations}
+                  isClearable={false}
+                  onChange={item => {
+                    setExploitation(item)
+                  }}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <Label for='username'>Compte source</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  value={sourceAccount}
+                  options={accounts}
+                  isClearable={false}
+                  onChange={item => {
+                    setSourceAccount(item)
+                  }}
+                />
+              </FormGroup>
+
+   
+              <FormGroup>
+                <Label for='username'>Compte destination</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  value={destinationAccount}
+                  options={accounts}
+                  isClearable={false}
+                  onChange={item => {
+                    setDestinationAccount(item)
+                  }}
+                />
+              </FormGroup>
+
+    <FormGroup className='mb-2'>
+    {/* <input type="file" id="file" multiple name="file" onChange={handleChange} /> */}
+    <Card>
+      <CardHeader>
+       {/*  <CardTitle tag='h4'> Preuve(s)</CardTitle> */}
+      </CardHeader>
+      <CardBody>
+        {/* <DragDrop uppy={uppy} /> */}
+        {//renderPreview()
+        }
+      </CardBody>
+    </Card>
+</FormGroup>
+
+        
           <FormGroup className='d-flex'>
             <EventActions />
           </FormGroup>

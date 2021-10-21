@@ -165,11 +165,11 @@ const AddEventSidebar = props => {
       const calendar = selectedEvent.extendedProps.calendar
 
       const resolveLabel = () => {
-        if (calendar.length) {
+       /*  if (calendar.length) {
           return { label: calendar, value: calendar, color: calendarsColor[calendar] }
-        } else {
+        } else  */{
           return { value: 'Business', label: 'Business', color: 'primary' }
-        }
+        //}
       }
       setTitle(selectedEvent.title || title)
       setAllDay(selectedEvent.allDay || allDay)
@@ -715,6 +715,7 @@ const AddEventSidebar = props => {
       </ModalBody>
     </Modal>
   )
+}
 }
 
 export default AddEventSidebar
