@@ -48,7 +48,8 @@ const UserInfoCard = ({ selectedOperation }) => {
   }
 
   const renderOldImages = () => {
-    const file_url = 'http://188.165.235.13/myfpbackend'
+    //const file_url = 'http://188.165.235.13/myfpbackend'
+    const file_url = 'http://file.assurtrans.com/myfpbackend'
     if (selectedOperation.operationPictures.length) {     
       return selectedOperation.operationPictures.map((src, index) => <img key={index} className='rounded mt-2 mr-1' 
       src={`${file_url}${src.url}`} alt='avatar' width="500"/>)

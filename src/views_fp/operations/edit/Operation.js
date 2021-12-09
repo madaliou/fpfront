@@ -129,7 +129,8 @@ const UserAccountTab = ({ selectedOperation }) => {
   })
 
   const renderOldImages = () => {
-    const file_url = 'http://188.165.235.13/myfpbackend'
+    //const file_url = 'http://188.165.235.13/myfpbackend'
+    const file_url = 'https://file.assurtrans.com/myfpbackend'
     if (selectedOperation.operationPictures.length) {
       return selectedOperation.operationPictures.map((src, index) => <img key={index} className='rounded mt-2 mr-1' 
       src={`${file_url}${src.url}`} alt='avatar' width="200"/>)
@@ -251,7 +252,7 @@ const UserAccountTab = ({ selectedOperation }) => {
             <Col md='4' sm='12'>
               <FormGroup>
                 <Label for='description'>Description</Label>
-                <Input innerRef={register({ required: true })} id='description' name='description' placeholder='Description' defaultValue={operationData && operationData.description} />
+                <Input  type='textarea' innerRef={register({ required: true })} id='description' name='description' placeholder='Description' defaultValue={operationData && operationData.description} />
               </FormGroup>
             </Col>
 

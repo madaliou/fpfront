@@ -295,12 +295,12 @@ const AddEventSidebar = props => {
     if (isObjEmpty(selectedEvent) || (!isObjEmpty(selectedEvent) && !selectedEvent.title.length)) {
       return (
         <Fragment>
-          <Button.Ripple className='mr-1' type='submit' color='primary'>
+          {/* <Button.Ripple className='mr-1' type='submit' color='primary'>
             Add
           </Button.Ripple>
           <Button.Ripple color='secondary' type='reset' onClick={handleAddEventSidebar} outline>
             Cancel
-          </Button.Ripple>
+          </Button.Ripple> */}
         </Fragment>
       )
     } else {
