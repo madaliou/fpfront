@@ -264,7 +264,7 @@ const UsersList = () => {
                 options={theAccounts}
                 value={parentAccount}
                 onChange={data => {
-                  console.log('selected parent : ', data)
+                  console.log('selectedd parent : ', data)
                   setParentAccount(data)
                   dispatch(
                     getData({
