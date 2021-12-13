@@ -43,7 +43,7 @@ const UserAccountTab = ({ selectedAccount }) => {
   const [currencies, setCurrencies] = useState([])
   //const [accounts, setAccounts] = useState([])
   const [currency, setCurrency] = useState({})
-  const [parentAccount, setParentAccount] = useState({})
+  const [parentAccount, setParentAccount] = useState(null)
   const [accountType, setAccountType] = useState('')
   const [accountForm, setAccountForm] = useState('')
 
@@ -69,7 +69,7 @@ const UserAccountTab = ({ selectedAccount }) => {
     console.log('selected account type store : ', selectedAccount.accountType)
        if (selectedAccount.parentAccount !== null) {
         setParentAccount({label:  selectedAccount.parentAccount.wording, value: selectedAccount.parentAccount.id, id:  selectedAccount.parentAccount.id})
-      }    
+      }   
       setCurrency({label:  selectedAccount.currency.wording, value: selectedAccount.currency.id, id: selectedAccount.currency.id})
       setAccountForm(selectedAccount.accountForm)
       setAccountType(selectedAccount.accountType)
@@ -84,17 +84,17 @@ const UserAccountTab = ({ selectedAccount }) => {
     })
 
     axios.post('account-parent-list/', {id: selectedAccount.id}).then(response => {
-      console.log('account parent list : ', response.data)
+      //console.log('account parent list : ', response.data)
       //setAccounts(response.data)
     }).catch(error => {
-      console.log("account parent lkist error : ", error)
+      //console.log("account parent lkist error : ", error)
     })
     setFilterAccounts(store.allAccounts)
     const filter2Ops = filterAccounts.filter(account => account.id !== selectedAccount.id)
     //setFilterAccounts(filter2Ops) 
     setFilterAcs(filter2Ops)
-    console.log('rerer : ', filtAcs)
-    console.log('all accounts : ', store.allAccounts)
+    /* console.log('rerer : ', filtAcs)
+    console.log('all accounts : ', store.allAccounts) */
 
   }, [selectedAccount])
 
@@ -129,9 +129,10 @@ const UserAccountTab = ({ selectedAccount }) => {
         balance: values.balance,
         accountForm,
         accountType,
+        parentAccount: '',
         currency: currency.id
       } 
-      console.log('null payload : ', payload)
+      console.log('null mm : ', payload)
       dispatch(editAccount(payload))      
       history.push('/accounts/list') 
     }
