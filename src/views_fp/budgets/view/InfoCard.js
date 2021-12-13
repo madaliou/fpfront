@@ -177,6 +177,17 @@ const UserInfoCard = ({ selectedBudget }) => {
                 </div>
                 <CardText className='mb-2'>{selectedBudget.exploitation !== null ? selectedBudget.exploitation.wording : '(123) 456-7890'}</CardText>
               </div>
+
+              <div className='d-flex flex-wrap align-items-center'>
+                <div className='user-info-title'>
+                  <Phone className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Montant prévisionnel
+                  </CardText>
+                </div>
+                <CardText className='mb-2'>{selectedBudget !== null ? selectedBudget.provisionalAmount : '(123) 456-7890'}</CardText>
+              </div>
+              
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
                   <Calendar className='mr-1' size={14} />
