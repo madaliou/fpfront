@@ -50,6 +50,7 @@ const UserAccountTab = ({ selectedOperation }) => {
   const [budgets, setBudgets] = useState([])
   const [budget, setBudget] = useState({id:''})
   const [start, setStart] = useState('')
+  const [postingDate, setPostingDate] = useState('')
   const [operationTime, setOperationTime] = useState('')
   const [operationType, setOperationType] = useState('')
   const [exploitation, setExploitation] = useState({id:''})
@@ -82,6 +83,7 @@ const UserAccountTab = ({ selectedOperation }) => {
         setOperationTime(selectedOperation.operationTime)
         setOperationType(selectedOperation.operationType)
         setStart(selectedOperation.start)
+        setPostingDate(selectedOperation.postingDate)
             
        if (selectedOperation.budget !== null) {
         setBudget({label:  selectedOperation.budget.wording, value: selectedOperation.budget.id, id:  selectedOperation.budget.id})
@@ -183,6 +185,7 @@ const UserAccountTab = ({ selectedOperation }) => {
         sourceAccount: sourceAccount.id,
         destinationAccount: destinationAccount.id,
         start,
+        postingDate,
         operationTime,
         operationType        
       }     
@@ -336,6 +339,17 @@ const UserAccountTab = ({ selectedOperation }) => {
                 <Flatpickr className='form-control' value={start} 
                   onChange={date => {
                     setStart(moment(new Date(date)).format('YYYY-MM-DD'))
+                    }} id='default-picker' />
+               
+              </FormGroup>
+              </Col>
+
+              <Col md='4' sm='12'>
+              <FormGroup>
+                <Label for='start'>Date de comptabilisation </Label>
+                <Flatpickr className='form-control' value={postingDate} 
+                  onChange={date => {
+                    setPostingDate(moment(new Date(date)).format('YYYY-MM-DD'))
                     }} id='default-picker' />
                
               </FormGroup>
