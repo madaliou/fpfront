@@ -134,12 +134,19 @@ export const columns = [
     sortable: true,
     cell: row => row.email
   }, */
-  {
+  /* {
     name: 'Code',
     minWidth: '102px',
     selector: 'code',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.code}</span>
+  }, */
+  {
+    name: 'Parent',
+    minWidth: '138px',
+    //selector: 'balance',
+    sortable: true,
+    cell: row => <span className='text-capitalize'>{row.parentAccount !== null ? row.parentAccount.wording : 'Pas de parent' }</span>
   },
   {
     name: 'Libellé',
@@ -166,14 +173,6 @@ export const columns = [
     selector: 'currentBalance',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.currentBalance} {' '} {row.currency.code} </span>
-  },
-  
-  {
-    name: 'Parent',
-    minWidth: '138px',
-    //selector: 'balance',
-    sortable: true,
-    cell: row => <span className='text-capitalize'>{row.parentAccount !== null ? row.parentAccount.wording : 'Pas de parent' }</span>
   },
   {
     name: 'Actions',
