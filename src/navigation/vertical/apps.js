@@ -6,7 +6,7 @@ export default [
   },
   {
     id: 'email',
-    title: 'Comptes',
+    title: 'Comptes standards',
     icon: <Mail size={20} />,
     navLink: '/accounts/list'
   },

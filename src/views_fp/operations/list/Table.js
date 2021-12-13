@@ -251,13 +251,15 @@ const UsersList = () => {
 
   return (
     <Fragment>
+      {/*Opérations
+
       <Card>
-       <CardHeader>
+        <CardHeader>
           <CardTitle tag='h4'>Opérations</CardTitle>
-        </CardHeader>
+        </CardHeader> 
           <CardBody>
           <Row>
-            {/* <Col md='4'>
+           <Col md='4'>
               <Select
                 isClearable={false}
                 theme={selectThemeColors}
@@ -326,10 +328,10 @@ const UsersList = () => {
                   )
                 }}
               />
-            </Col> */}
+            </Col> 
           </Row>
         </CardBody> 
-      </Card>
+      </Card>*/}
 
       <Card>
         <DataTable
