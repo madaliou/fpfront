@@ -6,9 +6,21 @@ export default [
   },
   {
     id: 'email',
-    title: 'Comptes standards',
+    title: 'Comptes',
     icon: <Mail size={20} />,
     navLink: '/accounts/list'
+  },
+  {
+    id: 'emailStandard',
+    title: 'Comptes standards',
+    icon: <Mail size={20} />,
+    navLink: '/standard-accounts/list'
+  },
+  {
+    id: 'emailPhysic',
+    title: 'Trésorerie physique',
+    icon: <Mail size={20} />,
+    navLink: '/treasury-accounts/list'
   },
   {
     id: 'chat',

@@ -174,33 +174,93 @@ const AppRoutes = [
   } */
 
   //raoul's routes
-  //accounts
+    //accounts
+    {
+      path: '/accounts/list',
+      component: lazy(() => import('../../views_fp/accounts/list'))
+    },
+    {
+      path: '/account/edit',
+      exact: true,
+      component: () => <Redirect to='accounts/edit/1' />
+    },
+    {
+      path: '/account/edit/:id',
+      component: lazy(() => import('../../views_fp/accounts/edit')),
+      meta: {
+        navLink: 'account/edit'
+      }
+    },
+    {
+      path: '/account/view',
+      exact: true,
+      component: () => <Redirect to='account/view/1' />
+    },
+    {
+      path: '/account/view/:id',
+      component: lazy(() => import('../../views_fp/accounts/view')),
+      meta: {
+        navLink: '/apps/account/view'
+      }
+    },
+
+    //standard accounts
+    {
+      path: '/standard-accounts/list',
+      component: lazy(() => import('../../views_fp/standard-accounts/list'))
+    },
+    {
+      path: '/standard-account/edit',
+      exact: true,
+      component: () => <Redirect to='standard-accounts/edit/1' />
+    },
+    {
+      path: '/standard-account/edit/:id',
+      component: lazy(() => import('../../views_fp/standard-accounts/edit')),
+      meta: {
+        navLink: 'standard-account/edit'
+      }
+    },
+    {
+      path: '/standard-account/view',
+      exact: true,
+      component: () => <Redirect to='standard-account/view/1' />
+    },
+    {
+      path: '/standard-account/view/:id',
+      component: lazy(() => import('../../views_fp/standard-accounts/view')),
+      meta: {
+        navLink: '/apps/standard-account/view'
+      }
+    },
+
+    //physical tresorery accopunts
   {
-    path: '/accounts/list',
-    component: lazy(() => import('../../views_fp/accounts/list'))
+    path: '/treasury-accounts/list',
+    component: lazy(() => import('../../views_fp/treasury-accounts/list'))
   },
   {
-    path: '/account/edit',
+    path: '/treasury-account/edit',
     exact: true,
-    component: () => <Redirect to='accounts/edit/1' />
+    component: () => <Redirect to='treasury-account/edit/1' />
   },
   {
-    path: '/account/edit/:id',
-    component: lazy(() => import('../../views_fp/accounts/edit')),
+    path: '/treasury-account/edit/:id',
+    component: lazy(() => import('../../views_fp/treasury-accounts/edit')),
     meta: {
-      navLink: 'account/edit'
+      navLink: 'treasury-account/edit'
     }
   },
   {
-    path: '/account/view',
+    path: '/treasury-account/view',
     exact: true,
     component: () => <Redirect to='account/view/1' />
   },
   {
-    path: '/account/view/:id',
+    path: '/treasury-account/view/:id',
     component: lazy(() => import('../../views_fp/accounts/view')),
     meta: {
-      navLink: '/apps/account/view'
+      navLink: '/apps/treasury-account/view'
     }
   },
 

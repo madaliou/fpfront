@@ -92,7 +92,7 @@ const UsersList = () => {
   const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
   
   const [parentAccount, setParentAccount] = useState({ value: '', label: 'Selectionner un parent' })
-  const [accountType, setAccountType] = useState({ value: '', label: 'Select type', number: 0 })
+  const [accountType, setAccountType] = useState({ value: 'standardAccount', label: 'Compte standard', number: 0 })
   const [accountForm, setAccountForm] = useState({ value: '', label: 'Select forme', number: 0 })
 
   const [theAccounts, setTheAccounts] = useState([])
@@ -109,7 +109,7 @@ const UsersList = () => {
         perPage: rowsPerPage,
         parentAccount: parentAccount !== null ? parentAccount.value : "",
         accountType: accountType.value,
-        accountForm: accountForm.value,
+        accountForm: accountForm !== null ? accountForm.value : "",
         q: searchTerm
       })
     )
@@ -163,7 +163,7 @@ const UsersList = () => {
         page: page.selected + 1,
         perPage: rowsPerPage,
         parentAccount: parentAccount !== null ? parentAccount.value : "",
-        accountForm: accountForm.value,
+        accountForm: accountForm !== null ? accountForm.value : "",
         accountType: accountType.value,
         q: searchTerm
       })
@@ -179,7 +179,7 @@ const UsersList = () => {
         page: currentPage,
         perPage: value,
         parentAccount: parentAccount !== null ? parentAccount.value : "",
-        accountForm: accountForm.value,
+        accountForm: accountForm !== null ? accountForm.value : "",
         accountType: accountType.value,
         q: searchTerm
       })
@@ -195,7 +195,7 @@ const UsersList = () => {
         page: currentPage,
         perPage: rowsPerPage,
         parentAccount: parentAccount !== null ? parentAccount.value : "",
-        accountForm: accountForm.value,
+        accountForm: accountForm !== null ? accountForm.value : "",
         accountType: accountType.value,
         q: val
       })
@@ -229,7 +229,7 @@ const UsersList = () => {
   const dataToRender = () => {
     const filters = {
       parentAccount: parentAccount !== null ? parentAccount.value : "",
-      accountForm: accountForm.value,
+      accountForm: accountForm !== null ? accountForm.value : "",
       accountType: accountType.value,
       q: searchTerm
     }
@@ -275,7 +275,7 @@ const UsersList = () => {
                       perPage: rowsPerPage,
                       parentAccount: data.value,
                       accountType: accountType.value,
-                      accountForm: accountForm.value,
+                      accountForm: accountForm !== null ? accountForm.value : "",
                       q: searchTerm
                     })
                   )
@@ -287,7 +287,7 @@ const UsersList = () => {
                         perPage: rowsPerPage,
                         parentAccount: "",
                         accountType: accountType.value,
-                        accountForm: accountForm.value,
+                        accountForm: accountForm !== null ? accountForm.value : "",
                         q: searchTerm
                       })
                     )
@@ -296,7 +296,7 @@ const UsersList = () => {
                 }}
               />
             </Col>
-            <Col className='my-md-0 my-1' md='4'>
+          {/*   <Col className='my-md-0 my-1' md='4'>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
@@ -313,13 +313,13 @@ const UsersList = () => {
                       perPage: rowsPerPage,
                       parentAccount: parentAccount !== null ? parentAccount.value : "",
                       accountType: data.value,
-                      accountForm: accountForm.value,
+                      accountForm: accountForm !== null ? accountForm.value : "",
                       q: searchTerm
                     })
                   )
                 }}
               />
-            </Col>
+            </Col> */}
             <Col md='4'>
               <Select
                 theme={selectThemeColors}
@@ -331,16 +331,31 @@ const UsersList = () => {
                 isClearable
                 onChange={data => {
                   setAccountForm(data)
-                  dispatch(
-                    getData({
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      parentAccount: parentAccount !== null ? parentAccount.value : "",
-                      accountType: accountType.value,
-                      accountForm: data.value,
-                      q: searchTerm
-                    })
-                  )
+                  if (data !== null) {
+                    dispatch(
+                      getData({
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        parentAccount: parentAccount !== null ? parentAccount.value : "",
+                        accountType: accountType !== null ? accountType.value : "",
+                        accountForm: data.value,
+                        q: searchTerm
+                      })
+                    )
+
+                  } else {
+                    dispatch(
+                      getData({
+                        page: currentPage,
+                        perPage: rowsPerPage,
+                        parentAccount: parentAccount !== null ? parentAccount.value : "",
+                        accountType: accountType !== null ? accountType.value : "",
+                        accountForm: "",
+                        q: searchTerm
+                      })
+                    )
+
+                  }
                 }}
               />
             </Col>

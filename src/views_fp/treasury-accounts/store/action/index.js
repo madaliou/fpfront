@@ -26,7 +26,7 @@ const ToastContent = ({ message, header, color }) => (
 export const getAllData = () => {
   return async dispatch => {
     await axios.get('accounts').then(response => {
-      //console.log('accounts ! ', response)
+      console.log('physical accounts ! ', response)
       dispatch({
         type: 'GET_ALL_DATA',
         data: response.data
