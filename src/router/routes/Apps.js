@@ -236,31 +236,61 @@ const AppRoutes = [
 
     //physical tresorery accopunts
   {
-    path: '/treasury-accounts/list',
-    component: lazy(() => import('../../views_fp/treasury-accounts/list'))
+    path: '/physical-treasury-accounts/list',
+    component: lazy(() => import('../../views_fp/physical-treasury-accounts/list'))
   },
   {
-    path: '/treasury-account/edit',
+    path: '/physical-treasury-account/edit',
     exact: true,
-    component: () => <Redirect to='treasury-account/edit/1' />
+    component: () => <Redirect to='physical-treasury-account/edit/1' />
   },
   {
-    path: '/treasury-account/edit/:id',
-    component: lazy(() => import('../../views_fp/treasury-accounts/edit')),
+    path: '/physical-treasury-account/edit/:id',
+    component: lazy(() => import('../../views_fp/physical-treasury-accounts/edit')),
     meta: {
-      navLink: 'treasury-account/edit'
+      navLink: 'physical-treasury-account/edit'
     }
   },
   {
-    path: '/treasury-account/view',
+    path: '/physical-treasury-account/view',
     exact: true,
     component: () => <Redirect to='account/view/1' />
   },
   {
-    path: '/treasury-account/view/:id',
+    path: '/physical-treasury-account/view/:id',
     component: lazy(() => import('../../views_fp/accounts/view')),
     meta: {
-      navLink: '/apps/treasury-account/view'
+      navLink: '/apps/physical-treasury-account/view'
+    }
+  },
+
+  //logical treasury accounts
+  {
+    path: '/logical-treasury-accounts/list',
+    component: lazy(() => import('../../views_fp/logical-treasury-accounts/list'))
+  },
+  {
+    path: '/logical-treasury-account/edit',
+    exact: true,
+    component: () => <Redirect to='logical-treasury-account/edit/1' />
+  },
+  {
+    path: '/logical-treasury-account/edit/:id',
+    component: lazy(() => import('../../views_fp/logical-treasury-accounts/edit')),
+    meta: {
+      navLink: 'logical-treasury-account/edit'
+    }
+  },
+  {
+    path: '/logical-treasury-account/view',
+    exact: true,
+    component: () => <Redirect to='account/view/1' />
+  },
+  {
+    path: '/logical-treasury-account/view/:id',
+    component: lazy(() => import('../../views_fp/accounts/view')),
+    meta: {
+      navLink: '/apps/logical-treasury-account/view'
     }
   },
 

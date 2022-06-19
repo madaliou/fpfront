@@ -20,8 +20,16 @@ export default [
     id: 'emailPhysic',
     title: 'Trésorerie physique',
     icon: <Mail size={20} />,
-    navLink: '/treasury-accounts/list'
+    navLink: '/physical-treasury-accounts/list'
   },
+
+  {
+    id: 'logicalAccounts',
+    title: 'Trésorerie logique',
+    icon: <Mail size={20} />,
+    navLink: '/logical-treasury-accounts/list'
+  },
+  
   {
     id: 'chat',
     title: 'Budgets',
