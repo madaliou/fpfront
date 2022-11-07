@@ -4,11 +4,11 @@ import { useParams, Link } from 'react-router-dom'
 
 // ** User Edit Components
 import SocialTab from './Social'
-import ExploitationTab from './Exploitation'
+import AccountTab from './Account'
 import InfoTab from './Information'
 
 // ** Store & Actions
-import { getExploitation } from '../store/action'
+import { getAccount } from '../store/action'
 import { useSelector, useDispatch } from 'react-redux'
 
 // ** Third Party Components
@@ -21,7 +21,7 @@ import '@styles/react/apps/app-users.scss'
 const UserEdit = () => {
   // ** States & Vars
   const [activeTab, setActiveTab] = useState('1'),
-    store = useSelector(state => state.exploitations),
+    store = useSelector(state => state.accounts),
     dispatch = useDispatch(),
     { id } = useParams()   
 
@@ -30,13 +30,13 @@ const UserEdit = () => {
 
   // ** Function to get user on mount
   useEffect(() => {
-    dispatch(getExploitation(parseInt(id)))
+    dispatch(getAccount(parseInt(id)))
 
-    console.log('exploitation store : ', store)
+    console.log('the store : ', store)
    
   }, [dispatch])
 
-  return store.selectedExploitation !== null && store.selectedExploitation !== undefined ? (
+  return store.selectedAccount !== null && store.selectedAccount !== undefined ? (
     <Row className='app-user-edit'>
       <Col sm='12'>
         <Card>
@@ -45,7 +45,7 @@ const UserEdit = () => {
               <NavItem>
                 <NavLink active={activeTab === '1'} onClick={() => toggle('1')}>
                   <User size={14} />
-                  <span className='align-middle d-none d-sm-block'>Exploitation</span>
+                  <span className='align-middle d-none d-sm-block'>Compte</span>
                 </NavLink>
               </NavItem>
               {/* <NavItem>
@@ -63,7 +63,7 @@ const UserEdit = () => {
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId='1'>
-                <ExploitationTab selectedExploitation={store.selectedExploitation} />
+                <AccountTab selectedAccount={store.selectedAccount} />
               </TabPane>
              {/*   <TabPane tabId='2'>
                 <InfoTab />

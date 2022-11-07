@@ -159,13 +159,13 @@ export const columns = [
       </Badge>
     )
   },
-  {
+  /* {
     name: 'Solde intitial',
     minWidth: '138px',
     selector: 'balance',
     sortable: true,
     cell: row => <span className='text-capitalize'>{row.balance} {' '} {row.currency.code} </span>
-  },
+  }, */
 
   {
     name: 'Solde Courant',

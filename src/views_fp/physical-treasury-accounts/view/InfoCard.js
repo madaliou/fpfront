@@ -10,13 +10,14 @@ import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Calendar } from
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { deleteBudget } from '../store/action'
+import { deleteAccount } from '../store/action'
 import { store } from '@store/storeConfig/store'
 
 const MySwal = withReactContent(Swal)
 
 
-const UserInfoCard = ({ selectedBudget }) => {
+const UserInfoCard = ({ selectedAccount }) => {
+
   const history = useHistory()
 
   const handleConfirmDelete = (id) => {
@@ -33,7 +34,7 @@ const UserInfoCard = ({ selectedBudget }) => {
       buttonsStyling: false
     }).then(function (result) {
       if (result.value) {
-        store.dispatch(deleteBudget(id))
+        store.dispatch(deleteAccount(id))
         MySwal.fire({
           icon: 'success',
           title: 'Deleted!',
@@ -42,15 +43,17 @@ const UserInfoCard = ({ selectedBudget }) => {
             confirmButton: 'btn btn-success'
           }
         })
-        history.push('/budgets/list')
+        history.push('/accounts/list')
 
       }
     })
   }
+
+
   // ** render user img
   const renderUserImg = () => {
-    if (selectedBudget !== null && selectedBudget.avatar.length) {
-      return <img src={selectedBudget.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
+    if (selectedAccount !== null && selectedAccount.avatar.length) {
+      return <img src={selectedAccount.avatar} alt='user-avatar' className='img-fluid rounded' height='104' width='104' />
     } else {
       const stateNum = Math.floor(Math.random() * 6),
         states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
@@ -60,7 +63,7 @@ const UserInfoCard = ({ selectedBudget }) => {
           initials
           color={color}
           className='rounded'
-          content={selectedBudget.fullName}
+          content={selectedAccount.fullName}
           contentStyles={{
             borderRadius: 0,
             fontSize: 'calc(36px)',
@@ -86,17 +89,17 @@ const UserInfoCard = ({ selectedBudget }) => {
                 {/*renderUserImg() */}
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mb-1'>
-                    <h4 className='mb-0'>{selectedBudget !== null ? selectedBudget.fullName : 'Eleanor Aguilar'}</h4>
+                    <h4 className='mb-0'>{selectedAccount !== null ? selectedAccount.fullName : 'Eleanor Aguilar'}</h4>
                     <CardText tag='span'>
-                      {selectedBudget !== null ? selectedBudget.email : 'eleanor.aguilar@gmail.com'}
+                      {selectedAccount !== null ? selectedAccount.email : 'eleanor.aguilar@gmail.com'}
                     </CardText>
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
-                    <Button.Ripple tag={Link} to={`/budget/edit/${selectedBudget.id}`} color='primary'>
+                    <Button.Ripple tag={Link} to={`/account/edit/${selectedAccount.id}`} color='primary'>
                       Edit
                     </Button.Ripple>
                     <Button.Ripple className='ml-1' color='danger'
-                     onClick={() => { handleConfirmDelete(selectedBudget.id) }}>
+                      onClick={() => { handleConfirmDelete(selectedAccount.id) }}>
                       Delete
                     </Button.Ripple>
                   </div>
@@ -106,21 +109,23 @@ const UserInfoCard = ({ selectedBudget }) => {
             <div className='d-flex align-items-center user-total-numbers'>
               <div className='d-flex align-items-center mr-2'>
                 <div className='color-box bg-light-primary'>
-                  {/* <DollarSign className='text-primary' /> */}
+                  <DollarSign className='text-primary' />
                 </div>
-                {/* <div className='ml-1'>
-                  <h5 className='mb-0'>{selectedBudget.provisionalAmount} </h5>
-                  <small>Montant prévisionnel</small>
-                </div> */}
+                <div className='ml-1'>
+                  <h5 className='mb-0'>{selectedAccount.balance} {' '} {selectedAccount.currency.wording} </h5>
+                  <small>Solde initial</small>
+                </div>
+
+
               </div>
               <div className='d-flex align-items-center'>
-                {/*<div className='color-box bg-light-success'>
+                <div className='color-box bg-light-success'>
                   <TrendingUp className='text-success' />
                 </div>
                 <div className='ml-1'>
-                   <h5 className='mb-0'>$99.87K</h5>
-                  <small>Annual Profit</small> 
-                </div>*/}
+                  <h5 className='mb-0'>{selectedAccount.currentBalance} {' '} {selectedAccount.currency.wording}</h5>
+                  <small>Solde courant</small>
+                </div>
               </div>
             </div>
           </Col>
@@ -134,60 +139,49 @@ const UserInfoCard = ({ selectedBudget }) => {
                   </CardText>
                 </div>
                 <CardText className='mb-0'>
-                  {selectedBudget !== null ? selectedBudget.wording : 'eleanor.aguilar'}
+                  {selectedAccount !== null ? selectedAccount.wording : 'eleanor.aguilar'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
-                {/* <div className='user-info-title'>
+                <div className='user-info-title'>
                   <Check className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                   
+                    Type de compte
                   </CardText>
-                </div> */}
+                </div>
                 <CardText className='text-capitalize mb-0'>
-                  {selectedBudget !== null ? selectedBudget.accountType : 'Active'}
+                  {selectedAccount !== null ? selectedAccount.accountType : 'Active'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
                 <div className='user-info-title'>
                   <Star className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Date debut
+                    Forme de compte
                   </CardText>
                 </div>
-                <CardText className='text-capitalize mb-0'> {'   '}
-                  {selectedBudget !== null ? selectedBudget.startDate : 'Admin'}
+                <CardText className='text-capitalize mb-0'>
+                  {selectedAccount !== null ? selectedAccount.accountForm : 'Admin'}
                 </CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center my-50'>
                 <div className='user-info-title'>
                   <Flag className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Date fin
+                    Parent
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{selectedBudget !== null ? selectedBudget.endDate : 'Date de fin'}</CardText>
+                <CardText className='mb-0'>{selectedAccount.parentAccount !== null ? selectedAccount.parentAccount.wording : 'Pas de parent'}</CardText>
               </div>
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
                   <Phone className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Exploitation
+                    Devise
                   </CardText>
                 </div>
-                <CardText className='mb-2'>{selectedBudget.exploitation !== null ? selectedBudget.exploitation.wording : '(123) 456-7890'}</CardText>
+                <CardText className='mb-0'>{selectedAccount !== null ? selectedAccount.currency.wording : '(123) 456-7890'}</CardText>
               </div>
-
-              <div className='d-flex flex-wrap align-items-center'>
-                <div className='user-info-title'>
-                  <Phone className='mr-1' size={14} />
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Montant prévisionnel
-                  </CardText>
-                </div>
-                <CardText className='mb-2'>{selectedBudget !== null ? selectedBudget.provisionalAmount : '(123) 456-7890'}</CardText>
-              </div>
-              
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
                   <Calendar className='mr-1' size={14} />
@@ -195,9 +189,9 @@ const UserInfoCard = ({ selectedBudget }) => {
                     Création
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{ moment(new Date(selectedBudget.created_at)).format(
-                          'DD/MM/YYYY à H:m:s')}
-              </CardText>
+                <CardText className='mb-0'>{moment(new Date(selectedAccount.created_at)).format(
+                  'DD/MM/YYYY à H:m:s')}
+                </CardText>
               </div>
             </div>
           </Col>

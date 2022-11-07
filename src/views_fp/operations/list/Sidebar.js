@@ -38,6 +38,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const [operationType, setOperationType] = useState('output')
   const [operationTime, setOperationTime] = useState(moment(new Date()).format('H:m'))
   const [startDate, setStartDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
+  const [postingDate, setPostingDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
   const [previewArr, setPreviewArr] = useState([])
   const [proofs, setProofs] = useState([])
 
@@ -93,6 +94,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           budget,
           exploitation,
           start: startDate,
+          postingDate,
           operationTime,
           operationType
         }
@@ -182,7 +184,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           <Input type='select' id='accountForm' name='accountForm' value={operationType} onChange={e => {
             console.log('restoaa : ', e.target.value)
             setOperationType(e.target.value)
-          } }>
+          }}>
             <option value='output'>Sortie</option>
             <option value='entrance'>Entrée</option>
             <option value='transfer'>Virement</option>
@@ -245,7 +247,17 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           //console.log('selected date : ', moment(new Date(date)).format('YYYY-MM-DD'))
           setStartDate(moment(new Date(date)).format('YYYY-MM-DD'))
           }} id='default-picker' />
-        </FormGroup>
+      </FormGroup>
+
+      <FormGroup className='mb-2'>
+      
+        <Label>Date de comptabilisation </Label>
+        <Flatpickr className='form-control' value={startDate} 
+        onChange={date => {
+          //console.log('selected date : ', moment(new Date(date)).format('YYYY-MM-DD'))
+          setPostingDate(moment(new Date(date)).format('YYYY-MM-DD'))
+          }} id='default-picker' />
+      </FormGroup>
 
         <FormGroup className='mb-2'>
         <Flatpickr

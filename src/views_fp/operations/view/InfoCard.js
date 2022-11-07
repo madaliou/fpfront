@@ -205,6 +205,16 @@ const UserInfoCard = ({ selectedOperation }) => {
                 <div className='user-info-title'>
                   <Flag className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    Date de comptabilisation
+                  </CardText>
+                </div>
+                <CardText className='mb-0'>{selectedOperation !== null ? selectedOperation.postingDate : 'Date de fin'}</CardText>
+              </div>
+
+              <div className='d-flex flex-wrap align-items-center my-50'>
+                <div className='user-info-title'>
+                  <Flag className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
                     Heure
                   </CardText>
                 </div>

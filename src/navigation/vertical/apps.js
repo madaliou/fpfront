@@ -11,6 +11,26 @@ export default [
     navLink: '/accounts/list'
   },
   {
+    id: 'emailStandard',
+    title: 'Comptes standards',
+    icon: <Mail size={20} />,
+    navLink: '/standard-accounts/list'
+  },
+  {
+    id: 'emailPhysic',
+    title: 'Trésorerie physique',
+    icon: <Mail size={20} />,
+    navLink: '/physical-treasury-accounts/list'
+  },
+
+  {
+    id: 'logicalAccounts',
+    title: 'Trésorerie logique',
+    icon: <Mail size={20} />,
+    navLink: '/logical-treasury-accounts/list'
+  },
+  
+  {
     id: 'chat',
     title: 'Budgets',
     icon: <MessageSquare size={20} />,
